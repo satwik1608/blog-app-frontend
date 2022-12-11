@@ -84,6 +84,14 @@ function BlogList() {
         </li>
       ))}
     </ul>
+    // <Card
+    //   author="satwik"
+    //   title="The best anime ever"
+    //   tags={initialState[0].tags}
+    //   img="https://placeimg.com/400/225/arch"
+    //   content="According to me the best anime is not the worst anime but the best anime is the best anime and I think it will remain the same ..."
+    //   date="16th May"
+    // />
   );
 }
 
