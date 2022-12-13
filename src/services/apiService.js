@@ -7,3 +7,7 @@ export function getBlogs() {
 export function getAuthor(id) {
   return http.get(`http://localhost:1337/author/${id}`);
 }
+
+export function getBlog(id) {
+  return http.get(`http://localhost:1337/blogs/${id}`);
+}

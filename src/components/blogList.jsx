@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Card from "./common/card";
 
 import { getBlogs } from "./../services/apiService";
+import { set } from "mongoose";
 
 function BlogList({ id, author, tag }) {
   const [blogs, setBlogs] = React.useState([]);
@@ -16,7 +17,9 @@ function BlogList({ id, author, tag }) {
         const blogD = blogData.filter((b) => b.author._id === id);
         setBlogs(blogD);
       } else if (tag) {
-        blog.data.filter((b) => b.tags.inlcude(tag) === true);
+        blogData.filter((b) => b.tags.includes(tag));
+
+        setBlogs(blogData);
       } else setBlogs(blogData);
     };
 

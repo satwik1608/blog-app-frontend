@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import BlogList from "./blogList";
 import AuthorList from "./common/authorList";
 import ProfileRight from "./common/profileRight";
-function TagProfile() {
+import { getBlogs } from "./../services/apiService";
+function TagProfile({ tag }) {
+  const [blogs, setBlogs] = React.useState([]);
+
   return (
     <div className="flex flex-row flex-wide   justify-center  ">
       <div className="p-2">
         <div class="mb-7  font-extrabold border-b border-gray-200 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
-          Tag Name
+          {tag}
         </div>
         <button
           type="button"
@@ -16,20 +19,7 @@ function TagProfile() {
           Follow
         </button>
 
-        <BlogList />
-      </div>
-      <div className="p-10 border-b border-gray-200">
-        <div className="flex flex-row justify-center">
-          <div className="text-gray-900 mr-10">
-            <p className="font-bold text-xl">1.5</p>
-            <p>Following</p>
-          </div>
-          <div className="text-gray-900">
-            <p className="font-bold text-xl">1.5</p>
-            <p>Followers</p>
-          </div>
-        </div>
-        <AuthorList />
+        <BlogList tag={tag} />
       </div>
     </div>
   );
