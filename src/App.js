@@ -11,7 +11,7 @@ import BlogFull from "./components/blogFull";
 function App() {
   return (
     <React.Fragment>
-      <BlogList />
+      <AuthorProfile id="clblyn68y0000h8uuewyc7dpr" />
     </React.Fragment>
   );
 }

@@ -1,50 +1,23 @@
 import React, { Component } from "react";
 import CardSm from "./common/cardSm";
-
-const initialState = [
-  {
-    author: "Satwik",
-    title: "The best movie ever",
-  },
-  {
-    author: "Gian",
-    title: "The best song ever",
-  },
-  {
-    author: "Gian",
-    title: "The best song ever",
-  },
-  {
-    author: "Gian",
-    title: "The best song ever",
-  },
-  {
-    author: "Gian",
-    title: "The best song ever",
-  },
-  {
-    author: "Gian",
-    title: "The best song ever",
-  },
-  {
-    author: "Gian",
-    title: "The best song ever",
-  },
-  {
-    author: "Gian",
-    title: "The best song ever",
-  },
-];
+import { getBlogs } from "../services/apiService";
 
 function Trending() {
-  const [blogs, setBlogs] = React.useState(initialState);
+  const [blogs, setBlogs] = React.useState([]);
 
+  React.useEffect(() => {
+    const getBlog = async () => {
+      const blogs = await getBlogs();
+      setBlogs(blogs.data);
+    };
+    getBlog();
+  }, []);
   return (
     <ul className="flex flex-row flex-wrap ">
       {blogs.map((blog) => (
         <li className="m-2 w-90" key={blog.author}>
           <div>
-            <CardSm author={blog.author} title={blog.title} />
+            <CardSm author={blog.author.name} title={blog.title} />
           </div>
         </li>
       ))}

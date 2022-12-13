@@ -3,18 +3,21 @@ import Card from "./common/card";
 
 import { getBlogs } from "./../services/apiService";
 
-async function fetchBlogs() {
-  const blogs = await getBlogs();
-
-  return blogs.data;
-}
-function BlogList() {
+function BlogList({ id, author, tag }) {
   const [blogs, setBlogs] = React.useState([]);
 
   React.useEffect(() => {
     const getBlog = async () => {
       const blog = await getBlogs();
-      setBlogs(blog.data);
+
+      const blogData = blog.data;
+
+      if (author) {
+        const blogD = blogData.filter((b) => b.author._id === id);
+        setBlogs(blogD);
+      } else if (tag) {
+        blog.data.filter((b) => b.tags.inlcude(tag) === true);
+      } else setBlogs(blogData);
     };
 
     getBlog();
@@ -24,7 +27,7 @@ function BlogList() {
   return (
     <ul className="m-4">
       {blogs.map((blog) => (
-        <li className="m-2" key={blog.author}>
+        <li className="m-2" key={blog.author._id}>
           <Card
             author={blog.author.name}
             title={blog.title}
