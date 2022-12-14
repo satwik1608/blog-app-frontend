@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { createComment } from "../../services/apiService";
-import { set } from "mongoose";
+import { createComment, updateComment } from "../../services/apiService";
 
-function CommentForm({ blog, onChange }) {
+function CommentForm({ blog, onChange, isReply, id, onReset }) {
   const { _id } = blog;
   const [data, setData] = React.useState("nig");
 
@@ -11,13 +10,23 @@ function CommentForm({ blog, onChange }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const comment = {
-      data: data,
-      author: "clbm01co200005ouu7vlte9tf",
-      blog: _id,
-    };
+    if (isReply) {
+      const comment = {
+        reply: data,
+      };
 
-    await createComment(comment);
+      await updateComment(comment, id);
+      onReset();
+    } else {
+      const comment = {
+        data: data,
+        author: "clbm01co200005ouu7vlte9tf",
+        blog: _id,
+      };
+
+      await createComment(comment);
+    }
+
     onChange();
     setData("");
     textRef.current.value = "";

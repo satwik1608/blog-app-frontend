@@ -19,3 +19,7 @@ export function createComment(comment) {
 export function getComment() {
   return http.get("http://localhost:1337/comments");
 }
+
+export function updateComment(comment, id) {
+  return http.put(`http://localhost:1337/comments/${id}`, comment);
+}

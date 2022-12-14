@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CommentForm from "./common/commentForm";
 import Comment from "./common/comment";
-import { getComment, createComment } from "../services/apiService";
+import { getComment } from "../services/apiService";
 function Comments({ blog }) {
   const [comments, setComment] = React.useState([]);
   const [refresh, setRefresh] = React.useState(0);
@@ -32,7 +32,7 @@ function Comments({ blog }) {
         <CommentForm blog={blog} onChange={handleRefresh} />
         <ul>
           {comments.map((comment) => (
-            <Comment comment={comment} />
+            <Comment comment={comment} onChange={handleRefresh} />
           ))}
         </ul>
       </div>
