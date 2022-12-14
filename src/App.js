@@ -8,6 +8,7 @@ import ProfileRight from "./components/common/profileRight";
 import AuthorProfile from "./components/authorProfile";
 import TagProfile from "./components/tagProfile";
 import BlogFull from "./components/blogFull";
+import Comment from "./components/comments";
 function App() {
   return (
     <React.Fragment>

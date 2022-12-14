@@ -3,6 +3,7 @@ import BlogList from "./blogList";
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import { getAuthor, getBlog } from "./../services/apiService";
+import Comment from "./comments";
 function BlogFull({ id }) {
   const [blog, setBlog] = React.useState({});
   const [author, setAuthor] = React.useState({});
@@ -32,6 +33,7 @@ function BlogFull({ id }) {
           {blog.content}
         </p>
         <Rating />
+        <Comment blog={blog} />
       </div>
       <div>{author.name && <ProfileRight author={author} />}</div>
     </div>
