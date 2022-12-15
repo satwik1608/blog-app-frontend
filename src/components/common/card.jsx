@@ -6,9 +6,9 @@ function Card({ author, title, img, tags, content, date }) {
       href="#"
       className="flex flex-col items-center bg-white   md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
-      <div className="flex flex-col justify-between p-1 font-bold text-gray-900  leading-normal">
+      <div className="flex flex-col justify-between p-1 font-bold text-slate-50  leading-normal">
         <a>{author}</a>
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-50">
           {title}
         </h5>
         <p className="mb-1 font-normal text-gray-700 dark:text-gray-400">

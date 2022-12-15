@@ -42,7 +42,7 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
         <textarea
           id="comment"
           rows="6"
-          className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-black dark:placeholder-white bg-white"
+          className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
           placeholder="Write a comment..."
           ref={textRef}
           onChange={handleChange}

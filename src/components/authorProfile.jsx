@@ -18,7 +18,7 @@ function AuthorProfile({ id }) {
     <div>
       <div className="flex flex-row flex-wide   justify-center  ">
         <div className="p-2">
-          <div class="mb-7  font-extrabold border-b border-gray-200 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
+          <div className="mb-7  font-extrabold border-b border-gray-200 tracking-tight leading-none text-slate-50  md:text-xl lg:text-4xl  ">
             {author.name}
           </div>
 

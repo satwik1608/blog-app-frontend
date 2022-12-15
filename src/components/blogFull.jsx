@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import BlogList from "./blogList";
+
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import { getAuthor, getBlog } from "./../services/apiService";
@@ -18,6 +18,7 @@ function BlogFull({ id }) {
 
     getBl();
   }, []);
+  if (!blog) return <p>Wait</p>;
   return (
     <div className="flex flex-row justify-center">
       <div className="p-2 basis-1/2 m-5">
@@ -33,6 +34,8 @@ function BlogFull({ id }) {
           {blog.content}
         </p>
         <Rating />
+        <i class="fa-solid fa-comment"></i>
+        {blog.comments && blog.comments.length}
         <Comment blog={blog} />
       </div>
       <div>{author.name && <ProfileRight author={author} />}</div>
