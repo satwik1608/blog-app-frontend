@@ -15,7 +15,7 @@ function Comment({ comment, onChange }) {
 
   return (
     <article
-      class="p-6 mb-6 text-base bg-white border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+      class="p-6 mb-6 text-base bg-#1f2937 border-t border-gray-200 dark:border-gray-700 dark:bg-#1f2937"
       key={comment._id}
     >
       <footer class="flex justify-between items-center mb-2">
@@ -72,7 +72,7 @@ function Comment({ comment, onChange }) {
         )}
         {comment.reply && (
           <article
-            class="p-6 text-base bg-white rounded-lg dark:bg-gray-900"
+            class="p-6 text-base bg-#1f2937 rounded-lg dark:bg-#1f2937"
             key={comment.author._id}
           >
             <footer class="flex justify-between items-center mb-2">

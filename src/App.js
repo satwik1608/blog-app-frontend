@@ -12,7 +12,7 @@ import Comment from "./components/comments";
 function App() {
   return (
     <React.Fragment>
-      <BlogFull id="clblz438w0001h8uufz31hjcm" />
+      <Trending />
     </React.Fragment>
   );
 }

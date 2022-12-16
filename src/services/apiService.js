@@ -12,6 +12,10 @@ export function getBlog(id) {
   return http.get(`http://localhost:1337/blogs/${id}`);
 }
 
+export function editBlog(blog, id) {
+  return http.put(`http://localhost:1337/blogs/${id}`, blog);
+}
+
 export function createComment(comment) {
   return http.post(`http://localhost:1337/comments`, comment);
 }

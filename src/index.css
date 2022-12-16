@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+*{
+  /* background-color: #1f2937; */
+}
 #root{
     background-color: #1f2937;
     padding:3rem;
