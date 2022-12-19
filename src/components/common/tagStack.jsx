@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getBlogs } from "../../services/apiService";
-function TagStack() {
+function TagStack({ search }) {
   const [blogs, setBlogs] = React.useState([]);
   const [tags, setTags] = React.useState([]);
   const num = React.useRef(0);
@@ -11,7 +11,9 @@ function TagStack() {
       const tagss = b.tags;
 
       tagss.forEach((t) => {
-        tag.push(t);
+        if (search) {
+          if (t.startsWith(search)) tag.push(t);
+        } else tag.push(t);
       });
     });
 
@@ -28,7 +30,7 @@ function TagStack() {
     };
 
     getBl();
-  }, [num.current]);
+  }, [num.current, search]);
 
   if (blogs.length === 0) {
     ++num.current;

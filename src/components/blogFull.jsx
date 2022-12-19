@@ -4,12 +4,14 @@ import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import { getAuthor, getBlog, editBlog } from "./../services/apiService";
 import Comment from "./comments";
-function BlogFull({ id }) {
+import { useParams } from "react-router-dom";
+function BlogFull() {
   const [blog, setBlog] = React.useState({});
   const [author, setAuthor] = React.useState({});
   const [likes, setLikes] = React.useState(0);
   const [isComment, setIsComment] = React.useState(false);
 
+  const { id } = useParams();
   const handleLike = async (id) => {
     setLikes((like) => like + id);
 

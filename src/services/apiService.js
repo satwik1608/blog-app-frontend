@@ -7,7 +7,12 @@ export function getBlogs() {
 export function getAuthor(id) {
   return http.get(`http://localhost:1337/author/${id}`);
 }
-
+export function listAuthor(search) {
+  return http.get(`http://localhost:1337/authors?search=${search}`);
+}
+export function createAuthor(author) {
+  return http.post(`http://localhost:1337/author`, author);
+}
 export function getBlog(id) {
   return http.get(`http://localhost:1337/blogs/${id}`);
 }

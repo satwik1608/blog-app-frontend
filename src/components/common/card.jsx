@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-
-function Card({ author, title, img, tags, content, date }) {
+import { Link } from "react-router-dom";
+function Card({ author, title, img, tags, content, date, id, authorId }) {
   return (
-    <a
-      href="#"
+    <Link
+      to={`/blogs/${id}`}
       className="flex flex-col items-center bg-white   md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div className="flex flex-col justify-between p-1 font-bold text-slate-50  leading-normal">
-        <a>{author}</a>
+        <Link to={`/author/${authorId}`}>{author}</Link>
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-50">
           {title}
         </h5>
@@ -18,9 +18,12 @@ function Card({ author, title, img, tags, content, date }) {
           <p className="text-gray-500 font-normal text-sm">{date}</p>
 
           {tags.map((tag) => (
-            <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+            <Link
+              to={`/tags/${tag}`}
+              className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3"
+            >
               {tag}
-            </span>
+            </Link>
           ))}
         </div>
       </div>
@@ -29,7 +32,7 @@ function Card({ author, title, img, tags, content, date }) {
         src={img}
         alt={img}
       />
-    </a>
+    </Link>
   );
 }
 

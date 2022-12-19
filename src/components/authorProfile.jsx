@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import BlogList from "./blogList";
 import ProfileRight from "./common/profileRight";
 import { getAuthor } from "../services/apiService";
+import { useParams } from "react-router-dom";
 
-function AuthorProfile({ id }) {
+function AuthorProfile() {
   const [author, setAuthor] = React.useState([]);
+  const { id } = useParams();
 
   React.useState(() => {
     const getAuth = async () => {
@@ -14,6 +16,7 @@ function AuthorProfile({ id }) {
 
     getAuth();
   }, []);
+
   return (
     <div>
       <div className="flex flex-row flex-wide   justify-center  ">

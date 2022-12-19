@@ -11,10 +11,27 @@ import BlogFull from "./components/blogFull";
 import Comment from "./components/comments";
 import HomePage from "./components/homePage";
 import TagStack from "./components/common/tagStack";
+import RegisterForm from "./components/registerForm";
+import SearchBox from "./components/searchBox";
+import {
+  BrowserRouter as Router,
+  Route,
+  route,
+  Routes,
+  routes,
+} from "react-router-dom";
+
 function App() {
   return (
     <React.Fragment>
-      <HomePage />
+      {/* <Routes>
+        <Route path="/" element={<HomePage />} />
+
+        <Route path="/tags/:tag" element={<TagProfile />} />
+        <Route path="/blogs/:id" element={<BlogFull />} />
+        <Route path="/author/:id" element={<AuthorProfile />} />
+      </Routes> */}
+      <SearchBox />
     </React.Fragment>
   );
 }

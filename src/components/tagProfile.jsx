@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import BlogList from "./blogList";
-import AuthorList from "./common/authorList";
-import ProfileRight from "./common/profileRight";
-import { getBlogs } from "./../services/apiService";
-function TagProfile({ tag }) {
-  const [blogs, setBlogs] = React.useState([]);
 
+import { useParams } from "react-router-dom";
+function TagProfile() {
+  const { tag } = useParams();
   return (
     <div className="flex flex-row flex-wide   justify-center  ">
       <div className="p-2">
