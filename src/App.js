@@ -24,14 +24,14 @@ import {
 function App() {
   return (
     <React.Fragment>
-      {/* <Routes>
+      <SearchBox />
+      <Routes>
         <Route path="/" element={<HomePage />} />
 
         <Route path="/tags/:tag" element={<TagProfile />} />
         <Route path="/blogs/:id" element={<BlogFull />} />
         <Route path="/author/:id" element={<AuthorProfile />} />
-      </Routes> */}
-      <SearchBox />
+      </Routes>
     </React.Fragment>
   );
 }

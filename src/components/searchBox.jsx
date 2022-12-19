@@ -65,8 +65,8 @@ function SearchBox() {
       </form>
       {data && (
         <div className=" flex flex-row">
-          {/* <BlogList search={data} />
-          <TagStack search={data} /> */}
+          <BlogList search={data} />
+          <TagStack search={data} />
           <AuthorList search={data} />
         </div>
       )}

@@ -12,7 +12,7 @@ function TagStack({ search }) {
 
       tagss.forEach((t) => {
         if (search) {
-          if (t.startsWith(search)) tag.push(t);
+          if (t.toLowerCase().startsWith(search.toLowerCase())) tag.push(t);
         } else tag.push(t);
       });
     });

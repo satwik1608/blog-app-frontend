@@ -6,11 +6,17 @@ import { getBlogs } from "./../services/apiService";
 function BlogList({ id, author, tag, search }) {
   const [blogs, setBlogs] = React.useState([]);
 
+  const [sort, setSort] = React.useState(false);
+
   React.useEffect(() => {
     const getBlog = async () => {
       const blog = await getBlogs();
 
       const blogData = blog.data;
+
+      if (sort) {
+        blogData.sort((a, b) => b.likes - a.likes);
+      }
 
       if (author) {
         const blogD = blogData.filter((b) => b.author._id === id);
@@ -36,26 +42,44 @@ function BlogList({ id, author, tag, search }) {
     };
 
     getBlog();
-  }, [tag, id, author, search]);
+  }, [tag, id, author, search, sort]);
 
   if (blogs.length === 0) return <p>Best</p>;
   return (
-    <ul className="m-4">
-      {blogs.map((blog) => (
-        <li className="m-2" key={blog.author._id}>
-          <Card
-            author={blog.author.name}
-            authorId={blog.author._id}
-            title={blog.title}
-            tags={blog.tags}
-            img={blog.img}
-            content={blog.content}
-            date={blog.date}
-            id={blog._id}
-          />
-        </li>
-      ))}
-    </ul>
+    <React.Fragment>
+      <div class="inline-flex rounded-md shadow-sm" role="group">
+        <button
+          type="button"
+          onClick={() => setSort(false)}
+          className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+        >
+          Recent
+        </button>
+        <button
+          type="button"
+          onClick={() => setSort(true)}
+          className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+        >
+          Likes
+        </button>
+      </div>
+      <ul className="m-4">
+        {blogs.map((blog) => (
+          <li className="m-2" key={blog.author._id}>
+            <Card
+              author={blog.author.name}
+              authorId={blog.author._id}
+              title={blog.title}
+              tags={blog.tags}
+              img={blog.img}
+              content={blog.content}
+              date={blog.date}
+              id={blog._id}
+            />
+          </li>
+        ))}
+      </ul>
+    </React.Fragment>
   );
 }
 
