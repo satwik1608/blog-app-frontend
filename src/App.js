@@ -13,6 +13,7 @@ import HomePage from "./components/homePage";
 import TagStack from "./components/common/tagStack";
 import RegisterForm from "./components/registerForm";
 import SearchBox from "./components/searchBox";
+import { getCurrentUser } from "./services/authService";
 import {
   BrowserRouter as Router,
   Route,
@@ -20,18 +21,29 @@ import {
   Routes,
   routes,
 } from "react-router-dom";
+import LoginForm from "./components/loginForm";
 
 function App() {
+  const [user, setUser] = React.useState(null);
+
+  React.useEffect(() => {
+    const author = getCurrentUser();
+    console.log(author);
+    setUser(author);
+  }, []);
   return (
     <React.Fragment>
-      <SearchBox />
+      {/* <SearchBox />
+      
       <Routes>
         <Route path="/" element={<HomePage />} />
 
         <Route path="/tags/:tag" element={<TagProfile />} />
         <Route path="/blogs/:id" element={<BlogFull />} />
         <Route path="/author/:id" element={<AuthorProfile />} />
-      </Routes>
+      </Routes> */}
+      {user && <p>{user.username}</p>}
+      <LoginForm />
     </React.Fragment>
   );
 }
