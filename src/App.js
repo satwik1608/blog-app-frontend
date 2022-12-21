@@ -14,6 +14,7 @@ import TagStack from "./components/common/tagStack";
 import RegisterForm from "./components/registerForm";
 import SearchBox from "./components/searchBox";
 import { getCurrentUser } from "./services/authService";
+import UserContext from "./userContext";
 import {
   BrowserRouter as Router,
   Route,
@@ -22,28 +23,30 @@ import {
   routes,
 } from "react-router-dom";
 import LoginForm from "./components/loginForm";
+import NavBar from "./components/navBar";
+import SearchResult from "./components/searchResult";
 
 function App() {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState({ username: "", id: "" });
 
   React.useEffect(() => {
     const author = getCurrentUser();
-    console.log(author);
+
     setUser(author);
   }, []);
   return (
     <React.Fragment>
-      {/* <SearchBox />
-      
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-
-        <Route path="/tags/:tag" element={<TagProfile />} />
-        <Route path="/blogs/:id" element={<BlogFull />} />
-        <Route path="/author/:id" element={<AuthorProfile />} />
-      </Routes> */}
-      {user && <p>{user.username}</p>}
-      <LoginForm />
+      <UserContext.Provider value={user}>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/author/:id" element={<AuthorProfile />} />
+          <Route path="/search/:data" element={<SearchResult />} />
+          <Route path="blogs/:id" element={<BlogFull />} />
+        </Routes>
+      </UserContext.Provider>
     </React.Fragment>
   );
 }

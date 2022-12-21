@@ -7,7 +7,14 @@ function Card({ author, title, img, tags, content, date, id, authorId }) {
       className="flex flex-col items-center bg-white   md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div className="flex flex-col justify-between p-1 font-bold text-slate-50  leading-normal">
-        <Link to={`/author/${authorId}`}>{author}</Link>
+        <div className="flex flex-row">
+          <img
+            className="w-8 h-8 rounded-full mr-2"
+            src="https://placeimg.com/400/225/arch"
+            alt="Neil image"
+          />
+          <Link to={`/author/${authorId}`}>{author}</Link>
+        </div>
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-50">
           {title}
         </h5>

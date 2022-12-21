@@ -46,7 +46,7 @@ function BlogList({ id, author, tag, search }) {
 
   if (blogs.length === 0) return <p>Best</p>;
   return (
-    <React.Fragment>
+    <div>
       <div class="inline-flex rounded-md shadow-sm" role="group">
         <button
           type="button"
@@ -79,7 +79,7 @@ function BlogList({ id, author, tag, search }) {
           </li>
         ))}
       </ul>
-    </React.Fragment>
+    </div>
   );
 }
 
