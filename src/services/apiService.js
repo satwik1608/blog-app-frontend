@@ -1,9 +1,13 @@
 import http from "./httpService";
+import jsCookie from "js-cookie";
 
 export function getBlogs() {
   return http.get("http://localhost:1337/blogs");
 }
 
+export function getAuthorId(author) {
+  return http.get(`http://localhost:1337/author?name=${author}`);
+}
 export function getAuthor(id) {
   return http.get(`http://localhost:1337/author/${id}`);
 }
@@ -22,6 +26,7 @@ export function editBlog(blog, id) {
 }
 
 export function createComment(comment) {
+  jsCookie.set("jwt", localStorage.getItem("token"), { path: "/" });
   return http.post(`http://localhost:1337/comments`, comment);
 }
 

@@ -5,12 +5,12 @@ import UserContext from "./../../userContext";
 function CommentForm({ blog, onChange, isReply, id, onReset }) {
   const { _id } = blog;
   const [data, setData] = React.useState("nig");
-  // const { id } = React.useContext(UserContext);
+  const { id: user } = React.useContext(UserContext);
   const textRef = React.useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("user", user);
     if (isReply) {
       const comment = {
         reply: data,
@@ -21,7 +21,7 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
     } else {
       const comment = {
         data: data,
-        author: "clbm01co200005ouu7vlte9tf",
+        author: user.current,
         blog: _id,
       };
 

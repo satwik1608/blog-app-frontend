@@ -15,6 +15,7 @@ import RegisterForm from "./components/registerForm";
 import SearchBox from "./components/searchBox";
 import { getCurrentUser } from "./services/authService";
 import UserContext from "./userContext";
+import http from "./services/httpService";
 import {
   BrowserRouter as Router,
   Route,
@@ -25,18 +26,32 @@ import {
 import LoginForm from "./components/loginForm";
 import NavBar from "./components/navBar";
 import SearchResult from "./components/searchResult";
+import { getAuthorId } from "./services/apiService";
 
 function App() {
-  const [user, setUser] = React.useState({ username: "", id: "" });
+  const [user, setUser] = React.useState({
+    username: "",
+  });
+  const id = React.useRef("");
 
   React.useEffect(() => {
     const author = getCurrentUser();
-
-    setUser(author);
+    console.log("author", author);
+    if (author) {
+      const func = async () => {
+        const auth = await getAuthorId(author.username);
+        console.log("auth", auth);
+        id.current = auth.data._id;
+        console.log("id", id.current);
+      };
+      func();
+      setUser(author.username);
+    }
   }, []);
+
   return (
     <React.Fragment>
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={{ user, id }}>
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />

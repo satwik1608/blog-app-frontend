@@ -1,10 +1,18 @@
 import jwtDecode from "jwt-decode";
-import http from "./httpService";
+import http, { debug } from "./httpService";
+import Cookies from "js-cookie";
+
+export function getJwt() {
+  return localStorage.getItem("token");
+}
+
+http.setJwt(getJwt());
 
 export async function login(fields) {
-  console.log("here");
   console.log(fields);
   const { data } = await http.post("http://localhost:1337/login", fields);
+
+  console.log(data);
 
   localStorage.setItem("token", data.token);
 }
@@ -15,8 +23,9 @@ export function logout() {
 
 export function getCurrentUser() {
   try {
-    const token = localStorage.getItem("token");
-
+    debug();
+    const token = getJwt("token");
+    console.log("debug", token);
     const User = jwtDecode(token);
 
     return User;
