@@ -10,10 +10,22 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("user", user);
+
     if (isReply) {
-      const comment = {
-        reply: data,
+      // const idd = userId.current;
+      // const comment = {
+      //   reply: { data, idd },
+      // };
+      let comment = {
+        data: data,
+        author: user._id,
+        blog: _id,
+        replyIs: true,
+      };
+      const com = await createComment(comment);
+
+      comment = {
+        reply: com.data._id,
       };
 
       await updateComment(comment, id);
@@ -21,10 +33,11 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
     } else {
       const comment = {
         data: data,
-        author: user.current,
+        author: user._id,
         blog: _id,
+        replyIs: false,
       };
-
+      // console.log(comment);
       await createComment(comment);
     }
 

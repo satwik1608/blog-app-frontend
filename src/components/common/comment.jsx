@@ -73,7 +73,7 @@ function Comment({ comment, onChange }) {
         {comment.reply && (
           <article
             class="p-6 text-base bg-#1f2937 rounded-lg dark:bg-#1f2937"
-            key={comment.author._id}
+            key={comment.reply.author._id}
           >
             <footer class="flex justify-between items-center mb-2">
               <div class="flex items-center">
@@ -83,7 +83,7 @@ function Comment({ comment, onChange }) {
                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
                     alt="Michael Gough"
                   />
-                  {comment.author.name}
+                  {comment.reply.author.name}
                 </p>
                 <p class="text-sm text-gray-600 dark:text-gray-400">
                   <time
@@ -96,7 +96,7 @@ function Comment({ comment, onChange }) {
                 </p>
               </div>
             </footer>
-            <p class="text-gray-500 dark:text-gray-400">{comment.reply}</p>
+            <p class="text-gray-500 dark:text-gray-400">{comment.reply.data}</p>
           </article>
         )}
       </div>

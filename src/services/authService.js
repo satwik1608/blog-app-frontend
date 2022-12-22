@@ -9,10 +9,7 @@ export function getJwt() {
 http.setJwt(getJwt());
 
 export async function login(fields) {
-  console.log(fields);
   const { data } = await http.post("http://localhost:1337/login", fields);
-
-  console.log(data);
 
   localStorage.setItem("token", data.token);
 }
@@ -23,9 +20,8 @@ export function logout() {
 
 export function getCurrentUser() {
   try {
-    debug();
     const token = getJwt("token");
-    console.log("debug", token);
+
     const User = jwtDecode(token);
 
     return User;

@@ -1,14 +1,26 @@
 import React, { Component } from "react";
 
-function Rating({ onLike, likes }) {
+function Rating({ onLike, likes, wasLiked }) {
   const [liked, setLiked] = React.useState(false);
-
+  // console.log("likeS", liked);
+  const [load, setLoad] = React.useState(0);
+  // console.log(wasLiked.current);
   const setLike = (id) => {
     setLiked(id);
 
+    // console.log(load);
     if (id) onLike(1);
     else onLike(-1);
+
+    setLoad((l) => l + 1);
   };
+  React.useEffect(() => {
+    setLiked(wasLiked.current);
+    // console.log("useEffect on");
+    // console.log(wasLiked.current);
+    // console.log("likeS", liked);
+    // console.log("useEffect off");
+  }, [wasLiked]);
   if (!liked)
     return (
       <React.Fragment>

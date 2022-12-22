@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import CommentForm from "./common/commentForm";
 import Comment from "./common/comment";
 import { getComment } from "../services/apiService";
+import UserContext from "./../userContext";
 function Comments({ blog }) {
   const [comments, setComment] = React.useState([]);
   const [refresh, setRefresh] = React.useState(0);
-
+  const { id } = React.useContext(UserContext);
   const handleRefresh = () => {
     setRefresh((c) => c + 1);
   };
@@ -14,7 +15,10 @@ function Comments({ blog }) {
     const getCom = async () => {
       const comments = await getComment();
 
-      setComment(comments.data);
+      const comment = comments.data.filter(
+        (c) => c.blog._id === blog._id && c.replyIs === false
+      );
+      setComment(comment);
     };
 
     getCom();

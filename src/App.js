@@ -29,20 +29,19 @@ import SearchResult from "./components/searchResult";
 import { getAuthorId } from "./services/apiService";
 
 function App() {
-  const [user, setUser] = React.useState({
-    username: "",
-  });
-  const id = React.useRef("");
+  const [user, setUser] = React.useState();
+  const [id, setId] = React.useState();
 
   React.useEffect(() => {
     const author = getCurrentUser();
-    console.log("author", author);
+
     if (author) {
       const func = async () => {
         const auth = await getAuthorId(author.username);
-        console.log("auth", auth);
-        id.current = auth.data._id;
-        console.log("id", id.current);
+
+        setId(auth.data);
+        console.log("id", id);
+        console.log("auth", auth.data);
       };
       func();
       setUser(author.username);
@@ -51,7 +50,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <UserContext.Provider value={{ user, id }}>
+      <UserContext.Provider value={{ id, setId }}>
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />

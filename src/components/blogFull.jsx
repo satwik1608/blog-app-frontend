@@ -2,16 +2,24 @@ import React, { Component } from "react";
 
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
-import { getAuthor, getBlog, editBlog } from "./../services/apiService";
+import {
+  getAuthor,
+  getBlog,
+  editBlog,
+  updateAuthor,
+} from "./../services/apiService";
 import Comment from "./comments";
 import { useParams } from "react-router-dom";
+import UserContext from "./../userContext";
+
 function BlogFull() {
   const [blog, setBlog] = React.useState({});
   const [author, setAuthor] = React.useState({});
   const [likes, setLikes] = React.useState(0);
   const [isComment, setIsComment] = React.useState(false);
-
+  const wasLiked = React.useRef(null);
   const { id } = useParams();
+  const { id: user, setId } = React.useContext(UserContext);
   const handleLike = async (id) => {
     setLikes((like) => like + id);
 
@@ -19,21 +27,42 @@ function BlogFull() {
       likes: likes + id,
     };
 
+    const auth = author;
+    auth.liked.push(blog._id);
+
+    console.log("hola");
+    setAuthor(auth);
+    const idd = blog._id;
+    const changeAuthor = {
+      liked: idd,
+      id: id,
+    };
+    console.log("user in blog", user);
+    const updatedAuthor = await updateAuthor(user._id, changeAuthor);
+    console.log("UPDA", updatedAuthor);
+    setId(updatedAuthor.data);
     await editBlog(change, blog._id);
+    console.log("like before", likes);
+
+    console.log("like after", likes);
   };
 
   React.useEffect(() => {
     const getBl = async () => {
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);
-
+      console.log("before", wasLiked.current);
+      console.log(user);
+      if (user.liked.includes(blog.data._id)) wasLiked.current = true;
+      else wasLiked.current = false;
+      console.log("after", wasLiked.current);
       setAuthor(author.data);
       setBlog(blog.data);
       setLikes(blog.data.likes);
     };
 
     getBl();
-  }, []);
+  }, [wasLiked.current, likes]);
 
   if (!blog) return <p>Wait</p>;
   return (
@@ -51,7 +80,9 @@ function BlogFull() {
           {blog.content}
         </p>
         <div className="flex flex-row">
-          <Rating onLike={handleLike} likes={likes} />
+          {wasLiked.current !== null && (
+            <Rating onLike={handleLike} likes={likes} wasLiked={wasLiked} />
+          )}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

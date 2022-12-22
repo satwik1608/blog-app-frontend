@@ -17,6 +17,10 @@ export function listAuthor(search) {
 export function createAuthor(author) {
   return http.post(`http://localhost:1337/author`, author);
 }
+export function updateAuthor(id, author) {
+  return http.put(`http://localhost:1337/author/${id}`, author);
+}
+
 export function getBlog(id) {
   return http.get(`http://localhost:1337/blogs/${id}`);
 }
