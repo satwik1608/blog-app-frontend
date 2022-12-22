@@ -7,6 +7,8 @@ import {
   getBlog,
   editBlog,
   updateAuthor,
+  follow,
+  unFollow,
 } from "./../services/apiService";
 import Comment from "./comments";
 import { useParams } from "react-router-dom";
@@ -20,6 +22,7 @@ function BlogFull() {
   const wasLiked = React.useRef(null);
   const { id } = useParams();
   const { id: user, setId } = React.useContext(UserContext);
+  const [isFollower, setisFollower] = React.useState(false);
   const handleLike = async (id) => {
     setLikes((like) => like + id);
 
@@ -37,32 +40,58 @@ function BlogFull() {
       liked: idd,
       id: id,
     };
-    console.log("user in blog", user);
+    // console.log("user in blog", user);
     const updatedAuthor = await updateAuthor(user._id, changeAuthor);
-    console.log("UPDA", updatedAuthor);
+    // console.log("UPDA", updatedAuthor);
     setId(updatedAuthor.data);
     await editBlog(change, blog._id);
-    console.log("like before", likes);
+    // console.log("like before", likes);
 
-    console.log("like after", likes);
+    // console.log("like after", likes);
+  };
+
+  const handleFollow = async () => {
+    const obj = {
+      id: user._id,
+    };
+    const updatedUser = await follow(obj, author._id);
+
+    setId(updatedUser.data);
+    setisFollower(true);
+  };
+  const handleUnfollow = async () => {
+    const obj = {
+      id: user._id,
+    };
+    const updatedUser = await unFollow(obj, author._id);
+
+    setId(updatedUser.data);
+    setisFollower(false);
   };
 
   React.useEffect(() => {
     const getBl = async () => {
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);
-      console.log("before", wasLiked.current);
-      console.log(user);
-      if (user.liked.includes(blog.data._id)) wasLiked.current = true;
+      // console.log("before", wasLiked.current);
+      // console.log(user);
+
+      if (user && user.liked.includes(blog.data._id)) wasLiked.current = true;
       else wasLiked.current = false;
-      console.log("after", wasLiked.current);
+      // console.log("after", wasLiked.current);
+      if (user) {
+        author.data.followers.forEach((f) => {
+          if (f._id === user._id) setisFollower(true);
+        });
+      }
+
       setAuthor(author.data);
       setBlog(blog.data);
       setLikes(blog.data.likes);
     };
 
     getBl();
-  }, [wasLiked.current, likes]);
+  }, [wasLiked.current, likes, isFollower]);
 
   if (!blog) return <p>Wait</p>;
   return (
@@ -104,7 +133,16 @@ function BlogFull() {
 
         {isComment && <Comment blog={blog} />}
       </div>
-      <div>{author.name && <ProfileRight author={author} />}</div>
+      <div>
+        (
+        <ProfileRight
+          author={author}
+          handleFollow={handleFollow}
+          handleUnfollow={handleUnfollow}
+          isFollower={isFollower}
+        />
+        )
+      </div>
     </div>
   );
 }

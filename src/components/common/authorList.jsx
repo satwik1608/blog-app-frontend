@@ -5,6 +5,7 @@ function AuthorList({ followers, search }) {
   const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
+    console.log("followers", followers);
     const getAuth = async () => {
       const authors = await listAuthor(search);
 

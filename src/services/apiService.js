@@ -21,6 +21,13 @@ export function updateAuthor(id, author) {
   return http.put(`http://localhost:1337/author/${id}`, author);
 }
 
+export function follow(follower, followee) {
+  return http.post(`http://localhost:1337/follow/${followee}`, follower);
+}
+export function unFollow(follower, followee) {
+  return http.post(`http://localhost:1337/unfollow/${followee}`, follower);
+}
+
 export function getBlog(id) {
   return http.get(`http://localhost:1337/blogs/${id}`);
 }
