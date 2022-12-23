@@ -59,6 +59,7 @@ function App() {
           <Route path="/author/:id" element={<AuthorProfile />} />
           <Route path="/search/:data" element={<SearchResult />} />
           <Route path="blogs/:id" element={<BlogFull />} />
+          <Route path="tags/:tag" element={<TagProfile />} />
         </Routes>
       </UserContext.Provider>
     </React.Fragment>
