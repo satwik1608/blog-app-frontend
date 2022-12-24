@@ -22,7 +22,7 @@ function BlogFull() {
   const wasLiked = React.useRef(null);
   const { id } = useParams();
   const { id: user, setId } = React.useContext(UserContext);
-  const [isFollower, setisFollower] = React.useState(false);
+
   const handleLike = async (id) => {
     setLikes((like) => like + id);
 
@@ -50,6 +50,7 @@ function BlogFull() {
     // console.log("like after", likes);
   };
 
+  const [isFollower, setisFollower] = React.useState(false);
   const handleFollow = async () => {
     const obj = {
       id: user._id,
@@ -78,20 +79,21 @@ function BlogFull() {
 
       if (user && user.liked.includes(blog.data._id)) wasLiked.current = true;
       else wasLiked.current = false;
-      // console.log("after", wasLiked.current);
+
       if (user) {
         author.data.followers.forEach((f) => {
           if (f._id === user._id) setisFollower(true);
         });
       }
-
+      // console.log("after", wasLiked.current);
+      console.log("author", author.data);
       setAuthor(author.data);
       setBlog(blog.data);
       setLikes(blog.data.likes);
     };
 
     getBl();
-  }, [wasLiked.current, likes, isFollower]);
+  }, [wasLiked.current, likes, user]);
 
   if (!blog) return <p>Wait</p>;
   return (
@@ -134,14 +136,12 @@ function BlogFull() {
         {isComment && <Comment blog={blog} />}
       </div>
       <div>
-        (
         <ProfileRight
           author={author}
           handleFollow={handleFollow}
           handleUnfollow={handleUnfollow}
           isFollower={isFollower}
         />
-        )
       </div>
     </div>
   );

@@ -40,8 +40,8 @@ function App() {
         const auth = await getAuthorId(author.username);
 
         setId(auth.data);
-        console.log("id", id);
-        console.log("auth", auth.data);
+        // console.log("id", id);
+        // console.log("auth", auth.data);
       };
       func();
       setUser(author.username);

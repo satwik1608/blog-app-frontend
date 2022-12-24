@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import AuthorList from "./authorList";
 import UserContext from "./../../userContext";
-
+import { follow, unFollow } from "../../services/apiService";
 function ProfileRight({ author, handleFollow, handleUnfollow, isFollower }) {
   const {
     _id: authorId,
@@ -11,8 +11,9 @@ function ProfileRight({ author, handleFollow, handleUnfollow, isFollower }) {
     imgThumb,
     profession,
   } = author;
-  const { id: user } = React.useContext(UserContext);
-  console.log(user);
+  const { id: user, setId } = React.useContext(UserContext);
+
+  // console.log(user);
   return (
     <div className="w-full max-w-sm bg-white border-left border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="flex flex-col items-center pb-10">
