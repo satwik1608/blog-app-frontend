@@ -31,6 +31,10 @@ export function unFollow(follower, followee) {
   return http.post(`http://localhost:1337/unfollow/${followee}`, follower);
 }
 
+export function createBlog(blog) {
+  return http.post(`http://localhost:1337/blogs`, blog);
+}
+
 export function getBlog(id) {
   return http.get(`http://localhost:1337/blogs/${id}`);
 }

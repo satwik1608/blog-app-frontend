@@ -3,19 +3,21 @@ import BlogList from "./blogList";
 import ProfileRight from "./common/profileRight";
 import { getAuthor } from "../services/apiService";
 import { useParams } from "react-router-dom";
+import UserContext from "./../userContext";
 
 function AuthorProfile() {
   const [author, setAuthor] = React.useState([]);
   const { id } = useParams();
+  const { id: user } = React.useContext(UserContext);
 
-  React.useState(() => {
+  React.useEffect(() => {
     const getAuth = async () => {
       const author = await getAuthor(id);
       setAuthor(author.data);
     };
 
     getAuth();
-  }, []);
+  }, [user]);
 
   return (
     <div>
@@ -25,10 +27,10 @@ function AuthorProfile() {
             {author.name}
           </div>
 
-          {author.name && <BlogList id={id} author={author.name} />}
+          <BlogList id={id} author={author.name} />
         </div>
 
-        {author.name && <ProfileRight author={author} />}
+        <ProfileRight author={author} />
       </div>
     </div>
   );

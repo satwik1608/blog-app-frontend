@@ -27,6 +27,7 @@ import LoginForm from "./components/loginForm";
 import NavBar from "./components/navBar";
 import SearchResult from "./components/searchResult";
 import { getAuthorId } from "./services/apiService";
+import BlogForm from "./components/blogForm";
 
 function App() {
   const [user, setUser] = React.useState();
@@ -60,6 +61,7 @@ function App() {
           <Route path="/search/:data" element={<SearchResult />} />
           <Route path="blogs/:id" element={<BlogFull />} />
           <Route path="tags/:tag" element={<TagProfile />} />
+          <Route path="new-blog" element={<BlogForm />} />
         </Routes>
       </UserContext.Provider>
     </React.Fragment>

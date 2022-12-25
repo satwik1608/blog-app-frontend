@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AuthorList from "./authorList";
 import UserContext from "./../../userContext";
 import { follow, unFollow } from "../../services/apiService";
-function ProfileRight({ author, handleFollow, handleUnfollow, isFollower }) {
+function ProfileRight({ author }) {
   const {
     _id: authorId,
     name,
@@ -11,7 +11,39 @@ function ProfileRight({ author, handleFollow, handleUnfollow, isFollower }) {
     imgThumb,
     profession,
   } = author;
+  console.log("author a", author);
   const { id: user, setId } = React.useContext(UserContext);
+
+  const [isFollower, setisFollower] = React.useState(false);
+  const handleFollow = async () => {
+    const obj = {
+      id: user._id,
+    };
+    const updatedUser = await follow(obj, author._id);
+    setisFollower(true);
+    setId(updatedUser.data);
+  };
+  const handleUnfollow = async () => {
+    const obj = {
+      id: user._id,
+    };
+    const updatedUser = await unFollow(obj, author._id);
+    setisFollower(false);
+    setId(updatedUser.data);
+  };
+
+  React.useEffect(() => {
+    console.log(user, followers);
+    if (user && followers) {
+      console.log("follo", followers);
+      followers.forEach((f) => {
+        if (f._id === user._id) {
+          // console.log("true");
+          setisFollower(true);
+        }
+      });
+    }
+  }, [author]);
 
   // console.log(user);
   return (

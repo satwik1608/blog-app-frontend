@@ -50,26 +50,6 @@ function BlogFull() {
     // console.log("like after", likes);
   };
 
-  const [isFollower, setisFollower] = React.useState(false);
-  const handleFollow = async () => {
-    const obj = {
-      id: user._id,
-    };
-    const updatedUser = await follow(obj, author._id);
-
-    setId(updatedUser.data);
-    setisFollower(true);
-  };
-  const handleUnfollow = async () => {
-    const obj = {
-      id: user._id,
-    };
-    const updatedUser = await unFollow(obj, author._id);
-
-    setId(updatedUser.data);
-    setisFollower(false);
-  };
-
   React.useEffect(() => {
     const getBl = async () => {
       const blog = await getBlog(id);
@@ -80,13 +60,8 @@ function BlogFull() {
       if (user && user.liked.includes(blog.data._id)) wasLiked.current = true;
       else wasLiked.current = false;
 
-      if (user) {
-        author.data.followers.forEach((f) => {
-          if (f._id === user._id) setisFollower(true);
-        });
-      }
       // console.log("after", wasLiked.current);
-      console.log("author", author.data);
+      // console.log("author", author.data);
       setAuthor(author.data);
       setBlog(blog.data);
       setLikes(blog.data.likes);
@@ -136,12 +111,7 @@ function BlogFull() {
         {isComment && <Comment blog={blog} />}
       </div>
       <div>
-        <ProfileRight
-          author={author}
-          handleFollow={handleFollow}
-          handleUnfollow={handleUnfollow}
-          isFollower={isFollower}
-        />
+        <ProfileRight author={author} />
       </div>
     </div>
   );
