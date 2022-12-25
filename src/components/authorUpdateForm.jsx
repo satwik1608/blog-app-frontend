@@ -1,29 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { updateAuthor } from "../services/apiService";
 import UserContext from "../userContext";
-import { createBlog } from "./../services/apiService";
 
-function BlogForm() {
-  const imgRef = React.useRef("");
-  const titleRef = React.useRef("");
-  const contentRef = React.useRef("");
-  const tagsRef = React.useRef("");
-  const navigate = useNavigate();
-
+function AuthorUpdateForm() {
   const [data, setData] = React.useState({});
-  const { id: user } = React.useContext(UserContext);
-  let userId;
+  const Navigate = useNavigate();
+  const { id: user, setId } = React.useContext(UserContext);
+  console.log(user);
+  const nameRef = React.useRef("");
+  const emailRef = React.useRef("");
+  const professionRef = React.useRef("");
+  const imgRef = React.useRef("");
+  const descriptionRef = React.useRef("");
+  const usernameRef = React.useRef("");
 
-  if (user) userId = user._id;
-  else userId = "";
   const handleChange = () => {
-    const tags = tagsRef.current.value.split(" ");
     const obj = {
-      img: imgRef.current.value,
-      title: titleRef.current.value,
-      content: contentRef.current.value,
-      tags: tags,
-      author: userId,
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      profession: professionRef.current.value,
+      imgThumb: imgRef.current.value,
+      description: descriptionRef.current.value,
     };
 
     setData(obj);
@@ -31,35 +29,65 @@ function BlogForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data", data);
-    await createBlog(data);
+    // console.log(data);
+    console.log("id", user._id);
+    const author = await updateAuthor(user._id, data);
 
-    navigate("/");
+    setId(author.data);
+
+    Navigate(`/author/${user._id}`);
   };
+
+  React.useEffect(() => {
+    usernameRef.current.value = user.username;
+    imgRef.current.value = user.imgThumb ? user.imgThumb : "";
+    descriptionRef.current.value = user.description ? user.description : "";
+    emailRef.current.value = user.email ? user.email : "";
+    professionRef.current.value = user.profession ? user.profession : "";
+    nameRef.current.value = user.name ? user.name : "";
+  }, []);
 
   return (
     <section class="bg-white dark:bg-gray-900">
       <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-          Add Your own Blog !!
+          Update
         </h2>
         <form action="#" onSubmit={handleSubmit}>
           <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <div class="sm:col-span-2">
+            <div class="w-full">
               <label
-                for="name"
+                for="brand"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Title
+                Username
               </label>
               <input
                 type="text"
-                name="name"
-                id="name"
+                name="brand"
+                id="brand"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Type the blog title"
+                placeholder="links only"
                 required=""
-                ref={titleRef}
+                disabled="true"
+                ref={usernameRef}
+              />
+            </div>
+            <div class="w-full">
+              <label
+                for="brand"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                name="brand"
+                id="brand"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="links only"
+                required=""
+                ref={nameRef}
                 onChange={handleChange}
               />
             </div>
@@ -68,7 +96,25 @@ function BlogForm() {
                 for="brand"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Title Image Link
+                Email
+              </label>
+              <input
+                type="email"
+                name="brand"
+                id="brand"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder=""
+                required=""
+                ref={emailRef}
+                onChange={handleChange}
+              />
+            </div>
+            <div class="w-full">
+              <label
+                for="brand"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Profile Image
               </label>
               <input
                 type="text"
@@ -86,16 +132,16 @@ function BlogForm() {
                 for="brand"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Tags
+                Speciality
               </label>
               <input
                 type="text"
                 name="brand"
                 id="brand"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Give space between 2 tags"
+                placeholder="links only"
                 required=""
-                ref={tagsRef}
+                ref={professionRef}
                 onChange={handleChange}
               />
             </div>
@@ -105,14 +151,14 @@ function BlogForm() {
                 for="description"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Content
+                Something about you
               </label>
               <textarea
                 id="description"
                 rows="8"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="Write your heart out"
-                ref={contentRef}
+                ref={descriptionRef}
                 onChange={handleChange}
               ></textarea>
             </div>
@@ -129,4 +175,4 @@ function BlogForm() {
   );
 }
 
-export default BlogForm;
+export default AuthorUpdateForm;

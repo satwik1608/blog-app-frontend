@@ -4,4 +4,5 @@ module.exports = {
   theme: {
     extends: {},
   },
+  plugins: [require("tailwind-scrollbar-hide")],
 };

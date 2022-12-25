@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import AuthorList from "./authorList";
 import UserContext from "./../../userContext";
 import { follow, unFollow } from "../../services/apiService";
+import { Link } from "react-router-dom";
 function ProfileRight({ author }) {
   const {
     _id: authorId,
     name,
+    username,
     description,
     followers,
     imgThumb,
     profession,
   } = author;
-  console.log("author a", author);
+  // console.log("author a", author);
   const { id: user, setId } = React.useContext(UserContext);
 
   const [isFollower, setisFollower] = React.useState(false);
@@ -33,9 +35,9 @@ function ProfileRight({ author }) {
   };
 
   React.useEffect(() => {
-    console.log(user, followers);
+    // console.log(user, followers);
     if (user && followers) {
-      console.log("follo", followers);
+      // console.log("follo", followers);
       followers.forEach((f) => {
         if (f._id === user._id) {
           // console.log("true");
@@ -75,7 +77,7 @@ function ProfileRight({ author }) {
               Follow
             </button>
           )}
-          {user && !isFollower && (
+          {user && user.username !== username && !isFollower && (
             <button
               onClick={handleFollow}
               className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -84,7 +86,7 @@ function ProfileRight({ author }) {
             </button>
           )}
 
-          {user && isFollower && (
+          {user && user.username !== username && isFollower && (
             <button
               onClick={handleUnfollow}
               className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -92,12 +94,14 @@ function ProfileRight({ author }) {
               Unfollow
             </button>
           )}
-          <a
-            href="#"
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
-          >
-            Message
-          </a>
+          {user && user.username === username && (
+            <Link
+              to={`/edit-author`}
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+            >
+              Update details
+            </Link>
+          )}
         </div>
       </div>
 

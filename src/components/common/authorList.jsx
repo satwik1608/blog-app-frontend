@@ -6,7 +6,7 @@ import UserContext from "./../../userContext";
 function AuthorList({ followers, search, notFollowing }) {
   const { id: user } = React.useContext(UserContext);
   const [data, setData] = React.useState([]);
-  // console.log(followers, search, notFollowing);
+  console.log(followers, search, notFollowing);
   React.useEffect(() => {
     // console.log("followers", followers);
     const getAuth = async () => {
@@ -16,7 +16,7 @@ function AuthorList({ followers, search, notFollowing }) {
     };
 
     getAuth();
-  }, [search, followers, notFollowing, user]);
+  }, [search, followers, user]);
 
   if (followers) {
     return (

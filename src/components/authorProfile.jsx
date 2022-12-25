@@ -21,7 +21,7 @@ function AuthorProfile() {
 
   return (
     <div>
-      <div className="flex flex-row flex-wide   justify-center  ">
+      <div className="flex flex-row  ">
         <div className="p-2">
           <div className="mb-7  font-extrabold border-b border-gray-200 tracking-tight leading-none text-slate-50  md:text-xl lg:text-4xl  ">
             {author.name}
@@ -29,8 +29,9 @@ function AuthorProfile() {
 
           <BlogList id={id} author={author.name} />
         </div>
-
-        <ProfileRight author={author} />
+        <div className="fixed  inset-y-0 right-0 mt-20 mr-16 scrollbar-hide">
+          <ProfileRight author={author} />
+        </div>
       </div>
     </div>
   );

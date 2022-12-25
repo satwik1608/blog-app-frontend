@@ -1,11 +1,10 @@
 import React from "react";
 import { login, logout } from "../services/authService";
-import UserContext from "./../userContext";
+
 function LoginForm() {
   const [data, setData] = React.useState(null);
   const usernameRef = React.useRef("");
   const passwordRef = React.useRef("");
-  const value = React.useContext(UserContext);
 
   const handleChange = () => {
     const obj = {
