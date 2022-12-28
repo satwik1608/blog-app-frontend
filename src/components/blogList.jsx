@@ -55,7 +55,7 @@ function BlogList({ id, author, tag, search }) {
         // setBlogs([]);
         setBlogs(blogData);
 
-        // console.log(blogs);
+        console.log("blogData", blogData);
       }
     };
 
@@ -160,6 +160,7 @@ function BlogList({ id, author, tag, search }) {
               content={blog.content}
               date={blog.date}
               id={blog._id}
+              brief={blog.brief}
             />
           </li>
         ))}

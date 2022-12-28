@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import MDEditor from "@uiw/react-md-editor";
-import Explicit from "./common/explicit";
+import iframe from "../services/utils";
 
 import {
   getAuthor,
@@ -87,7 +87,13 @@ function BlogFull() {
         </div>
 
         <p class="mb-3 mt-10  text-gray-800 dark:text-gray-400 w-100 flex-wrap">
-          <Explicit pp={blog.content} />
+          {blog.content &&
+            blog.content.map((p) => (
+              <div
+                dangerouslySetInnerHTML={iframe(p)}
+                className="break-words w-1/2"
+              />
+            ))}
         </p>
         <div className="flex flex-row">
           {wasLiked.current !== null && (

@@ -1,8 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import iframe from "../../services/utils";
 import Explicit from "./explicit";
 
-function Card({ author, title, img, tags, content, date, id, authorId }) {
+function Card({
+  author,
+  title,
+  img,
+  tags,
+  content,
+  date,
+  id,
+  authorId,
+  brief,
+}) {
   return (
     <Link
       to={`/blogs/${id}`}
@@ -20,9 +31,9 @@ function Card({ author, title, img, tags, content, date, id, authorId }) {
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-50">
           {title}
         </h5>
-        <p className="mb-1 font-normal text-gray-700 dark:text-gray-400">
-          <Explicit pp={content} />
-        </p>
+        <div className="mb-1 font-normal text-gray-700 dark:text-gray-400">
+          {brief}
+        </div>
         <div className="flex items-center mt-2.5 mb-5">
           <p className="text-gray-500 font-normal text-sm">{date}</p>
 

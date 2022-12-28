@@ -6,6 +6,7 @@ import { createBlog } from "./../services/apiService";
 import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
 import Explicit from "./common/explicit";
+import Underline from "@editorjs/underline";
 const Header = require("@editorjs/header");
 
 const edjsHTML = require("editorjs-html");
@@ -14,7 +15,7 @@ const edjsParser = edjsHTML();
 function BlogForm() {
   const imgRef = React.useRef("");
   const titleRef = React.useRef("");
-  const contentRef = React.useRef("");
+  const briefRef = React.useRef("");
   const tagsRef = React.useRef("");
   const navigate = useNavigate();
   const edito = React.useRef(false);
@@ -33,6 +34,9 @@ function BlogForm() {
           list: {
             class: List,
             inlineToolbar: true,
+          },
+          underline: {
+            class: Underline,
           },
         },
       });
@@ -63,6 +67,7 @@ function BlogForm() {
     const obj = {
       img: imgRef.current.value,
       title: titleRef.current.value,
+      brief: briefRef.current.value,
       content: content,
       tags: tags,
       author: userId,
@@ -137,6 +142,24 @@ function BlogForm() {
                 placeholder="Give space between 2 tags"
                 required=""
                 ref={tagsRef}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label
+                for="brand"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Story in Brief
+              </label>
+              <input
+                type="text"
+                name="brand"
+                id="brand"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="in short"
+                required=""
+                ref={briefRef}
                 onChange={handleChange}
               />
             </div>
