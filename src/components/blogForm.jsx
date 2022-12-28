@@ -5,7 +5,7 @@ import { createBlog } from "./../services/apiService";
 
 import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
-import Explicit from "./common/explicit";
+
 import Underline from "@editorjs/underline";
 const Header = require("@editorjs/header");
 
@@ -164,25 +164,8 @@ function BlogForm() {
               />
             </div>
 
-            <div class="sm:col-span-2 editable">
-              {/* <label
-                for="description"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Content
-              </label> */}
-              {/* <textarea
-                id="description"
-                rows="8"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Write your heart out"
-                ref={contentRef}
-                onChange={handleChange}
-              ></textarea> */}
-              <div
-                id="editor"
-                className="text-slate-600 border border-white"
-              ></div>
+            <div class="sm:col-span-2 editable bg-indigo-300 rounded-lg">
+              <div id="editor" className="text-black  "></div>
             </div>
           </div>
           <button
