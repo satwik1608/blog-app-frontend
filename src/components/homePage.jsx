@@ -3,7 +3,7 @@ import BlogList from "./blogList";
 import TagStack from "./common/tagStack";
 
 import Trending from "./trending";
-import UserContext from "./../userContext";
+import UserContext from "../userContext";
 import AuthorList from "./common/authorList";
 import { listAuthor } from "../services/apiService";
 function HomePage() {

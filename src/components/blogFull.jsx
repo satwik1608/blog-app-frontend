@@ -2,6 +2,9 @@ import React, { Component } from "react";
 
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
+import MDEditor from "@uiw/react-md-editor";
+import Explicit from "./common/explicit";
+
 import {
   getAuthor,
   getBlog,
@@ -13,6 +16,7 @@ import {
 import Comment from "./comments";
 import { useParams } from "react-router-dom";
 import UserContext from "./../userContext";
+import { Parser } from "html-to-react";
 
 function BlogFull() {
   const [blog, setBlog] = React.useState({});
@@ -83,7 +87,7 @@ function BlogFull() {
         </div>
 
         <p class="mb-3 mt-10  text-gray-800 dark:text-gray-400 w-100 flex-wrap">
-          {blog.content}
+          <Explicit pp={blog.content} />
         </p>
         <div className="flex flex-row">
           {wasLiked.current !== null && (

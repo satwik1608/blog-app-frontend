@@ -10,7 +10,7 @@ import NavBar from "./components/navBar";
 import SearchResult from "./components/searchResult";
 import BlogForm from "./components/blogForm";
 
-import { getCurrentUser } from "./services/authService";
+import { getCurrentUser, logout } from "./services/authService";
 
 import UserContext from "./userContext";
 

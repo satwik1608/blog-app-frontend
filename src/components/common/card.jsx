@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Explicit from "./explicit";
+
 function Card({ author, title, img, tags, content, date, id, authorId }) {
   return (
     <Link
@@ -19,7 +21,7 @@ function Card({ author, title, img, tags, content, date, id, authorId }) {
           {title}
         </h5>
         <p className="mb-1 font-normal text-gray-700 dark:text-gray-400">
-          {content}
+          <Explicit pp={content} />
         </p>
         <div className="flex items-center mt-2.5 mb-5">
           <p className="text-gray-500 font-normal text-sm">{date}</p>

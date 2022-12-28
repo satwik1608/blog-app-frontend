@@ -7,7 +7,7 @@ function AuthorUpdateForm() {
   const [data, setData] = React.useState({});
   const Navigate = useNavigate();
   const { id: user, setId } = React.useContext(UserContext);
-  console.log(user);
+  //   console.log(user);
   const nameRef = React.useRef("");
   const emailRef = React.useRef("");
   const professionRef = React.useRef("");
@@ -29,8 +29,8 @@ function AuthorUpdateForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(data);
-    console.log("id", user._id);
+
+    // console.log("id", user._id);
     const author = await updateAuthor(user._id, data);
 
     setId(author.data);
