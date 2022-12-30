@@ -15,6 +15,7 @@ const edjsParser = edjsHTML();
 function BlogForm() {
   const titleRef = React.useRef("");
   const imgRef = React.useRef();
+  const imgDataRef = React.useRef("");
   const briefRef = React.useRef("");
   const tagsRef = React.useRef("");
   const navigate = useNavigate();
@@ -51,40 +52,45 @@ function BlogForm() {
 
   if (user) userId = user._id;
   else userId = "";
-  const handleChange = (event) => {
-    // const tags = tagsRef.current.value.split(" ");
-
-    console.log(event.target.files[0]);
-    // editor.current
-    //   .save()
-    //   .then((outputData) => {
-    //     console.log("Article data: ", outputData);
-    //     const html = edjsParser.parse(outputData);
-    //     setContent(html);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Saving failed: ", error);
-    //   });
-    // const obj = {
-    //   title: titleRef.current.value,
-    //   brief: briefRef.current.value,
-    //   content: content,
-    //   tags: tags,
-    //   author: userId,
-    // };
-    // setData(obj);
+  const handleChange = () => {
+    const tags = tagsRef.current.value.split(" ");
+    editor.current
+      .save()
+      .then((outputData) => {
+        console.log("Article data: ", outputData);
+        const html = edjsParser.parse(outputData);
+        setContent(html);
+      })
+      .catch((error) => {
+        console.log("Saving failed: ", error);
+      });
+    const obj = {
+      title: titleRef.current.value,
+      brief: briefRef.current.value,
+      img: imgDataRef.current,
+      content: content,
+      tags: tags,
+      author: userId,
+    };
+    setData(obj);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleImage = async () => {
     const obj = {
       name: "test",
       testImage: imgRef.current.files[0],
     };
 
-    uploadImage(obj);
-    // await createBlog(data);
+    const img = await uploadImage(obj);
+    console.log("img", img);
+    imgDataRef.current = img.data._id;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("data", data);
+    const blo = await createBlog(data);
+    console.log("blo", blo);
     // navigate("/");
   };
 
@@ -126,6 +132,7 @@ function BlogForm() {
                 id="file_input"
                 name="file"
                 ref={imgRef}
+                onChange={handleImage}
                 type="file"
               />
             </div>

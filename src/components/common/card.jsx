@@ -14,6 +14,15 @@ function Card({
   authorId,
   brief,
 }) {
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
+
+  const base64String = arrayBufferToBase64(img.img.data.data);
+
   return (
     <Link
       to={`/blogs/${id}`}
@@ -47,10 +56,11 @@ function Card({
           ))}
         </div>
       </div>
+
       <img
         className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
-        src={img}
-        alt={img}
+        src={`data:image/png;base64,${base64String}`}
+        alt="why"
       />
     </Link>
   );

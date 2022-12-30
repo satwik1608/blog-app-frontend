@@ -26,6 +26,13 @@ function BlogFull() {
   const wasLiked = React.useRef(null);
   const { id } = useParams();
   const { id: user, setId } = React.useContext(UserContext);
+  const [base64String, setbase64String] = React.useState("");
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
 
   const handleLike = async (id) => {
     setLikes((like) => like + id);
@@ -58,6 +65,8 @@ function BlogFull() {
     const getBl = async () => {
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);
+
+      setbase64String(arrayBufferToBase64(blog.data.img.img.data.data));
       // console.log("before", wasLiked.current);
       // console.log(user);
 
@@ -83,7 +92,10 @@ function BlogFull() {
         </div>
 
         <div>
-          <img src={blog.img} className="rounded" />
+          <img
+            src={`data:image/png;base64,${base64String}`}
+            className="rounded"
+          />
         </div>
 
         <p class="mb-3 mt-10  text-gray-800 dark:text-white w-100 flex-wrap tracking-wide text-lg leading-relaxed">

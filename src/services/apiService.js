@@ -59,23 +59,13 @@ export function updateComment(comment, id) {
 export function uploadImage(image) {
   const formData = new FormData();
 
-  // console.log("file", file);
   formData.append("testImage", image.testImage);
-  // console.log("gsafsd", image.testImage);
+
   formData.append("name", image.name);
-  // console.log("form", formData);
+
   return http.post("http://localhost:1337/image", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
-
-  // fetch("http://localhost:1337/image", {
-  //   method: "POST",
-  //   body: formData,
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //   });
 }
