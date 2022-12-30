@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../userContext";
-import { createBlog } from "./../services/apiService";
+import { createBlog, uploadImage } from "./../services/apiService";
 
 import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
@@ -13,8 +13,8 @@ const edjsHTML = require("editorjs-html");
 const edjsParser = edjsHTML();
 
 function BlogForm() {
-  const imgRef = React.useRef("");
   const titleRef = React.useRef("");
+  const imgRef = React.useRef();
   const briefRef = React.useRef("");
   const tagsRef = React.useRef("");
   const navigate = useNavigate();
@@ -51,36 +51,41 @@ function BlogForm() {
 
   if (user) userId = user._id;
   else userId = "";
-  const handleChange = () => {
-    const tags = tagsRef.current.value.split(" ");
+  const handleChange = (event) => {
+    // const tags = tagsRef.current.value.split(" ");
 
-    editor.current
-      .save()
-      .then((outputData) => {
-        console.log("Article data: ", outputData);
-        const html = edjsParser.parse(outputData);
-        setContent(html);
-      })
-      .catch((error) => {
-        console.log("Saving failed: ", error);
-      });
-    const obj = {
-      img: imgRef.current.value,
-      title: titleRef.current.value,
-      brief: briefRef.current.value,
-      content: content,
-      tags: tags,
-      author: userId,
-    };
-    setData(obj);
+    console.log(event.target.files[0]);
+    // editor.current
+    //   .save()
+    //   .then((outputData) => {
+    //     console.log("Article data: ", outputData);
+    //     const html = edjsParser.parse(outputData);
+    //     setContent(html);
+    //   })
+    //   .catch((error) => {
+    //     console.log("Saving failed: ", error);
+    //   });
+    // const obj = {
+    //   title: titleRef.current.value,
+    //   brief: briefRef.current.value,
+    //   content: content,
+    //   tags: tags,
+    //   author: userId,
+    // };
+    // setData(obj);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("data", data);
-    await createBlog(data);
-    navigate("/");
+    const obj = {
+      name: "test",
+      testImage: imgRef.current.files[0],
+    };
+
+    uploadImage(obj);
+    // await createBlog(data);
+    // navigate("/");
   };
 
   return (
@@ -111,20 +116,17 @@ function BlogForm() {
             </div>
             <div class="w-full">
               <label
-                for="brand"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="file_input"
               >
-                Title Image Link
+                Upload file
               </label>
               <input
-                type="text"
-                name="brand"
-                id="brand"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="links only"
-                required=""
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                id="file_input"
+                name="file"
                 ref={imgRef}
-                onChange={handleChange}
+                type="file"
               />
             </div>
             <div class="w-full">

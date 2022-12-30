@@ -86,12 +86,12 @@ function BlogFull() {
           <img src={blog.img} className="rounded" />
         </div>
 
-        <p class="mb-3 mt-10  text-gray-800 dark:text-gray-400 w-100 flex-wrap">
+        <p class="mb-3 mt-10  text-gray-800 dark:text-white w-100 flex-wrap tracking-wide text-lg leading-relaxed">
           {blog.content &&
             blog.content.map((p) => (
               <div
                 dangerouslySetInnerHTML={iframe(p)}
-                className="break-words w-1/2"
+                className="break-words w-3/4"
               />
             ))}
         </p>
