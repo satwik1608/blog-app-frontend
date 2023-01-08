@@ -65,7 +65,7 @@ function BlogFull() {
     const getBl = async () => {
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);
-
+      // console.log(arrayBufferToBase64(blog.data.img.img.data.data));
       setbase64String(arrayBufferToBase64(blog.data.img.img.data.data));
       // console.log("before", wasLiked.current);
       // console.log(user);

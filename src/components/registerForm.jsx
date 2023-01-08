@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { createAuthor } from "../services/apiService";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 function RegisterForm() {
   const [data, setData] = React.useState({});
@@ -22,8 +23,12 @@ function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
-    await createAuthor(data);
+
+    try {
+      await createAuthor(data);
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
   return (

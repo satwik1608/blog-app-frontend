@@ -9,7 +9,7 @@ import LoginForm from "./components/loginForm";
 import NavBar from "./components/navBar";
 import SearchResult from "./components/searchResult";
 import BlogForm from "./components/blogForm";
-
+import { ToastContainer } from "react-toastify";
 import { getCurrentUser, logout } from "./services/authService";
 
 import UserContext from "./userContext";
@@ -42,8 +42,21 @@ function App() {
 
   return (
     <React.Fragment>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <UserContext.Provider value={{ id, setId }}>
         <NavBar />
+
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterForm />} />

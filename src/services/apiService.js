@@ -32,6 +32,7 @@ export function unFollow(follower, followee) {
 }
 
 export function createBlog(blog) {
+  console.log(blog);
   return http.post(`http://localhost:1337/blogs`, blog);
 }
 

@@ -84,14 +84,26 @@ function BlogForm() {
     const img = await uploadImage(obj);
     console.log("img", img);
     imgDataRef.current = img.data._id;
+    const tags = tagsRef.current.value.split(" ");
+    const obj2 = {
+      title: titleRef.current.value,
+      brief: briefRef.current.value,
+      img: imgDataRef.current,
+      content: content,
+      tags: tags,
+      author: userId,
+    };
+    setData(obj2);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data", data);
-    const blo = await createBlog(data);
-    console.log("blo", blo);
-    // navigate("/");
+    try {
+      await createBlog(data);
+      navigate("/");
+    } catch (ex) {
+      console.log(ex);
+    }
   };
 
   return (
