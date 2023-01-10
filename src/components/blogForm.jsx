@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../userContext";
 import { createBlog, uploadImage } from "./../services/apiService";
-
+import { resizeFile } from "../services/imgService";
 import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
 
@@ -76,13 +76,16 @@ function BlogForm() {
   };
 
   const handleImage = async () => {
+    const testImage = await resizeFile(imgRef.current.files[0]);
+    console.log("tes", testImage);
+    console.log("tes2", imgRef.current.files[0]);
     const obj = {
       name: "test",
-      testImage: imgRef.current.files[0],
+      testImage: testImage,
     };
 
     const img = await uploadImage(obj);
-    console.log("img", img);
+
     imgDataRef.current = img.data._id;
     const tags = tagsRef.current.value.split(" ");
     const obj2 = {
