@@ -6,17 +6,34 @@ import UserContext from "./../../userContext";
 function AuthorList({ followers, search, notFollowing }) {
   const { id: user } = React.useContext(UserContext);
   const [data, setData] = React.useState([]);
+  console.log("fdsf");
   console.log(followers, search, notFollowing);
+  const [base64String, setbase64String] = React.useState("");
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
   React.useEffect(() => {
-    // console.log("followers", followers);
     const getAuth = async () => {
       const authors = await listAuthor(search);
-
+      // setbase64String(arrayBufferToBase64());
       setData(authors.data);
     };
 
     getAuth();
   }, [search, followers, user]);
+
+  function fillSrc(follower) {
+    if (follower.imgThumb) {
+      return `data:image/png;base64,${arrayBufferToBase64(
+        follower.imgThumb.img.data.data
+      )}`;
+    }
+
+    return " https://picsum.photos/200";
+  }
 
   if (followers) {
     return (
@@ -48,7 +65,7 @@ function AuthorList({ followers, search, notFollowing }) {
                     <div className="flex-shrink-0">
                       <img
                         className="w-8 h-8 rounded-full"
-                        src="https://placeimg.com/400/225/arch"
+                        src={fillSrc(follower)}
                         alt="Neil image"
                       />
                     </div>
@@ -104,7 +121,7 @@ function AuthorList({ followers, search, notFollowing }) {
                   <div className="flex-shrink-0">
                     <img
                       className="w-8 h-8 rounded-full"
-                      src="https://placeimg.com/400/225/arch"
+                      src={fillSrc(d)}
                       alt="Neil image"
                     />
                   </div>
@@ -175,7 +192,7 @@ function AuthorList({ followers, search, notFollowing }) {
                     <div className="flex-shrink-0">
                       <img
                         className="w-8 h-8 rounded-full"
-                        src="https://placeimg.com/400/225/arch"
+                        src={fillSrc(notFollow)}
                         alt="Neil image"
                       />
                     </div>

@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { updateAuthor } from "../services/apiService";
+import { updateAuthor, uploadImage } from "../services/apiService";
 import UserContext from "../userContext";
+import { resizeFile } from "../services/imgService";
 
 function AuthorUpdateForm() {
   const [data, setData] = React.useState({});
@@ -14,6 +15,29 @@ function AuthorUpdateForm() {
   const imgRef = React.useRef("");
   const descriptionRef = React.useRef("");
   const usernameRef = React.useRef("");
+
+  const handleImage = async () => {
+    const testImage = await resizeFile(imgRef.current.files[0]);
+    // console.log("tes", testImage);
+    // console.log("tes2", imgRef.current.files[0]);
+    const obj = {
+      name: "test",
+      testImage: testImage,
+    };
+
+    const img = await uploadImage(obj);
+
+    imgRef.current = img.data._id;
+
+    const obj2 = {
+      name: nameRef.current.value,
+      email: emailRef.current.value,
+      profession: professionRef.current.value,
+      imgThumb: imgRef.current,
+      description: descriptionRef.current.value,
+    };
+    setData(obj2);
+  };
 
   const handleChange = () => {
     const obj = {
@@ -30,7 +54,6 @@ function AuthorUpdateForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log("id", user._id);
     const author = await updateAuthor(user._id, data);
 
     setId(author.data);
@@ -39,8 +62,9 @@ function AuthorUpdateForm() {
   };
 
   React.useEffect(() => {
+    console.log("usefdafs", user);
     usernameRef.current.value = user.username;
-    imgRef.current.value = user.imgThumb ? user.imgThumb : "";
+    // imgRef.current.value = user.imgThumb ? user.imgThumb : "";
     descriptionRef.current.value = user.description ? user.description : "";
     emailRef.current.value = user.email ? user.email : "";
     professionRef.current.value = user.profession ? user.profession : "";
@@ -84,7 +108,7 @@ function AuthorUpdateForm() {
                 type="text"
                 name="brand"
                 id="brand"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                class="bg-gray-50  text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="links only"
                 required=""
                 ref={nameRef}
@@ -117,14 +141,14 @@ function AuthorUpdateForm() {
                 Profile Image
               </label>
               <input
-                type="text"
+                type="file"
                 name="brand"
                 id="brand"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 placeholder="links only"
                 required=""
                 ref={imgRef}
-                onChange={handleChange}
+                onChange={handleImage}
               />
             </div>
             <div class="w-full">

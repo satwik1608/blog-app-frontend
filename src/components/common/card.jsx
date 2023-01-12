@@ -14,6 +14,7 @@ function Card({
   authorId,
   brief,
 }) {
+  console.log("f", author);
   function arrayBufferToBase64(buffer) {
     var binary = "";
     var bytes = [].slice.call(new Uint8Array(buffer));
@@ -22,6 +23,16 @@ function Card({
   }
 
   const base64String = arrayBufferToBase64(img.img.data.data);
+
+  function fillSrc(person) {
+    if (person.imgThumb) {
+      return `data:image/png;base64,${arrayBufferToBase64(
+        person.imgThumb.img.data.data
+      )}`;
+    }
+
+    return " https://picsum.photos/200";
+  }
 
   return (
     <Link
@@ -32,10 +43,10 @@ function Card({
         <div className="flex flex-row">
           <img
             className="w-8 h-8 rounded-full mr-2"
-            src="https://placeimg.com/400/225/arch"
+            src={fillSrc(author)}
             alt="Neil image"
           />
-          <Link to={`/author/${authorId}`}>{author}</Link>
+          <Link to={`/author/${authorId}`}>{author.name}</Link>
         </div>
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-50">
           {title}

@@ -9,16 +9,21 @@ function AuthorProfile() {
   const [author, setAuthor] = React.useState([]);
   const { id } = useParams();
   const { id: user } = React.useContext(UserContext);
+  const [imgThumb, setImgThumb] = React.useState("");
+  const [wait, setWait] = React.useState(true);
 
   React.useEffect(() => {
     const getAuth = async () => {
       const author = await getAuthor(id);
+      console.log("aufhsdkj", author.data);
       setAuthor(author.data);
+      if (author.data.imgThumb) setImgThumb(author.data.imgThumb.img.data.data);
     };
 
     getAuth();
   }, [user]);
 
+  if (author.length === 0) return <p>......</p>;
   return (
     <div>
       <div className="flex flex-row  ">
@@ -29,7 +34,7 @@ function AuthorProfile() {
 
           <BlogList id={id} author={author.name} />
         </div>
-        <div className="fixed  inset-y-0 right-0 mt-20 mr-16 scrollbar-hide">
+        <div className="fixed  inset-y-0 right-0 mt-28 mr-16 scrollbar-hide">
           <ProfileRight author={author} />
         </div>
       </div>

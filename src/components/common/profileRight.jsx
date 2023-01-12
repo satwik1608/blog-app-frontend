@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AuthorList from "./authorList";
 import UserContext from "./../../userContext";
 import { follow, unFollow } from "../../services/apiService";
+
 import { Link } from "react-router-dom";
 function ProfileRight({ author }) {
   const {
@@ -13,10 +14,19 @@ function ProfileRight({ author }) {
     imgThumb,
     profession,
   } = author;
-  // console.log("author a", author);
+  console.log("author a", author);
+  console.log("imgf", imgThumb);
+  console.log("floofsd", followers);
   const { id: user, setId } = React.useContext(UserContext);
 
   const [isFollower, setisFollower] = React.useState(false);
+  const [base64String, setbase64String] = React.useState("");
+  function arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
+  }
   const handleFollow = async () => {
     const obj = {
       id: user._id,
@@ -36,8 +46,11 @@ function ProfileRight({ author }) {
 
   React.useEffect(() => {
     // console.log(user, followers);
+    if (imgThumb) setbase64String(arrayBufferToBase64(imgThumb.img.data.data));
+    // console.log("user lenda", user);
     if (user && followers) {
       // console.log("follo", followers);
+
       followers.forEach((f) => {
         if (f._id === user._id) {
           // console.log("true");
@@ -53,7 +66,7 @@ function ProfileRight({ author }) {
       <div className="flex flex-col items-center pb-10">
         <img
           className="w-24 h-24 mb-3 rounded-full shadow-lg"
-          src={imgThumb}
+          src={`data:image/png;base64,${base64String}`}
           alt="Bonnie image"
         />
         <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
