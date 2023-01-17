@@ -12,39 +12,16 @@ function AuthorUpdateForm() {
   const nameRef = React.useRef("");
   const emailRef = React.useRef("");
   const professionRef = React.useRef("");
-  const imgRef = React.useRef("");
+
   const descriptionRef = React.useRef("");
   const usernameRef = React.useRef("");
-
-  const handleImage = async () => {
-    const testImage = await resizeFile(imgRef.current.files[0]);
-    // console.log("tes", testImage);
-    // console.log("tes2", imgRef.current.files[0]);
-    const obj = {
-      name: "test",
-      testImage: testImage,
-    };
-
-    const img = await uploadImage(obj);
-
-    imgRef.current = img.data._id;
-
-    const obj2 = {
-      name: nameRef.current.value,
-      email: emailRef.current.value,
-      profession: professionRef.current.value,
-      imgThumb: imgRef.current,
-      description: descriptionRef.current.value,
-    };
-    setData(obj2);
-  };
 
   const handleChange = () => {
     const obj = {
       name: nameRef.current.value,
       email: emailRef.current.value,
       profession: professionRef.current.value,
-      imgThumb: imgRef.current.value,
+
       description: descriptionRef.current.value,
     };
 
@@ -133,24 +110,7 @@ function AuthorUpdateForm() {
                 onChange={handleChange}
               />
             </div>
-            <div class="w-full">
-              <label
-                for="brand"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Profile Image
-              </label>
-              <input
-                type="file"
-                name="brand"
-                id="brand"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="links only"
-                required=""
-                ref={imgRef}
-                onChange={handleImage}
-              />
-            </div>
+
             <div class="w-full">
               <label
                 for="brand"

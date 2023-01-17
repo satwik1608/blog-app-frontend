@@ -5,7 +5,9 @@ import { isFocusable } from "@testing-library/user-event/dist/utils";
 export function getBlogs() {
   return http.get("http://localhost:1337/blogs");
 }
-
+export function getBlogImage(id) {
+  return http.get(`http://localhost:1337/blogImage/${id}`);
+}
 export function getAuthorId(author) {
   return http.get(`http://localhost:1337/author?name=${author}`);
 }

@@ -32,7 +32,7 @@ function AuthorList({ followers, search, notFollowing }) {
       )}`;
     }
 
-    return " https://picsum.photos/200";
+    return "https://picsum.photos/200";
   }
 
   if (followers) {

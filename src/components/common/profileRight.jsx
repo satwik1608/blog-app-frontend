@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import AuthorList from "./authorList";
 import UserContext from "./../../userContext";
-import { follow, unFollow } from "../../services/apiService";
+import {
+  follow,
+  unFollow,
+  uploadImage,
+  updateAuthor,
+} from "../../services/apiService";
+import { resizeFile } from "../../services/imgService";
 
 import { Link } from "react-router-dom";
 function ProfileRight({ author }) {
@@ -21,6 +27,7 @@ function ProfileRight({ author }) {
 
   const [isFollower, setisFollower] = React.useState(false);
   const [base64String, setbase64String] = React.useState("");
+  const [isImageUpdate, setImageUpdate] = React.useState(false);
   function arrayBufferToBase64(buffer) {
     var binary = "";
     var bytes = [].slice.call(new Uint8Array(buffer));
@@ -42,6 +49,30 @@ function ProfileRight({ author }) {
     const updatedUser = await unFollow(obj, author._id);
     setisFollower(false);
     setId(updatedUser.data);
+  };
+
+  const imgRef = React.useRef("");
+  const handleImage = async () => {
+    const testImage = await resizeFile(imgRef.current.files[0]);
+    // console.log("tes", testImage);
+    // console.log("tes2", imgRef.current.files[0]);
+    const obj = {
+      name: "test",
+      testImage: testImage,
+    };
+
+    const img = await uploadImage(obj);
+
+    imgRef.current = img.data._id;
+
+    const data = {
+      imgThumb: imgRef.current,
+    };
+    const author = await updateAuthor(user._id, data);
+
+    setId(author.data);
+
+    setImageUpdate(false);
   };
 
   React.useEffect(() => {
@@ -69,6 +100,30 @@ function ProfileRight({ author }) {
           src={`data:image/png;base64,${base64String}`}
           alt="Bonnie image"
         />
+        {user && user.username === username && (
+          <button onClick={() => setImageUpdate((s) => !s)}>
+            <i class="fa-regular fa-pen-to-square"></i>
+          </button>
+        )}
+        {user && user.username === username && isImageUpdate && (
+          <div class="w-full">
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="file_input"
+            >
+              Upload file
+            </label>
+            <input
+              class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              id="file_input"
+              name="file"
+              required="true"
+              ref={imgRef}
+              onChange={handleImage}
+              type="file"
+            />
+          </div>
+        )}
         <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
           {name}
         </h5>

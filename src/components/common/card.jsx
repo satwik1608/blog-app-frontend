@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { getBlogImage } from "../../services/apiService";
 import iframe from "../../services/utils";
 import Explicit from "./explicit";
 
 function Card({
   author,
   title,
-  img,
+
   tags,
   content,
   date,
@@ -14,15 +15,22 @@ function Card({
   authorId,
   brief,
 }) {
-  console.log("f", author);
   function arrayBufferToBase64(buffer) {
     var binary = "";
     var bytes = [].slice.call(new Uint8Array(buffer));
     bytes.forEach((b) => (binary += String.fromCharCode(b)));
     return window.btoa(binary);
   }
+  // const [img, setImage] = React.useState();
+  const [base64String, setBase64String] = React.useState("");
+  React.useEffect(() => {
+    const getImg = async () => {
+      const img = await getBlogImage(id);
+      setBase64String(arrayBufferToBase64(img.data.img.img.data.data));
+    };
 
-  const base64String = arrayBufferToBase64(img.img.data.data);
+    getImg();
+  }, []);
 
   function fillSrc(person) {
     if (person.imgThumb) {

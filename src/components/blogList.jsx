@@ -14,10 +14,17 @@ function BlogList({ id, author, tag, search }) {
 
   React.useEffect(() => {
     const getBlog = async () => {
-      const blog = await getBlogs();
+      console.log("www");
 
+      const blog = await getBlogs();
+      console.log("gb;(");
       let blogData = blog.data;
 
+      console.log("blog", blog);
+      // let blogData = JSON.parse(blog.data.toString());
+      // let blogData = Buffer.from(blog.data, "base64").toString("ascii");
+      // v;
+      // var temp = JSON.parse(blogData.toString());
       // console.log("sort", sort);
       // console.log("follwing", following);
       if (sort) {
@@ -53,9 +60,10 @@ function BlogList({ id, author, tag, search }) {
       } else {
         // console.log("blol", blogData);
         // setBlogs([]);
+
         setBlogs(blogData);
 
-        console.log("blogData", blogData);
+        console.log("blogData", blogData.length);
       }
     };
 
@@ -156,7 +164,6 @@ function BlogList({ id, author, tag, search }) {
               authorId={blog.author._id}
               title={blog.title}
               tags={blog.tags}
-              img={blog.img}
               content={blog.content}
               date={blog.date}
               id={blog._id}
