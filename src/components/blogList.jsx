@@ -36,7 +36,8 @@ function BlogList({ id, author, tag, search }) {
       }
 
       if (author) {
-        const blogD = blogData.filter((b) => b.author._id === id);
+        let blogD = blogData;
+        if (!list) blogD = blogData.filter((b) => b.author._id === id);
         setBlogs(blogD);
       } else if (tag) {
         const blogD = blogData.filter((b) => b.tags.includes(tag));
