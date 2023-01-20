@@ -78,6 +78,7 @@ function ProfileRight({ author }) {
   React.useEffect(() => {
     // console.log(user, followers);
     if (imgThumb) setbase64String(arrayBufferToBase64(imgThumb.img.data.data));
+    else setbase64String("");
     // console.log("user lenda", user);
     if (user && followers) {
       // console.log("follo", followers);

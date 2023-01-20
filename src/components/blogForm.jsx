@@ -21,6 +21,8 @@ function BlogForm() {
   const navigate = useNavigate();
   const edito = React.useRef(false);
   const editor = React.useRef();
+
+  const [isBlogFilled, setIsBlogFilled] = React.useState(false);
   React.useEffect(() => {
     if (!edito.current) {
       editor.current = new EditorJS({
@@ -40,7 +42,31 @@ function BlogForm() {
             class: Underline,
           },
         },
+        onChange: (api, event) => {
+          const tags = tagsRef.current.value.split(" ");
+          editor.current
+            .save()
+            .then((outputData) => {
+              console.log("Article data: ", outputData);
+              const html = edjsParser.parse(outputData);
+              setContent(html);
+              const obj = {
+                title: titleRef.current.value,
+                brief: briefRef.current.value,
+                img: imgDataRef.current,
+                content: html,
+                tags: tags,
+                author: userId,
+              };
+              setData(obj);
+              console.log(obj);
+            })
+            .catch((error) => {
+              console.log("Saving failed: ", error);
+            });
+        },
       });
+
       edito.current = true;
     }
   }, []);
@@ -54,16 +80,6 @@ function BlogForm() {
   else userId = "";
   const handleChange = () => {
     const tags = tagsRef.current.value.split(" ");
-    editor.current
-      .save()
-      .then((outputData) => {
-        console.log("Article data: ", outputData);
-        const html = edjsParser.parse(outputData);
-        setContent(html);
-      })
-      .catch((error) => {
-        console.log("Saving failed: ", error);
-      });
     const obj = {
       title: titleRef.current.value,
       brief: briefRef.current.value,
@@ -190,7 +206,11 @@ function BlogForm() {
             </div>
 
             <div class="sm:col-span-2 editable bg-indigo-300 rounded-lg">
-              <div id="editor" className="text-black  "></div>
+              <div
+                id="editor"
+                className="text-black "
+                onChange={editor.handleChange}
+              ></div>
             </div>
           </div>
           <button

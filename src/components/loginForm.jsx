@@ -1,6 +1,7 @@
 import React from "react";
 import { login, logout } from "../services/authService";
-
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 function LoginForm() {
   const [data, setData] = React.useState(null);
   const usernameRef = React.useRef("");
@@ -17,12 +18,18 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await login(data);
+      usernameRef.current.value = "";
+      passwordRef.current.value = "";
 
-    await login(data);
-    usernameRef.current.value = "";
-    passwordRef.current.value = "";
-
-    window.location = "./";
+      window.location = "./";
+    } catch (ex) {
+      console.log(ex);
+      toast.error("Wrong Username or Password");
+      usernameRef.current.value = "";
+      passwordRef.current.value = "";
+    }
   };
 
   return (

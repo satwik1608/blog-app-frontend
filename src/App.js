@@ -19,7 +19,7 @@ import { Route, Routes } from "react-router-dom";
 import { getAuthorId } from "./services/apiService";
 import RequireAuth from "./components/requireAuth";
 import AuthorUpdateForm from "./components/authorUpdateForm";
-
+import { toast } from "react-toastify";
 function App() {
   const [user, setUser] = React.useState();
   const [id, setId] = React.useState();
@@ -32,8 +32,6 @@ function App() {
         const auth = await getAuthorId(author.username);
 
         setId(auth.data);
-        // console.log("id", id);
-        // console.log("auth", auth.data);
       };
       func();
       setUser(author.username);
