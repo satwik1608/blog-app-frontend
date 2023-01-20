@@ -1,7 +1,7 @@
 import React, { Component, useReducer } from "react";
 import Card from "./common/card";
 
-import { getBlogs } from "./../services/apiService";
+import { getBlogs, updateAuthor } from "./../services/apiService";
 import UserContext from "./../userContext";
 
 function BlogList({ id, author, tag, search }) {
@@ -9,8 +9,8 @@ function BlogList({ id, author, tag, search }) {
 
   const [sort, setSort] = React.useState(false);
   const [following, setFollowing] = React.useState(false);
-
-  const { id: user } = React.useContext(UserContext);
+  const [list, setList] = React.useState(false);
+  const { id: user, setId } = React.useContext(UserContext);
 
   React.useEffect(() => {
     const getBlog = async () => {
@@ -19,7 +19,7 @@ function BlogList({ id, author, tag, search }) {
       const blog = await getBlogs();
       console.log("gb;(");
       let blogData = blog.data;
-
+      console.log(user);
       console.log("blog", blog);
       if (sort) {
         blogData.sort((a, b) => b.likes - a.likes);
@@ -28,6 +28,10 @@ function BlogList({ id, author, tag, search }) {
         const bl = blogData.filter((b) =>
           user.following.includes(b.author._id)
         );
+        blogData = bl;
+      }
+      if (list) {
+        const bl = blogData.filter((b) => user.lists.includes(b._id));
         blogData = bl;
       }
 
@@ -62,8 +66,25 @@ function BlogList({ id, author, tag, search }) {
     };
 
     getBlog();
-  }, [tag, id, author, search, sort, following]);
+  }, [tag, id, author, search, sort, following, list, user]);
 
+  function setStuff() {
+    setSort(false);
+    setFollowing(false);
+    setList(false);
+  }
+
+  const handleList = async (id, flag) => {
+    const obj = {
+      id: id,
+    };
+    let author;
+    if (flag == 1) author = await updateAuthor(user._id, obj, "list");
+    else author = await updateAuthor(user._id, obj, "delist");
+
+    setId(author.data);
+  };
+  console.log("auth", author);
   if (blogs.length === 0)
     return (
       <div>
@@ -71,7 +92,7 @@ function BlogList({ id, author, tag, search }) {
           {!user && (
             <button
               type="button"
-              onClick={() => setSort(false)}
+              onClick={() => setStuff(false)}
               className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
             >
               Recent
@@ -89,19 +110,28 @@ function BlogList({ id, author, tag, search }) {
           {user && (
             <button
               type="button"
-              onClick={() => setFollowing(false)}
+              onClick={() => setStuff(false)}
               className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
             >
               Recent
             </button>
           )}
-          {user && (
+          {user && !author && (
             <button
               type="button"
               onClick={() => setFollowing(true)}
               className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
             >
               Following
+            </button>
+          )}
+          {user && author && (
+            <button
+              type="button"
+              onClick={() => setList(true)}
+              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
+            >
+              Bookmarks
             </button>
           )}
         </div>
@@ -114,7 +144,7 @@ function BlogList({ id, author, tag, search }) {
         {!user && (
           <button
             type="button"
-            onClick={() => setSort(false)}
+            onClick={() => setStuff(false)}
             className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
           >
             Recent
@@ -133,7 +163,7 @@ function BlogList({ id, author, tag, search }) {
         {user && (
           <button
             type="button"
-            onClick={() => setFollowing(false)}
+            onClick={() => setStuff(false)}
             className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
           >
             Recent
@@ -151,7 +181,7 @@ function BlogList({ id, author, tag, search }) {
         {user && author && (
           <button
             type="button"
-            onClick={() => setFollowing(true)}
+            onClick={() => setList(true)}
             className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
           >
             Bookmarks
@@ -171,6 +201,7 @@ function BlogList({ id, author, tag, search }) {
               date={blog.date}
               id={blog._id}
               brief={blog.brief}
+              handleList={handleList}
             />
           </li>
         ))}

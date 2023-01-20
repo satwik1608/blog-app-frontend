@@ -22,7 +22,9 @@ export function listAuthor(search) {
 export function createAuthor(author) {
   return http.post(`http://localhost:1337/author`, author);
 }
-export function updateAuthor(id, author) {
+export function updateAuthor(id, author, func) {
+  if (func)
+    return http.put(`http://localhost:1337/author/${id}?use=${func}`, author);
   return http.put(`http://localhost:1337/author/${id}`, author);
 }
 
