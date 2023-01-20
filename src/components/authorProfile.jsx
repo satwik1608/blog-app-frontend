@@ -21,7 +21,7 @@ function AuthorProfile() {
     };
 
     getAuth();
-  }, [user, author]);
+  }, [user]);
 
   if (author.length === 0) return <p>......</p>;
   return (
