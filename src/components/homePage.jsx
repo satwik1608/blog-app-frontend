@@ -13,16 +13,11 @@ function HomePage() {
     if (user) {
       const func = async () => {
         const authors = await listAuthor();
-        console.log("authors.data", authors.data);
-        console.log(user.following);
-        console.log(user.data);
         const author = authors.data.filter(
           (a) => !user.following.includes(a._id)
         );
 
         setNotFollowing(author);
-        console.log("author", author);
-        console.log("not", notFollowing);
       };
 
       func();

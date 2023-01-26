@@ -6,7 +6,7 @@ import UserContext from "./../userContext";
 function Comments({ blog }) {
   const [comments, setComment] = React.useState([]);
   const [refresh, setRefresh] = React.useState(0);
-  const { id } = React.useContext(UserContext);
+  const { id: user } = React.useContext(UserContext);
   const handleRefresh = () => {
     setRefresh((c) => c + 1);
   };
@@ -33,7 +33,7 @@ function Comments({ blog }) {
             Discussion ({comments.length})
           </h2>
         </div>
-        <CommentForm blog={blog} onChange={handleRefresh} />
+        {user && <CommentForm blog={blog} onChange={handleRefresh} />}
         <ul>
           {comments.map((comment) => (
             <Comment comment={comment} onChange={handleRefresh} />

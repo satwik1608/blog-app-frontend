@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import UserContext from "./../../userContext";
 
 function Rating({ onLike, likes, wasLiked }) {
   const [liked, setLiked] = React.useState(false);
   // console.log("likeS", liked);
   const [load, setLoad] = React.useState(0);
+  const { id: user } = React.useContext(UserContext);
   // console.log(wasLiked.current);
   const setLike = (id) => {
     setLiked(id);
@@ -21,7 +23,7 @@ function Rating({ onLike, likes, wasLiked }) {
     // console.log("likeS", liked);
     // console.log("useEffect off");
   }, [wasLiked]);
-  if (!liked)
+  if (!liked || !user)
     return (
       <React.Fragment>
         <svg

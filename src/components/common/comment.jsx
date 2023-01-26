@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import CommentForm from "./commentForm";
+import UserContext from "./../../userContext";
 function Comment({ comment, onChange }) {
   const [reply, setReply] = React.useState(false);
   const [replyOpen, setReplyOpen] = React.useState(false);
+  const { id: user } = React.useContext(UserContext);
   React.useEffect(() => {
     if (!comment.reply) setReply(false);
     else setReply(true);
@@ -37,7 +39,7 @@ function Comment({ comment, onChange }) {
       </footer>
       <p class="text-gray-500 dark:text-gray-400">{comment.data}</p>
       <div class="flex items-center mt-4 space-x-4">
-        {!reply && (
+        {!reply && user && (
           <button
             type="button"
             class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400"
@@ -61,7 +63,7 @@ function Comment({ comment, onChange }) {
             Reply
           </button>
         )}
-        {replyOpen && (
+        {replyOpen && user && (
           <CommentForm
             blog={comment.blog}
             onChange={onChange}

@@ -13,7 +13,7 @@ import {
   follow,
   unFollow,
 } from "./../services/apiService";
-import Comment from "./comments";
+import Comments from "./comments";
 import { useParams } from "react-router-dom";
 import UserContext from "./../userContext";
 import { Parser } from "html-to-react";
@@ -131,7 +131,7 @@ function BlogFull() {
           )}
         </div>
 
-        {isComment && <Comment blog={blog} />}
+        {isComment && <Comments blog={blog} />}
       </div>
       <div className="fixed inset-y-0 right-0 mr-16 mt-20 scrollbar-hide">
         <ProfileRight author={author} />
