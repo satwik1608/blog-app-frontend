@@ -3,6 +3,7 @@ import Card from "./common/card";
 
 import { getBlogs, updateAuthor } from "./../services/apiService";
 import UserContext from "./../userContext";
+import BlogListSkeleton from "./common/blogListSkeleton";
 
 function BlogList({ id, author, tag, search }) {
   const [blogs, setBlogs] = React.useState([]);
@@ -11,16 +12,14 @@ function BlogList({ id, author, tag, search }) {
   const [following, setFollowing] = React.useState(false);
   const [list, setList] = React.useState(false);
   const { id: user, setId } = React.useContext(UserContext);
-
+  const [isLoading, setisLoading] = React.useState(true);
   React.useEffect(() => {
     const getBlog = async () => {
-      console.log("www");
-
+      setisLoading(true);
       const blog = await getBlogs();
-      console.log("gb;(");
+
       let blogData = blog.data;
-      console.log(user);
-      console.log("blog", blog);
+
       if (sort) {
         blogData.sort((a, b) => b.likes - a.likes);
       }
@@ -38,11 +37,11 @@ function BlogList({ id, author, tag, search }) {
       if (author) {
         let blogD = blogData;
         if (!list) blogD = blogData.filter((b) => b.author._id === id);
-        setBlogs(blogD);
+        await setBlogs(blogD);
       } else if (tag) {
         const blogD = blogData.filter((b) => b.tags.includes(tag));
 
-        setBlogs(blogD);
+        await setBlogs(blogD);
       } else if (search) {
         const blogD = blogData.filter((b) => {
           const bl = b.title.toLowerCase().split(" ");
@@ -55,15 +54,12 @@ function BlogList({ id, author, tag, search }) {
           return false;
         });
 
-        setBlogs(blogD);
+        await setBlogs(blogD);
       } else {
-        // console.log("blol", blogData);
-        // setBlogs([]);
-
-        setBlogs(blogData);
-
-        console.log("blogData", blogData.length);
+        await setBlogs(blogData);
       }
+
+      setisLoading(false);
     };
 
     getBlog();
@@ -86,7 +82,7 @@ function BlogList({ id, author, tag, search }) {
     setId(author.data);
   };
   console.log("auth", author);
-  if (blogs.length === 0)
+  if (isLoading)
     return (
       <div>
         <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -126,7 +122,7 @@ function BlogList({ id, author, tag, search }) {
               Following
             </button>
           )}
-          {user && author && (
+          {user && author && user.name === author && (
             <button
               type="button"
               onClick={() => setList(true)}
@@ -136,7 +132,16 @@ function BlogList({ id, author, tag, search }) {
             </button>
           )}
         </div>
-        <div>Best</div>;
+
+        <BlogListSkeleton />
+        <BlogListSkeleton />
+        <BlogListSkeleton />
+        <BlogListSkeleton />
+        <BlogListSkeleton />
+        <BlogListSkeleton />
+        <BlogListSkeleton />
+        <BlogListSkeleton />
+        <BlogListSkeleton />
       </div>
     );
   return (
@@ -179,7 +184,7 @@ function BlogList({ id, author, tag, search }) {
             Following
           </button>
         )}
-        {user && author && (
+        {user && author && user.name === author && (
           <button
             type="button"
             onClick={() => setList(true)}

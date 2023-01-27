@@ -29,11 +29,11 @@ function HomePage() {
       <React.Fragment>
         <Trending />
 
-        <div className="flex flex-row">
-          <div className="flex-grow">
+        <div className="grid grid-cols-2 gap-4 place-content-between">
+          <div className="">
             <BlogList />
           </div>
-          <div className="flex-1">
+          <div className="">
             <TagStack />
           </div>
         </div>
@@ -44,7 +44,7 @@ function HomePage() {
   return (
     <React.Fragment>
       <div className="flex flex-row">
-        <div className="flex-grow">
+        <div className="">
           <BlogList />
         </div>
         <div className="fixed overflow-auto inset-y-0 right-0 mr-16 mt-20 scrollbar-hide">
