@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { createAuthor } from "../services/apiService";
+import { login } from "../services/authService";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -26,6 +27,8 @@ function RegisterForm() {
 
     try {
       await createAuthor(data);
+      await login({ username: data.username, password: data.password });
+      window.location = "./";
     } catch (ex) {
       console.log(ex);
     }

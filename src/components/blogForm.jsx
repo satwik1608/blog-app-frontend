@@ -8,6 +8,8 @@ import List from "@editorjs/list";
 
 import Underline from "@editorjs/underline";
 const Header = require("@editorjs/header");
+const Marker = require("@editorjs/marker");
+const InlineCode = require("@editorjs/inline-code");
 
 const edjsHTML = require("editorjs-html");
 const edjsParser = edjsHTML();
@@ -40,6 +42,12 @@ function BlogForm() {
           },
           underline: {
             class: Underline,
+          },
+          Marker: {
+            class: Marker,
+          },
+          inlineCode: {
+            class: InlineCode,
           },
         },
         onChange: (api, event) => {

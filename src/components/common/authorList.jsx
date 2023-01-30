@@ -54,7 +54,7 @@ function AuthorList({ followers, search, notFollowing }) {
             <Link
               to={`/author/${follower._id}`}
               className="flow-root"
-              id={follower._id}
+              key={follower._id}
             >
               <ul
                 role="list"
@@ -111,7 +111,7 @@ function AuthorList({ followers, search, notFollowing }) {
     return (
       <ul>
         {data.map((d) => (
-          <Link to={`/author/${d._id}`} className="flow-root" id={d._id}>
+          <Link to={`/author/${d._id}`} className="flow-root" key={d._id}>
             <ul
               role="list"
               className="divide-y divide-gray-200 dark:divide-gray-700"
@@ -181,7 +181,7 @@ function AuthorList({ followers, search, notFollowing }) {
             <Link
               to={`/author/${notFollow._id}`}
               className="flow-root"
-              id={notFollow._id}
+              key={notFollow._id}
             >
               <ul
                 role="list"

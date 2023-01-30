@@ -104,7 +104,7 @@ function BlogFull() {
             blog.content.map((p) => (
               <div
                 dangerouslySetInnerHTML={iframe(p)}
-                className="break-words w-3/4"
+                className="break-words w-4/4 mb-4"
               />
             ))}
         </p>
@@ -133,7 +133,7 @@ function BlogFull() {
 
         {isComment && <Comments blog={blog} />}
       </div>
-      <div className="fixed inset-y-0 right-0 mr-16 mt-20 scrollbar-hide">
+      <div className="fixed inset-y-0 right-0 mr-16 mt-28 scrollbar-hide">
         <ProfileRight author={author} />
       </div>
     </div>

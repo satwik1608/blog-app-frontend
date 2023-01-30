@@ -18,7 +18,10 @@
   blockquote {
     @apply p-4 my-4 bg-gray-50 border-l-4 border-gray-300 dark:border-gray-500 dark:bg-gray-800
   }
-
+  mark {
+    @apply bg-cyan-400
+  }
+ 
 };
 @tailwind components;
 @tailwind utilities;
@@ -32,4 +35,8 @@
     padding:3rem;
     
   font-family: 'Roboto', sans-serif;
+}
+
+.cdx-marker{
+   background-color: rgb(34 211 238);;
 }
