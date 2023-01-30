@@ -80,37 +80,8 @@ function Card({
   }
   return (
     <>
-      {user && !list && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          width="32px"
-          height="32px"
-          onClick={() => onList(id, 1)}
-          cursor="pointer"
-        >
-          {" "}
-          <path d="M25,27l-9-6.75L7,27V4h18V27z" />
-        </svg>
-      )}
-      {user && list && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 32 32"
-          width="32px"
-          height="32px"
-          fill="white"
-          onClick={() => onList(id, 0)}
-          cursor="pointer"
-        >
-          <path d="M25,27l-9-6.75L7,27V4h18V27z" />
-        </svg>
-      )}
-      <Link
-        to={`/blogs/${id}`}
-        className="flex flex-col items-center bg-white   md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-      >
-        <div className="flex flex-col justify-between w-96 p-3 font-bold text-slate-50  leading-normal">
+      <div className="flex flex-col items-center mb-6  border-b border-black rounded md:flex-row md:max-w-xl hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+        <div className="flex flex-col justify-between w-96 p-3 font-bold text-bg-neutral-900  leading-normal">
           <div className="flex flex-row mb-2">
             {thumbNail && (
               <img
@@ -142,27 +113,57 @@ function Card({
               <Link to={`/author/${authorId}`}>{author.name}</Link>
             </div>
 
-            <div className="text-gray-500 font-bold text-sm ml-3">
+            {user && !list && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                width="20px"
+                height="20px"
+                onClick={() => onList(id, 1)}
+                cursor="pointer"
+                fill="gray"
+                className="ml-3"
+              >
+                {" "}
+                <path d="M25,27l-9-6.75L7,27V4h18V27z" />
+              </svg>
+            )}
+            {user && list && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                width="24px"
+                height="24px"
+                // fill="yellow"
+                onClick={() => onList(id, 0)}
+                cursor="pointer"
+                className="ml-3"
+              >
+                <path d="M25,27l-9-6.75L7,27V4h18V27z" />
+              </svg>
+            )}
+          </div>
+          <Link to={`/blogs/${id}`}>
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-bg-neutral-900">
+              {title}
+            </h5>
+            <div className="mb-1 font-normal text-gray-700 dark:text-gray-400">
+              {brief}
+            </div>
+            <div className="flex items-center mt-2.5 mb-5">
+              {tags.map((tag) => (
+                <Link
+                  to={`/tags/${tag}`}
+                  className="bg-blue-100 text-blue-800 text-xs font-semibold  px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 mr-3"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+            <div className="text-gray-500 font-bold text-sm ">
               {formatDate(date)}
             </div>
-          </div>
-
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-50">
-            {title}
-          </h5>
-          <div className="mb-1 font-normal text-gray-700 dark:text-gray-400">
-            {brief}
-          </div>
-          <div className="flex items-center mt-2.5 mb-5">
-            {tags.map((tag) => (
-              <Link
-                to={`/tags/${tag}`}
-                className="bg-blue-100 text-blue-800 text-xs font-semibold  px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3"
-              >
-                {tag}
-              </Link>
-            ))}
-          </div>
+          </Link>
         </div>
 
         {base64String && (
@@ -191,7 +192,7 @@ function Card({
             <span class="sr-only">Loading...</span>
           </div>
         )}
-      </Link>
+      </div>
     </>
   );
 }

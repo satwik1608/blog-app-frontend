@@ -49,7 +49,7 @@ function AuthorList({ followers, search, notFollowing }) {
             View all
           </a>
         </div>
-        <ul>
+        <ul className="list-none">
           {followers.map((follower) => (
             <Link
               to={`/author/${follower._id}`}
@@ -58,7 +58,7 @@ function AuthorList({ followers, search, notFollowing }) {
             >
               <ul
                 role="list"
-                className="divide-y divide-gray-200 dark:divide-gray-700"
+                className="divide-y divide-gray-200 list-none dark:divide-gray-700"
               >
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center space-x-4">
@@ -114,7 +114,7 @@ function AuthorList({ followers, search, notFollowing }) {
           <Link to={`/author/${d._id}`} className="flow-root" key={d._id}>
             <ul
               role="list"
-              className="divide-y divide-gray-200 dark:divide-gray-700"
+              className="divide-y divide-gray-200 dark:divide-gray-700 list-none"
             >
               <li className="py-3 sm:py-4">
                 <div className="flex items-center space-x-4">
@@ -166,7 +166,7 @@ function AuthorList({ followers, search, notFollowing }) {
     return (
       <div className="w-full max-w-md p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <div className="flex items-center justify-between mb-4">
-          <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+          <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white ">
             People to Follow
           </h5>
           <a
@@ -185,7 +185,7 @@ function AuthorList({ followers, search, notFollowing }) {
             >
               <ul
                 role="list"
-                className="divide-y divide-gray-200 dark:divide-gray-700"
+                className="divide-y divide-gray-200 dark:divide-gray-700 list-none"
               >
                 <li className="py-3 sm:py-4">
                   <div className="flex items-center space-x-4">

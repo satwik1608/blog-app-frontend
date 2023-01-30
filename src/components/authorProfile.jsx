@@ -26,9 +26,9 @@ function AuthorProfile() {
   if (author.length === 0) return <p>......</p>;
   return (
     <div>
-      <div className="flex flex-row  ">
+      <div className="grid grid-cols-2 gap-4 place-content-between ">
         <div className="p-2">
-          <div className="mb-7  font-extrabold border-b border-gray-200 tracking-tight leading-none text-slate-50  md:text-xl lg:text-4xl  ">
+          <div className="mb-7  font-extrabold border-b border-gray-800 tracking-tight leading-none  md:text-xl lg:text-4xl  ">
             {author.name}
           </div>
 

@@ -197,7 +197,7 @@ function BlogList({ id, author, tag, search }) {
 
       <ul className="m-4">
         {blogs.map((blog) => (
-          <li className="m-2" key={blog._id}>
+          <li className="m-2 list-none" key={blog._id}>
             <Card
               author={blog.author}
               authorId={blog.author._id}

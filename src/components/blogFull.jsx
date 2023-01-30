@@ -88,7 +88,7 @@ function BlogFull() {
   return (
     <div className="flex flex-row ">
       <div className="p-2 basis-1/2 m-5">
-        <div class="mb-7  font-extrabold border-b border-gray-200 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
+        <div class="mb-7  font-extrabold border-b border-black tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
           {blog.title}
         </div>
 
@@ -115,7 +115,7 @@ function BlogFull() {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="#ffffff"
+            fill="rgb(113 113 122)"
             className="w-6 h-6 ml-5"
             cursor="pointer"
             onClick={() => setIsComment((c) => !c)}
@@ -126,9 +126,7 @@ function BlogFull() {
               clipRule="evenodd"
             />
           </svg>
-          {blog.comments && (
-            <p className="text-white">{blog.comments.length}</p>
-          )}
+          {blog.comments && <p className="">{blog.comments.length}</p>}
         </div>
 
         {isComment && <Comments blog={blog} />}

@@ -8,10 +8,11 @@ module.exports = {
     extend: {
       colors: {
         "regal-grey": "#374151",
+        primary: "rgb(29 78 216)",
       },
     },
   },
-  darkMode: "class",
+  darkMode: "light",
 
   plugins: [require("tailwind-scrollbar-hide"), require("flowbite/plugin")],
 };

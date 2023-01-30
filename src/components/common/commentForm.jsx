@@ -65,7 +65,7 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
       </div>
       <button
         type="submit"
-        className="inline-flex items-center btn-primary py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+        className="inline-flex items-center btn-primary py-2.5 px-4 text-xs font-medium text-center  bg-blue-700 text-white rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
       >
         Post comment
       </button>

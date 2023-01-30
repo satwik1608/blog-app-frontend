@@ -43,7 +43,7 @@ function HomePage() {
 
   return (
     <React.Fragment>
-      <div className="flex flex-row">
+      <div className="grid grid-cols-2 gap-4 place-content-between">
         <div className="">
           <BlogList />
         </div>

@@ -5,12 +5,11 @@ import { createBlog, uploadImage } from "./../services/apiService";
 import { resizeFile } from "../services/imgService";
 import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
-
+import ImageTool from "@editorjs/image";
 import Underline from "@editorjs/underline";
 const Header = require("@editorjs/header");
 const Marker = require("@editorjs/marker");
 const InlineCode = require("@editorjs/inline-code");
-
 const edjsHTML = require("editorjs-html");
 const edjsParser = edjsHTML();
 
@@ -213,17 +212,17 @@ function BlogForm() {
               />
             </div>
 
-            <div class="sm:col-span-2 editable bg-indigo-300 rounded-lg">
+            <div class="sm:col-span-2 editable rounded-lg border border-gray-200">
               <div
                 id="editor"
-                className="text-black "
+                className="text-black"
                 onChange={editor.handleChange}
               ></div>
             </div>
           </div>
           <button
             type="submit"
-            class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center  text-white  bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
           >
             Publish
           </button>

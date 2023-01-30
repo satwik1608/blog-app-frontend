@@ -15,9 +15,10 @@
   ol {
     @apply list-decimal
   }
-  blockquote {
-    @apply p-4 my-4 bg-gray-50 border-l-4 border-gray-300 dark:border-gray-500 dark:bg-gray-800
+  ul {
+    @apply list-disc
   }
+  
   mark {
     @apply bg-cyan-400
   }
@@ -31,7 +32,8 @@
 }
 #root{
    margin-top: 3rem;
-    background-color: #1f2937;
+    /* background-color: #1f2937; */
+    /* background-color: aliceblue; */
     padding:3rem;
     
   font-family: 'Roboto', sans-serif;
