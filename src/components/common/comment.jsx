@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CommentForm from "./commentForm";
 import UserContext from "./../../userContext";
+const { formatDate } = require("../../services/utils");
 function Comment({ comment, onChange }) {
   const [reply, setReply] = React.useState(false);
   const [replyOpen, setReplyOpen] = React.useState(false);
@@ -16,7 +17,7 @@ function Comment({ comment, onChange }) {
   };
 
   return (
-    <article
+    <div
       class="p-6 mb-6 text-base bg-#1f2937 border-t border-gray-200 dark:border-gray-700 dark:bg-#1f2937"
       key={comment._id}
     >
@@ -31,14 +32,14 @@ function Comment({ comment, onChange }) {
             {comment.author.name}
           </p>
           <p class="text-sm text-gray-600 dark:text-gray-400">
-            <time pubdate datetime="2022-02-08" title="February 8th, 2022">
-              {comment.blog.date}
-            </time>
+            <div>{formatDate(comment.date)}</div>
           </p>
         </div>
       </footer>
-      <p class="text-gray-500 dark:text-gray-400">{comment.data}</p>
-      <div class="flex items-center mt-4 space-x-4">
+      <div class="text-gray-500 dark:text-gray-400 break-words">
+        {comment.data}
+      </div>
+      <div class="flex items-center mt-4 space-x-4 	">
         {!reply && user && (
           <button
             type="button"
@@ -73,13 +74,13 @@ function Comment({ comment, onChange }) {
           />
         )}
         {comment.reply && (
-          <article
-            class="p-6 text-base bg-#1f2937 rounded-lg dark:bg-#1f2937"
+          <div
+            class="p-6 mb-6 text-base bg-#1f2937 rounded-lg max-w-full dark:bg-#1f2937"
             key={comment.reply.author._id}
           >
             <footer class="flex justify-between items-center mb-2">
               <div class="flex items-center">
-                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                <p class="inline-flex items-center mr-3 text-sm  text-gray-900 dark:text-white">
                   <img
                     class="mr-2 w-6 h-6 rounded-full"
                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
@@ -88,21 +89,17 @@ function Comment({ comment, onChange }) {
                   {comment.reply.author.name}
                 </p>
                 <p class="text-sm text-gray-600 dark:text-gray-400">
-                  <time
-                    pubdate
-                    datetime="2022-02-08"
-                    title="February 8th, 2022"
-                  >
-                    {comment.blog.date}
-                  </time>
+                  <div>{formatDate(comment.reply.date)}</div>
                 </p>
               </div>
             </footer>
-            <p class="text-gray-500 dark:text-gray-400">{comment.reply.data}</p>
-          </article>
+            <div class="text-gray-500 dark:text-gray-400 break-words ">
+              {comment.reply.data}
+            </div>
+          </div>
         )}
       </div>
-    </article>
+    </div>
   );
 }
 

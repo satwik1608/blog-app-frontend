@@ -42,7 +42,7 @@ function HomePage() {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="grid grid-cols-2 gap-4 place-content-between">
         <div className="">
           <BlogList />
@@ -51,7 +51,7 @@ function HomePage() {
           <AuthorList notFollowing={notFollowing} />
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

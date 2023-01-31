@@ -29,6 +29,8 @@ function Card({
   const [base64String, setBase64String] = React.useState("");
 
   const [thumbNail, setthumbNail] = React.useState("");
+
+  // console.log("niggA", author);
   React.useEffect(() => {
     const getImg = async () => {
       const img = await getBlogImage(id);

@@ -62,11 +62,13 @@ export function updateComment(comment, id) {
 }
 
 export function uploadImage(image) {
+  // console.log(image);
+  console.log("llol");
   const formData = new FormData();
 
-  formData.append("testImage", image.testImage);
+  formData.append("testImage", image);
 
-  formData.append("name", image.name);
+  formData.append("name", "random");
 
   return http.post("http://localhost:1337/image", formData, {
     headers: {

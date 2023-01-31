@@ -20,6 +20,7 @@ import { getAuthorId } from "./services/apiService";
 import RequireAuth from "./components/requireAuth";
 import AuthorUpdateForm from "./components/authorUpdateForm";
 import { toast } from "react-toastify";
+import Modal from "./components/common/modal";
 function App() {
   const [user, setUser] = React.useState();
   const [id, setId] = React.useState();
@@ -81,6 +82,7 @@ function App() {
             }
           />
         </Routes>
+        <Modal />
       </UserContext.Provider>
     </React.Fragment>
   );

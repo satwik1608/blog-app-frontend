@@ -19,7 +19,7 @@ function BlogList({ id, author, tag, search }) {
       const blog = await getBlogs();
 
       let blogData = blog.data;
-
+      blogData.reverse();
       if (sort) {
         blogData.sort((a, b) => b.likes - a.likes);
       }

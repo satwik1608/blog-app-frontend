@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import MDEditor from "@uiw/react-md-editor";
-import iframe from "../services/utils";
 
 import {
   getAuthor,
@@ -17,6 +16,8 @@ import Comments from "./comments";
 import { useParams } from "react-router-dom";
 import UserContext from "./../userContext";
 import { Parser } from "html-to-react";
+
+const { iframe } = require("../services/utils");
 
 function BlogFull() {
   const [blog, setBlog] = React.useState({});

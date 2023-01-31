@@ -7,6 +7,7 @@ import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Underline from "@editorjs/underline";
+import http from "../services/httpService";
 const Header = require("@editorjs/header");
 const Marker = require("@editorjs/marker");
 const InlineCode = require("@editorjs/inline-code");
@@ -50,6 +51,7 @@ function BlogForm() {
           },
         },
         onChange: (api, event) => {
+          console.log("gd");
           const tags = tagsRef.current.value.split(" ");
           editor.current
             .save()
@@ -102,13 +104,9 @@ function BlogForm() {
     const testImage = await resizeFile(imgRef.current.files[0]);
     console.log("tes", testImage);
     console.log("tes2", imgRef.current.files[0]);
-    const obj = {
-      name: "test",
-      testImage: testImage,
-    };
 
-    const img = await uploadImage(obj);
-
+    const img = await uploadImage(testImage);
+    console.log("img", img);
     imgDataRef.current = img.data._id;
     const tags = tagsRef.current.value.split(" ");
     const obj2 = {

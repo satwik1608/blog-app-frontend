@@ -54,14 +54,8 @@ function ProfileRight({ author }) {
   const imgRef = React.useRef("");
   const handleImage = async () => {
     const testImage = await resizeFile(imgRef.current.files[0]);
-    // console.log("tes", testImage);
-    // console.log("tes2", imgRef.current.files[0]);
-    const obj = {
-      name: "test",
-      testImage: testImage,
-    };
 
-    const img = await uploadImage(obj);
+    const img = await uploadImage(testImage);
 
     imgRef.current = img.data._id;
 

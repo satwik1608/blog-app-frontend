@@ -19,9 +19,13 @@ function Trending() {
       </p>
       <ul className="flex flex-row flex-wrap border-b border-black mb-10  ">
         {blogs.map((blog) => (
-          <li className="m-2 w-90" key={blog.author}>
+          <li className="m-2 w-90 list-none" key={blog.author}>
             <div>
-              <CardSm author={blog.author.name} title={blog.title} />
+              <CardSm
+                author={blog.author.name}
+                title={blog.title}
+                id={blog._id}
+              />
             </div>
           </li>
         ))}

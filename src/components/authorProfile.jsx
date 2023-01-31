@@ -15,13 +15,12 @@ function AuthorProfile() {
   React.useEffect(() => {
     const getAuth = async () => {
       const author = await getAuthor(id);
-      console.log("aufhsdkj", author.data);
       setAuthor(author.data);
       if (author.data.imgThumb) setImgThumb(author.data.imgThumb.img.data.data);
     };
 
     getAuth();
-  }, [user]);
+  }, [user, id]);
 
   if (author.length === 0) return <p>......</p>;
   return (
