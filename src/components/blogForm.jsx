@@ -210,7 +210,7 @@ function BlogForm() {
               />
             </div>
 
-            <div class="sm:col-span-2 editable rounded-lg border border-gray-200">
+            <div class="sm:col-span-2 editable rounded-lg border border-gray-200 dark:bg-indigo-300 bg-white dark:rounded">
               <div
                 id="editor"
                 className="text-black"

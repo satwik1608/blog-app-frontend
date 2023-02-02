@@ -22,6 +22,10 @@
   mark {
     @apply bg-cyan-400
   }
+
+  #root {
+    @apply dark:bg-gray-800
+  }
  
 };
 @tailwind components;
@@ -34,6 +38,7 @@
    margin-top: 3rem;
     /* background-color: #1f2937; */
     /* background-color: aliceblue; */
+  
     padding:3rem;
     
   font-family: 'Roboto', sans-serif;

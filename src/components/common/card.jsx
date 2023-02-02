@@ -112,7 +112,9 @@ function Card({
               </div>
             )}
             <div>
-              <Link to={`/author/${authorId}`}>{author.name}</Link>
+              <Link to={`/author/${authorId}`} className="dark:text-slate-100">
+                {author.name}
+              </Link>
             </div>
 
             {user && !list && (
@@ -146,7 +148,7 @@ function Card({
             )}
           </div>
           <Link to={`/blogs/${id}`}>
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-bg-neutral-900">
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-slate-100 ">
               {title}
             </h5>
             <div className="mb-1 font-normal text-gray-700 dark:text-gray-400">

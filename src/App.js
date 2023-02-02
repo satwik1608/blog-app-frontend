@@ -21,11 +21,56 @@ import RequireAuth from "./components/requireAuth";
 import AuthorUpdateForm from "./components/authorUpdateForm";
 import { toast } from "react-toastify";
 import Modal from "./components/common/modal";
+import FollowerList from "./components/common/followerList";
 function App() {
   const [user, setUser] = React.useState();
   const [id, setId] = React.useState();
 
   React.useEffect(() => {
+    var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
+    var themeToggleLightIcon = document.getElementById(
+      "theme-toggle-light-icon"
+    );
+
+    if (
+      localStorage.getItem("color-theme") === "dark" ||
+      (!("color-theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      themeToggleLightIcon.classList.remove("hidden");
+    } else {
+      themeToggleDarkIcon.classList.remove("hidden");
+    }
+
+    var themeToggleBtn = document.getElementById("theme-toggle");
+
+    themeToggleBtn.addEventListener("click", function () {
+      // toggle icons inside button
+      themeToggleDarkIcon.classList.toggle("hidden");
+      themeToggleLightIcon.classList.toggle("hidden");
+
+      // if set via local storage previously
+      if (localStorage.getItem("color-theme")) {
+        // console.log(localStorage.getItem("color-theme"), "lol");
+        if (localStorage.getItem("color-theme") === "light") {
+          document.documentElement.classList.add("dark");
+          localStorage.setItem("color-theme", "dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+          localStorage.setItem("color-theme", "light");
+        }
+
+        // if NOT set via local storage previously
+      } else {
+        if (document.documentElement.classList.contains("dark")) {
+          document.documentElement.classList.remove("dark");
+          localStorage.setItem("color-theme", "light");
+        } else {
+          document.documentElement.classList.add("dark");
+          localStorage.setItem("color-theme", "dark");
+        }
+      }
+    });
     const author = getCurrentUser();
 
     if (author) {
@@ -64,6 +109,7 @@ function App() {
           <Route path="/search/:data" element={<SearchResult />} />
           <Route path="blogs/:id" element={<BlogFull />} />
           <Route path="tags/:tag" element={<TagProfile />} />
+          <Route path="/followers/:id" element={<FollowerList />} />
 
           <Route
             path="new-blog"

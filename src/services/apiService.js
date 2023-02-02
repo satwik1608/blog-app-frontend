@@ -1,6 +1,5 @@
 import http from "./httpService";
 import jsCookie from "js-cookie";
-import { isFocusable } from "@testing-library/user-event/dist/utils";
 
 export function getBlogs() {
   return http.get("http://localhost:1337/blogs");
@@ -34,7 +33,10 @@ export function follow(follower, followee) {
 export function unFollow(follower, followee) {
   return http.post(`http://localhost:1337/unfollow/${followee}`, follower);
 }
-
+export function getFollowers(author) {
+  console.log(author);
+  return http.get(`http://localhost:1337/followers/${author}`);
+}
 export function createBlog(blog) {
   console.log(blog);
   return http.post(`http://localhost:1337/blogs`, blog);

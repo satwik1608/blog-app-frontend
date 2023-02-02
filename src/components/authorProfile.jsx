@@ -27,7 +27,7 @@ function AuthorProfile() {
     <div>
       <div className="grid grid-cols-2 gap-4 place-content-between ">
         <div className="p-2">
-          <div className="mb-7  font-extrabold border-b border-gray-800 tracking-tight leading-none  md:text-xl lg:text-4xl  ">
+          <div className="mb-7  font-extrabold border-b border-gray-800 tracking-tight leading-none dark:text-slate-100  md:text-xl lg:text-4xl  ">
             {author.name}
           </div>
 

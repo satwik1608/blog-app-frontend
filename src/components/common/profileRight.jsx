@@ -10,10 +10,12 @@ import {
 import { resizeFile } from "../../services/imgService";
 
 import { Link } from "react-router-dom";
+import { unsubscribe } from "medium-editor";
 function ProfileRight({ author }) {
   const {
     _id: authorId,
     name,
+    email,
     username,
     description,
     followers,
@@ -90,16 +92,31 @@ function ProfileRight({ author }) {
   return (
     <div className="w-96 max-w-96 bg-white border-left border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="flex flex-col items-center pb-10">
-        <img
-          className="w-24 h-24 mb-3 rounded-full shadow-lg"
-          src={`data:image/png;base64,${base64String}`}
-          alt="Bonnie image"
-        />
-        {user && user.username === username && (
-          <button onClick={() => setImageUpdate((s) => !s)}>
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-        )}
+        <div className="flex flex-row space-x-3  items-center justify-center ">
+          {user && user.username === username && (
+            <img
+              className="w-24 h-24 mb-3 rounded-full shadow-lg cursor-pointer"
+              src={`data:image/png;base64,${base64String}`}
+              alt="Bonnie image"
+              onClick={() => setImageUpdate((s) => !s)}
+            />
+          )}
+          {user && user.username !== username && (
+            <img
+              className="w-24 h-24 mb-3 rounded-full shadow-lg "
+              src={`data:image/png;base64,${base64String}`}
+              alt="Bonnie image"
+            />
+          )}
+        </div>
+
+        <span className="text-sm text-gray-500 dark:text-gray-400 ">
+          @{username}
+        </span>
+        <span className="text-sm text-gray-500 dark:text-gray-400 ">
+          {email}
+        </span>
+
         {user && user.username === username && isImageUpdate && (
           <div class="w-full">
             <label
@@ -119,6 +136,7 @@ function ProfileRight({ author }) {
             />
           </div>
         )}
+
         <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
           {name}
         </h5>
@@ -168,7 +186,7 @@ function ProfileRight({ author }) {
         </div>
       </div>
 
-      <AuthorList followers={followers} />
+      <AuthorList followers={followers} authorId={authorId} />
     </div>
   );
 }
