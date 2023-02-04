@@ -108,6 +108,13 @@ function ProfileRight({ author }) {
               alt="Bonnie image"
             />
           )}
+          {!user && (
+            <img
+              className="w-24 h-24 mb-3 rounded-full shadow-lg "
+              src={`data:image/png;base64,${base64String}`}
+              alt="Bonnie image"
+            />
+          )}
         </div>
 
         <span className="text-sm text-gray-500 dark:text-gray-400 ">

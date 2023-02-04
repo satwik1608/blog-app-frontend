@@ -22,6 +22,7 @@ import AuthorUpdateForm from "./components/authorUpdateForm";
 import { toast } from "react-toastify";
 import Modal from "./components/common/modal";
 import FollowerList from "./components/common/followerList";
+import Footer from "./components/footer";
 function App() {
   const [user, setUser] = React.useState();
   const [id, setId] = React.useState();
@@ -128,6 +129,7 @@ function App() {
             }
           />
         </Routes>
+        {/* <Footer /> */}
         <Modal />
       </UserContext.Provider>
     </React.Fragment>

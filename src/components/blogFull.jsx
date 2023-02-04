@@ -134,7 +134,7 @@ function BlogFull() {
 
         {isComment && <Comments blog={blog} />}
       </div>
-      <div className="fixed inset-y-0 right-0 mr-16 mt-28 scrollbar-hide">
+      <div className="fixed overflow-auto inset-y-0 right-0 mr-16 mt-28 scrollbar-hide">
         <ProfileRight author={author} />
       </div>
     </div>

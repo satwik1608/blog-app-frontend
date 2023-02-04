@@ -11,7 +11,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@uiw/react-md-editor": "^3.20.1",
-    "axios": "^1.2.1",
+    "axios": "^1.2.3",
     "daisyui": "^2.42.1",
     "dante3": "^1.1.6",
     "editorjs-html": "^3.4.2",

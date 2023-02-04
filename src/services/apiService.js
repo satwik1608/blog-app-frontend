@@ -1,66 +1,68 @@
 import http from "./httpService";
 import jsCookie from "js-cookie";
 
+const url = "https://shiny-ox-leotard.cyclic.app";
+// const url = "http://localhost:1337";
+
 export function getBlogs() {
-  return http.get("http://localhost:1337/blogs");
+  return http.get(`${url}/blogs`);
 }
 export function getBlogImage(id) {
-  return http.get(`http://localhost:1337/blogImage/${id}`);
+  return http.get(`${url}/blogImage/${id}`);
 }
 export function getAuthorId(author) {
-  return http.get(`http://localhost:1337/author?name=${author}`);
+  return http.get(`${url}/author?name=${author}`);
 }
 export function getAuthor(id) {
-  return http.get(`http://localhost:1337/author/${id}`);
+  return http.get(`${url}/author/${id}`);
 }
 export function listAuthor(search) {
-  if (search) return http.get(`http://localhost:1337/authors?search=${search}`);
+  if (search) return http.get(`${url}/authors?search=${search}`);
 
-  return http.get(`http://localhost:1337/authors`);
+  return http.get(`${url}/authors`);
 }
 export function createAuthor(author) {
-  return http.post(`http://localhost:1337/author`, author);
+  return http.post(`${url}/author`, author);
 }
 export function updateAuthor(id, author, func) {
-  if (func)
-    return http.put(`http://localhost:1337/author/${id}?use=${func}`, author);
-  return http.put(`http://localhost:1337/author/${id}`, author);
+  if (func) return http.put(`${url}/author/${id}?use=${func}`, author);
+  return http.put(`${url}/author/${id}`, author);
 }
 
 export function follow(follower, followee) {
-  return http.post(`http://localhost:1337/follow/${followee}`, follower);
+  return http.post(`${url}/follow/${followee}`, follower);
 }
 export function unFollow(follower, followee) {
-  return http.post(`http://localhost:1337/unfollow/${followee}`, follower);
+  return http.post(`${url}/unfollow/${followee}`, follower);
 }
 export function getFollowers(author) {
   console.log(author);
-  return http.get(`http://localhost:1337/followers/${author}`);
+  return http.get(`${url}/followers/${author}`);
 }
 export function createBlog(blog) {
   console.log(blog);
-  return http.post(`http://localhost:1337/blogs`, blog);
+  return http.post(`${url}/blogs`, blog);
 }
 
 export function getBlog(id) {
-  return http.get(`http://localhost:1337/blogs/${id}`);
+  return http.get(`${url}/blogs/${id}`);
 }
 
 export function editBlog(blog, id) {
-  return http.put(`http://localhost:1337/blogs/${id}`, blog);
+  return http.put(`${url}/blogs/${id}`, blog);
 }
 
 export function createComment(comment) {
   jsCookie.set("jwt", localStorage.getItem("token"), { path: "/" });
-  return http.post(`http://localhost:1337/comments`, comment);
+  return http.post(`${url}/comments`, comment);
 }
 
 export function getComment() {
-  return http.get("http://localhost:1337/comments");
+  return http.get(`${url}/comments`);
 }
 
 export function updateComment(comment, id) {
-  return http.put(`http://localhost:1337/comments/${id}`, comment);
+  return http.put(`${url}/comments/${id}`, comment);
 }
 
 export function uploadImage(image) {
@@ -72,7 +74,7 @@ export function uploadImage(image) {
 
   formData.append("name", "random");
 
-  return http.post("http://localhost:1337/image", formData, {
+  return http.post(`${url}/image`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
