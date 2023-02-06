@@ -208,6 +208,7 @@ function BlogList({ id, author, tag, search }) {
               id={blog._id}
               brief={blog.brief}
               handleList={handleList}
+              img={blog.img}
             />
           </li>
         ))}

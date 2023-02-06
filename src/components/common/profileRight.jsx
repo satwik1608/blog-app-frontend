@@ -8,6 +8,9 @@ import {
   updateAuthor,
 } from "../../services/apiService";
 import { resizeFile } from "../../services/imgService";
+import { storage } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 
 import { Link } from "react-router-dom";
 import { unsubscribe } from "medium-editor";
@@ -57,23 +60,44 @@ function ProfileRight({ author }) {
   const handleImage = async () => {
     const testImage = await resizeFile(imgRef.current.files[0]);
 
-    const img = await uploadImage(testImage);
+    // const img = await uploadImage(testImage);
 
-    imgRef.current = img.data._id;
+    // imgRef.current = img.data._id;
 
-    const data = {
-      imgThumb: imgRef.current,
-    };
-    const author = await updateAuthor(user._id, data);
+    // const data = {
+    //   imgThumb: imgRef.current,
+    // };
+    // const author = await updateAuthor(user._id, data);
 
-    setId(author.data);
+    // setId(author.data);
 
-    setImageUpdate(false);
+    // setImageUpdate(false);
+
+    // const testImage = imgRef.current.files[0];
+    const imageRef = ref(storage, `authorImg/${testImage.name + v4()}`);
+
+    try {
+      await uploadBytes(imageRef, testImage);
+      const link = await getDownloadURL(imageRef);
+      imgRef.current = link;
+
+      const data = {
+        imgThumb: imgRef.current,
+      };
+      const author = await updateAuthor(user._id, data);
+
+      setId(author.data);
+
+      setImageUpdate(false);
+    } catch (ex) {
+      console.log(ex);
+      console.log("wrong");
+    }
   };
 
   React.useEffect(() => {
     // console.log(user, followers);
-    if (imgThumb) setbase64String(arrayBufferToBase64(imgThumb.img.data.data));
+    if (imgThumb) setbase64String(imgThumb);
     else setbase64String("");
     // console.log("user lenda", user);
     if (user && followers) {
@@ -96,7 +120,7 @@ function ProfileRight({ author }) {
           {user && user.username === username && (
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg cursor-pointer"
-              src={`data:image/png;base64,${base64String}`}
+              src={`${base64String}`}
               alt="Bonnie image"
               onClick={() => setImageUpdate((s) => !s)}
             />
@@ -104,14 +128,14 @@ function ProfileRight({ author }) {
           {user && user.username !== username && (
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg "
-              src={`data:image/png;base64,${base64String}`}
+              src={`${base64String}`}
               alt="Bonnie image"
             />
           )}
           {!user && (
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg "
-              src={`data:image/png;base64,${base64String}`}
+              src={`${base64String}`}
               alt="Bonnie image"
             />
           )}

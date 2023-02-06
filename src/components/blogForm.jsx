@@ -3,11 +3,15 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../userContext";
 import { createBlog, uploadImage } from "./../services/apiService";
 import { resizeFile } from "../services/imgService";
+
 import EditorJS from "@editorjs/editorjs";
 import List from "@editorjs/list";
 import ImageTool from "@editorjs/image";
 import Underline from "@editorjs/underline";
 import http from "../services/httpService";
+import { storage } from "../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 const Header = require("@editorjs/header");
 const Marker = require("@editorjs/marker");
 const InlineCode = require("@editorjs/inline-code");
@@ -102,22 +106,29 @@ function BlogForm() {
 
   const handleImage = async () => {
     const testImage = await resizeFile(imgRef.current.files[0]);
-    console.log("tes", testImage);
-    console.log("tes2", imgRef.current.files[0]);
 
-    const img = await uploadImage(testImage);
-    console.log("img", img);
-    imgDataRef.current = img.data._id;
     const tags = tagsRef.current.value.split(" ");
-    const obj2 = {
-      title: titleRef.current.value,
-      brief: briefRef.current.value,
-      img: imgDataRef.current,
-      content: content,
-      tags: tags,
-      author: userId,
-    };
-    setData(obj2);
+    console.log(testImage);
+    const imageRef = ref(storage, `blogImg/${testImage.name + v4()}`);
+
+    try {
+      await uploadBytes(imageRef, testImage);
+      const link = await getDownloadURL(imageRef);
+      imgDataRef.current = link;
+      const obj2 = {
+        title: titleRef.current.value,
+        brief: briefRef.current.value,
+        img: link,
+        content: content,
+        tags: tags,
+        author: userId,
+      };
+      setData(obj2);
+      console.log(link);
+    } catch (ex) {
+      console.log(ex);
+      console.log("wrong");
+    }
   };
 
   const handleSubmit = async (e) => {

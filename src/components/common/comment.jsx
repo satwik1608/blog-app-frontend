@@ -6,6 +6,11 @@ function Comment({ comment, onChange }) {
   const [replyOpen, setReplyOpen] = React.useState(false);
   const { id: user } = React.useContext(UserContext);
   const [viewReply, setviewReply] = React.useState(false);
+
+  const setThumbnail = (person) => {
+    if (person.imgThumb) return person.imgThumb;
+    else return "https://picsum.photos/200";
+  };
   React.useEffect(() => {}, [replyOpen]);
 
   const onReset = () => {
@@ -23,7 +28,7 @@ function Comment({ comment, onChange }) {
           <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
             <img
               class="mr-2 w-6 h-6 rounded-full"
-              src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+              src={setThumbnail(comment.author)}
               alt="Michael Gough"
             />
             {comment.author.name}
@@ -105,7 +110,7 @@ function Comment({ comment, onChange }) {
                   <p class="inline-flex items-center mr-3 text-sm  text-gray-900 dark:text-white">
                     <img
                       class="mr-2 w-6 h-6 rounded-full"
-                      src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                      src={setThumbnail(cmtRep.author)}
                       alt="Michael Gough"
                     />
                     {cmtRep.author.name}

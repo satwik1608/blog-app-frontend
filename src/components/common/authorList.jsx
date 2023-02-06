@@ -36,9 +36,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
 
   function fillSrc(follower) {
     if (follower.imgThumb) {
-      return `data:image/png;base64,${arrayBufferToBase64(
-        follower.imgThumb.img.data.data
-      )}`;
+      return follower.imgThumb;
     }
 
     return "https://picsum.photos/200";

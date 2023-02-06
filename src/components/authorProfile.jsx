@@ -16,7 +16,6 @@ function AuthorProfile() {
     const getAuth = async () => {
       const author = await getAuthor(id);
       setAuthor(author.data);
-      if (author.data.imgThumb) setImgThumb(author.data.imgThumb.img.data.data);
     };
 
     getAuth();

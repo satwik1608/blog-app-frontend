@@ -16,6 +16,7 @@
     "dante3": "^1.1.6",
     "editorjs-html": "^3.4.2",
     "editorjs-parser": "^1.5.3",
+    "firebase": "^9.17.1",
     "flowbite": "^1.5.5",
     "flowbite-react": "^0.3.7",
     "font-awesome": "^4.7.0",
@@ -36,6 +37,7 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwind-toast": "^1.1.0",
     "util": "^0.12.5",
+    "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -16,6 +16,7 @@ function Card({
   id,
   authorId,
   brief,
+  img,
 }) {
   const { id: user } = React.useContext(UserContext);
   function arrayBufferToBase64(buffer) {
@@ -35,16 +36,13 @@ function Card({
     const getImg = async () => {
       const img = await getBlogImage(id);
       if (author.imgThumb) {
-        setthumbNail(
-          `data:image/png;base64,${arrayBufferToBase64(
-            author.imgThumb.img.data.data
-          )}`
-        );
+        setthumbNail(author.imgThumb);
       } else {
         setthumbNail("https://picsum.photos/200");
       }
 
-      setBase64String(arrayBufferToBase64(img.data.img.img.data.data));
+      setBase64String(img.data.img);
+      // console.log("law", img);
     };
 
     getImg();
@@ -54,15 +52,6 @@ function Card({
     }
   }, []);
 
-  function fillSrc(person) {
-    if (person.imgThumb) {
-      return `data:image/png;base64,${arrayBufferToBase64(
-        author.imgThumb.img.data.data
-      )}`;
-    }
-
-    return "https://picsum.photos/200";
-  }
   const onList = (id, flag) => {
     if (flag == 1) {
       setlist(true);
@@ -173,7 +162,7 @@ function Card({
         {base64String && (
           <img
             className="object-cover w-full rounded-t-lg h-32 w-32 md:h-32 md:w-32 md:rounded-none md:rounded-lg"
-            src={`data:image/png;base64,${base64String}`}
+            src={`${base64String}`}
             alt="why"
           />
         )}

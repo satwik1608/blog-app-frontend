@@ -68,7 +68,7 @@ function BlogFull() {
       const author = await getAuthor(blog.data.author);
 
       // console.log(arrayBufferToBase64(blog.data.img.img.data.data));
-      setbase64String(arrayBufferToBase64(blog.data.img.img.data.data));
+      // setbase64String(arrayBufferToBase64(blog.data.img.img.data.data));
       // console.log("before", wasLiked.current);
       // console.log(user);
 
@@ -94,10 +94,7 @@ function BlogFull() {
         </div>
 
         <div>
-          <img
-            src={`data:image/png;base64,${base64String}`}
-            className="rounded"
-          />
+          <img src={blog.img} className="rounded" />
         </div>
 
         <p class="mb-3 mt-10  text-gray-800 dark:text-white w-100 flex-wrap tracking-wide text-lg leading-relaxed">
