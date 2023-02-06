@@ -11,10 +11,11 @@ import SearchResult from "./components/searchResult";
 import BlogForm from "./components/blogForm";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser, logout } from "./services/authService";
-
+import { Navigate } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import UserContext from "./userContext";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Redirect } from "react-router-dom";
 
 import { getAuthorId } from "./services/apiService";
 import RequireAuth from "./components/requireAuth";
@@ -23,6 +24,8 @@ import { toast } from "react-toastify";
 import Modal from "./components/common/modal";
 import FollowerList from "./components/common/followerList";
 import Footer from "./components/footer";
+import Page404 from "./components/common/page404";
+import InProgress from "./components/common/inProgress";
 function App() {
   const [user, setUser] = React.useState();
   const [id, setId] = React.useState();
@@ -103,7 +106,6 @@ function App() {
         <NavBar />
 
         <Routes>
-          <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/author/:id" element={<AuthorProfile />} />
@@ -111,7 +113,8 @@ function App() {
           <Route path="blogs/:id" element={<BlogFull />} />
           <Route path="tags/:tag" element={<TagProfile />} />
           <Route path="/followers/:id" element={<FollowerList />} />
-
+          <Route path="/404" element={<Page404 />} />
+          <Route path="/in-transit" element={<InProgress />} />
           <Route
             path="new-blog"
             element={
@@ -128,9 +131,11 @@ function App() {
               </RequireAuth>
             }
           />
+          <Route path="/" exact element={<HomePage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         {/* <Footer /> */}
-        <Modal />
+        {/* <Page404 /> */}
       </UserContext.Provider>
     </React.Fragment>
   );

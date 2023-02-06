@@ -14,11 +14,13 @@ function TagStack({ search }) {
       tagss.forEach((t) => {
         if (search) {
           if (t.toLowerCase().startsWith(search.toLowerCase())) tag.push(t);
-        } else tag.push(t);
+        } else tag.push(t.toLowerCase());
       });
     });
 
-    setTags(tag);
+    const uniqueArray = [...new Set(tag)];
+    // console.log(uniqueArray);
+    setTags(uniqueArray);
   };
 
   React.useEffect(() => {

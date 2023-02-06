@@ -32,7 +32,7 @@ function AuthorProfile() {
 
           <BlogList id={id} author={author.name} />
         </div>
-        <div className="fixed  inset-y-0 right-0 mt-28 mr-16 scrollbar-hide">
+        <div className="fixed  overflow-auto inset-y-0 right-0 mt-28 mr-16 scrollbar-hide">
           <ProfileRight author={author} />
         </div>
       </div>

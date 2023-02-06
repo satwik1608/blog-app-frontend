@@ -59,7 +59,9 @@ function BlogForm() {
         },
         onChange: (api, event) => {
           console.log("gd");
-          const tags = tagsRef.current.value.split(" ");
+          const tagss = tagsRef.current.value.toLowerCase();
+
+          const tags = tagss.split(" ");
           editor.current
             .save()
             .then((outputData) => {
@@ -96,9 +98,9 @@ function BlogForm() {
   if (user) userId = user._id;
   else userId = "";
   const handleChange = () => {
-    tagsRef.current.value.toLowerCase();
+    const tagss = tagsRef.current.value.toLowerCase();
 
-    const tags = tagsRef.current.value.split(" ");
+    const tags = tagss.split(" ");
     const obj = {
       title: titleRef.current.value,
       brief: briefRef.current.value,
@@ -113,8 +115,9 @@ function BlogForm() {
 
   const handleImage = async () => {
     const testImage = await resizeFile(imgRef.current.files[0]);
-    tagsRef.current.value.toLowerCase();
-    const tags = tagsRef.current.value.split(" ");
+    const tagss = tagsRef.current.value.toLowerCase();
+
+    const tags = tagss.split(" ");
     console.log(testImage);
     const imageRef = ref(storage, `blogImg/${testImage.name + v4()}`);
 

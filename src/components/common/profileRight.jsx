@@ -98,7 +98,7 @@ function ProfileRight({ author }) {
   React.useEffect(() => {
     // console.log(user, followers);
     if (imgThumb) setbase64String(imgThumb);
-    else setbase64String("");
+    else setbase64String("https://picsum.photos/200");
     // console.log("user lenda", user);
     if (user && followers) {
       // console.log("follo", followers);
@@ -126,18 +126,22 @@ function ProfileRight({ author }) {
             />
           )}
           {user && user.username !== username && (
-            <img
-              className="w-24 h-24 mb-3 rounded-full shadow-lg "
-              src={`${base64String}`}
-              alt="Bonnie image"
-            />
+            <Link to={`/author/${authorId}`}>
+              <img
+                className="w-24 h-24 mb-3 rounded-full shadow-lg "
+                src={`${base64String}`}
+                alt="Bonnie image"
+              />
+            </Link>
           )}
           {!user && (
-            <img
-              className="w-24 h-24 mb-3 rounded-full shadow-lg "
-              src={`${base64String}`}
-              alt="Bonnie image"
-            />
+            <Link to={`/author/${authorId}`}>
+              <img
+                className="w-24 h-24 mb-3 rounded-full shadow-lg "
+                src={`${base64String}`}
+                alt="Bonnie image"
+              />
+            </Link>
           )}
         </div>
 

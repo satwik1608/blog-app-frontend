@@ -86,7 +86,7 @@ function NavBar() {
             alt="Flowbite Logo"
           />
           <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            One Piece
+            Inkwell
           </span>
         </Link>
 
@@ -199,16 +199,17 @@ function NavBar() {
             )}
             {user && <SearchBox />}
             <li>
-              <a
-                href="#"
+              <Link
+                to={"/in-transit"}
                 class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:text-black md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Services
-              </a>
+              </Link>
             </li>
             <li>
               <a
-                href="#"
+                href="https://twitter.com/SatwikKashyap6"
+                target="_blank"
                 class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:text-black md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Contact

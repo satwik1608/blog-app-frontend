@@ -83,7 +83,7 @@ function BlogFull() {
     };
 
     getBl();
-  }, [wasLiked.current, likes, user]);
+  }, [wasLiked.current, likes, user, isComment]);
 
   if (!blog) return <p>Wait</p>;
   return (
@@ -131,7 +131,7 @@ function BlogFull() {
 
         {isComment && <Comments blog={blog} />}
       </div>
-      <div className="fixed overflow-auto inset-y-0 right-0 mr-16 mt-28 scrollbar-hide">
+      <div className="fixed overflow-auto inset-y-0 right-0 mt-28 mr-16 scrollbar-hide">
         <ProfileRight author={author} />
       </div>
     </div>

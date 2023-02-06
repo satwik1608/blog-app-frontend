@@ -14,7 +14,7 @@ function HomePage() {
       const func = async () => {
         const authors = await listAuthor();
         const author = authors.data.filter(
-          (a) => !user.following.includes(a._id)
+          (a) => !user.following.includes(a._id) && user._id !== a._id
         );
 
         setNotFollowing(author);

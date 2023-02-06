@@ -31,7 +31,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-image-file-resizer": "^0.4.8",
-    "react-router-dom": "^6.5.0",
+    "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
     "stream": "^0.0.2",

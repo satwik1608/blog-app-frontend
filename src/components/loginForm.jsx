@@ -2,6 +2,7 @@ import React from "react";
 import { login, logout } from "../services/authService";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 function LoginForm() {
   const [data, setData] = React.useState(null);
   const usernameRef = React.useRef("");
@@ -95,12 +96,12 @@ function LoginForm() {
                     </label>
                   </div>
                 </div>
-                <a
-                  href="#"
+                <Link
+                  to={'/404'}
                   class="text-sm font-medium text-gray-500  hover:underline dark:text-primary-500"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <button
                 type="submit"
@@ -110,12 +111,12 @@ function LoginForm() {
               </button>
               <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
-                <a
-                  href="#"
+                <Link
+                  to="/register"
                   class="font-medium text-primary-600 hover:underline dark:text-primary-500 "
                 >
                   Sign up
-                </a>
+                </Link>
               </p>
             </form>
           </div>
