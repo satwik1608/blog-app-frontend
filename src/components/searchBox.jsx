@@ -12,7 +12,7 @@ function SearchBox() {
 
   return (
     <React.Fragment>
-      {/* <form class="flex items-center">
+      <form class="flex items-center">
         <label for="simple-search" class="sr-only">
           Search
         </label>
@@ -62,9 +62,9 @@ function SearchBox() {
           </svg>
           <span class="sr-only">Search</span>
         </Link>
-      </form> */}
+      </form>
 
-      <div>
+      {/* <div>
         <Link
           to={`/search/${data}`}
           class="flex md:order-2"
@@ -143,6 +143,7 @@ function SearchBox() {
           </svg>
         </button>
       </div>
+    </React.Fragment> */}
     </React.Fragment>
   );
 }
