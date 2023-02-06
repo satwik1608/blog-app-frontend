@@ -12,6 +12,7 @@ import http from "../services/httpService";
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import { title } from "@uiw/react-md-editor";
 const Header = require("@editorjs/header");
 const Marker = require("@editorjs/marker");
 const InlineCode = require("@editorjs/inline-code");
@@ -27,6 +28,8 @@ function BlogForm() {
   const navigate = useNavigate();
   const edito = React.useRef(false);
   const editor = React.useRef();
+  const [titleError, setTitleError] = React.useState("");
+  const [briefError, setbriefError] = React.useState("");
 
   const [isBlogFilled, setIsBlogFilled] = React.useState(false);
   React.useEffect(() => {
@@ -86,12 +89,15 @@ function BlogForm() {
 
   const [data, setData] = React.useState({});
   const [content, setContent] = React.useState([]);
+
   const { id: user } = React.useContext(UserContext);
   let userId;
 
   if (user) userId = user._id;
   else userId = "";
   const handleChange = () => {
+    tagsRef.current.value.toLowerCase();
+
     const tags = tagsRef.current.value.split(" ");
     const obj = {
       title: titleRef.current.value,
@@ -101,12 +107,13 @@ function BlogForm() {
       tags: tags,
       author: userId,
     };
+    console.log(obj);
     setData(obj);
   };
 
   const handleImage = async () => {
     const testImage = await resizeFile(imgRef.current.files[0]);
-
+    tagsRef.current.value.toLowerCase();
     const tags = tagsRef.current.value.split(" ");
     console.log(testImage);
     const imageRef = ref(storage, `blogImg/${testImage.name + v4()}`);
@@ -133,8 +140,28 @@ function BlogForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      titleRef.current.value.length < 3 ||
+      titleRef.current.value.length > 70
+    ) {
+      setTitleError("Title should be between 3 - 70 characters");
+      setbriefError("");
+      return;
+    }
+    if (
+      briefRef.current.value.length < 3 ||
+      briefRef.current.value.length > 70
+    ) {
+      setbriefError("Brief should be between 3 - 70 characters");
+      setTitleError("");
+      return;
+    }
+
     try {
       await createBlog(data);
+      setTitleError("");
+      setbriefError("");
       navigate("/");
     } catch (ex) {
       console.log(ex);
@@ -167,6 +194,28 @@ function BlogForm() {
                 onChange={handleChange}
               />
             </div>
+            {titleError && (
+              <div
+                class="flex p-1 mb-1 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-900 dark:text-red-400"
+                role="alert"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="flex-shrink-0 inline w-5 h-5 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>{titleError}</div>
+              </div>
+            )}
             <div class="w-full">
               <label
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -202,6 +251,7 @@ function BlogForm() {
                 onChange={handleChange}
               />
             </div>
+
             <div>
               <label
                 for="brand"
@@ -220,6 +270,28 @@ function BlogForm() {
                 onChange={handleChange}
               />
             </div>
+            {briefError && (
+              <div
+                class="flex p-1 mb-1 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-900 dark:text-red-400"
+                role="alert"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="flex-shrink-0 inline w-5 h-5 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>{briefError}</div>
+              </div>
+            )}
 
             <div class="sm:col-span-2 editable rounded-lg border border-gray-200 dark:bg-indigo-300 bg-white dark:rounded">
               <div
