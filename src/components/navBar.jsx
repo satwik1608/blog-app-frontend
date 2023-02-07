@@ -132,7 +132,7 @@ function NavBar() {
               ></path>
             </svg>
           </button>
-          <button
+          {/* <button
             id="theme-toggle"
             type="button"
             onClick={() => setLocalStore((c) => !c)}
@@ -160,7 +160,7 @@ function NavBar() {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </button>
+          </button> */}
         </div>
 
         <div
