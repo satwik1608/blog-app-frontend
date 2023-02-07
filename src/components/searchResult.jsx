@@ -8,7 +8,7 @@ function SearchResult() {
   const { data } = useParams();
   return (
     <React.Fragment>
-      <div className="flex flex-row">
+      <div className="grid grid-cols-3 gap-4 place-content-between">
         <BlogList search={data} />
         <TagStack search={data} />
         <AuthorList search={data} />

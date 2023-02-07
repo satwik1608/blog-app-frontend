@@ -5,8 +5,8 @@ function TagStack({ search }) {
   const [blogs, setBlogs] = React.useState([]);
   const [tags, setTags] = React.useState([]);
   const num = React.useRef(0);
-
-  const call = () => {
+  const [loading, setLoading] = React.useState(false);
+  const call = async () => {
     const tag = [];
     blogs.forEach((b) => {
       const tagss = b.tags;
@@ -20,16 +20,18 @@ function TagStack({ search }) {
 
     const uniqueArray = [...new Set(tag)];
     // console.log(uniqueArray);
-    setTags(uniqueArray);
+    await setTags(uniqueArray);
   };
 
   React.useEffect(() => {
+    setLoading(true);
     const getBl = async () => {
       const bl = await getBlogs();
 
-      setBlogs(bl.data);
+      await setBlogs(bl.data);
 
-      call();
+      await call();
+      setLoading(false);
     };
 
     getBl();
@@ -38,7 +40,61 @@ function TagStack({ search }) {
   if (blogs.length === 0) {
     ++num.current;
   }
-  if (blogs.length === 0) return <p>wait</p>;
+
+  if (loading) {
+    return (
+      <div role="status" class="space-y-2.5 mt-4 animate-pulse max-w-lg">
+        <div class="flex items-center w-full space-x-2">
+          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+        </div>
+        <div class="flex items-center w-full space-x-2 max-w-[480px]">
+          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+        </div>
+        <div class="flex items-center w-full space-x-2 max-w-[400px]">
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+        </div>
+        <div class="flex items-center w-full space-x-2 max-w-[480px]">
+          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+        </div>
+        <div class="flex items-center w-full space-x-2 max-w-[440px]">
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+        </div>
+        <div class="flex items-center w-full space-x-2 max-w-[360px]">
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+        </div>
+        <span class="sr-only">Loading...</span>
+      </div>
+    );
+  }
+  if (tags.length === 0) {
+    if (search) {
+      return (
+        <li className="py-3 sm:py-4 list-none text-center">
+          <p className=" font-medium text-gray-900 truncate dark:text-white">
+            No tags with given keyword
+          </p>
+        </li>
+      );
+    } else {
+      <li className="py-3 sm:py-4 list-none text-center">
+        <p className=" font-medium text-gray-900 truncate dark:text-white">
+          Apparently no blogs had a tag
+        </p>
+      </li>;
+    }
+  }
 
   return (
     <div className="p-10">

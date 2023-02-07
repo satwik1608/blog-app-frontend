@@ -2,8 +2,8 @@ import jwtDecode from "jwt-decode";
 import http, { debug } from "./httpService";
 import Cookies from "js-cookie";
 
-const url = "https://shiny-ox-leotard.cyclic.app";
-// const url = "http://localhost:1337";
+// const url = "https://shiny-ox-leotard.cyclic.app";
+const url = "http://localhost:1337";
 export function getJwt() {
   return localStorage.getItem("token");
 }

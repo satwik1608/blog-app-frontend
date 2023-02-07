@@ -3,12 +3,14 @@ import { listAuthor } from "./../../services/apiService";
 import { Link } from "react-router-dom";
 import UserContext from "./../../userContext";
 import Modal from "./modal";
+import AuthorListSkeleton from "./authorListSkeleton";
 
 function AuthorList({ followers, search, notFollowing, authorId }) {
   const { id: user } = React.useContext(UserContext);
   const [data, setData] = React.useState([]);
   console.log("fdsf");
   console.log(followers, search, notFollowing);
+  const [loading, setLoading] = React.useState(false);
   const [base64String, setbase64String] = React.useState("");
   function arrayBufferToBase64(buffer) {
     var binary = "";
@@ -17,10 +19,13 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
     return window.btoa(binary);
   }
   React.useEffect(() => {
+    setLoading(true);
     const getAuth = async () => {
       const authors = await listAuthor(search);
       // setbase64String(arrayBufferToBase64());
-      setData(authors.data);
+      await setData(authors.data);
+
+      setLoading(false);
     };
 
     getAuth();
@@ -56,6 +61,22 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
             View all
           </Link>
         </div>
+        {loading && (
+          <>
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+          </>
+        )}
+        {followers.length === 0 && (
+          <li className="py-3 sm:py-4 list-none text-center">
+            <p className=" font-medium text-gray-900 truncate dark:text-white">
+              No Followers for this guy/girl
+            </p>
+          </li>
+        )}
         <ul className="list-none">
           {followers.map((follower) => (
             <Link
@@ -100,41 +121,59 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
   }
   if (search) {
     return (
-      <ul>
-        {data.map((d) => (
-          <Link to={`/author/${d._id}`} className="flow-root" key={d._id}>
-            <ul
-              role="list"
-              className="divide-y divide-gray-200 dark:divide-gray-700 list-none"
-            >
-              <li className="py-3 sm:py-4">
-                <div className="flex items-center space-x-4">
-                  <div className="flex-shrink-0">
-                    <img
-                      className="w-8 h-8 rounded-full"
-                      src={fillSrc(d)}
-                      alt="Neil image"
-                    />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
-                      {d.name}
-                    </p>
-                    <div className="flex flex-row space-x-3">
-                      <p className="text-sm text-gray-500  dark:text-gray-400">
-                        @{d.username}
+      <>
+        {loading && (
+          <>
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+          </>
+        )}
+        {data.length === 0 && (
+          <li className="py-3 sm:py-4 list-none text-center">
+            <p className=" font-medium text-gray-900 truncate dark:text-white">
+              No Author with given name
+            </p>
+          </li>
+        )}
+        <ul>
+          {data.map((d) => (
+            <Link to={`/author/${d._id}`} className="flow-root" key={d._id}>
+              <ul
+                role="list"
+                className="divide-y divide-gray-200 dark:divide-gray-700 list-none"
+              >
+                <li className="py-3 sm:py-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-shrink-0">
+                      <img
+                        className="w-8 h-8 rounded-full"
+                        src={fillSrc(d)}
+                        alt="Neil image"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
+                        {d.name}
                       </p>
-                      <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        {d.email}
-                      </p>
+                      <div className="flex flex-row space-x-3">
+                        <p className="text-sm text-gray-500  dark:text-gray-400">
+                          @{d.username}
+                        </p>
+                        <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                          {d.email}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            </ul>
-          </Link>
-        ))}
-      </ul>
+                </li>
+              </ul>
+            </Link>
+          ))}
+        </ul>
+      </>
     );
   }
   if (notFollowing) {
@@ -145,7 +184,23 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
             People to Follow
           </h5>
         </div>
+        {loading && (
+          <>
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+            <AuthorListSkeleton />
+          </>
+        )}
         <ul>
+          {notFollowing.length === 0 && (
+            <li className="py-3 sm:py-4 list-none text-center">
+              <p className=" font-medium text-gray-900 truncate dark:text-white">
+                Apparently he/she has followed everyone
+              </p>
+            </li>
+          )}
           {notFollowing.map((notFollow) => (
             <Link
               to={`/author/${notFollow._id}`}

@@ -12,6 +12,11 @@ function Trending() {
     };
     getBlog();
   }, []);
+  if (blogs.length === 0) {
+    <p class="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">
+      No Trending blogs
+    </p>;
+  }
   return (
     <React.Fragment>
       <p className="mb-2  font-extrabold border-b border-black tracking-tight leading-none text-gray-500 md:text-xl lg:text-xl dark:text-white">
