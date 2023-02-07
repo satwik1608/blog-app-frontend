@@ -6,6 +6,7 @@ import Trending from "./trending";
 import UserContext from "../userContext";
 import AuthorList from "./common/authorList";
 import { listAuthor } from "../services/apiService";
+import Hero from "./common/hero";
 function HomePage() {
   const { id: user } = React.useContext(UserContext);
   const [notFollowing, setNotFollowing] = React.useState([]);
@@ -27,6 +28,7 @@ function HomePage() {
   if (!user) {
     return (
       <React.Fragment>
+        <Hero />
         <Trending />
 
         <div className="grid grid-cols-2 gap-4 place-content-between">

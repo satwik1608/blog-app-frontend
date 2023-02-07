@@ -135,7 +135,6 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         {/* <Footer /> */}
-        {/* <Page404 /> */}
       </UserContext.Provider>
     </React.Fragment>
   );
