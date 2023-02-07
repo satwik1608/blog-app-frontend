@@ -31,13 +31,14 @@ function TagStack({ search }) {
       await setBlogs(bl.data);
 
       await call();
+      console.log(blogs);
       setLoading(false);
     };
 
     getBl();
   }, [num.current, search]);
 
-  if (blogs.length === 0) {
+  if (blogs.length === 0 && num.current < 1) {
     ++num.current;
   }
 
@@ -78,7 +79,8 @@ function TagStack({ search }) {
       </div>
     );
   }
-  if (tags.length === 0) {
+
+  if (blogs.length === 0) {
     if (search) {
       return (
         <li className="py-3 sm:py-4 list-none text-center">
@@ -88,16 +90,19 @@ function TagStack({ search }) {
         </li>
       );
     } else {
-      <li className="py-3 sm:py-4 list-none text-center">
-        <p className=" font-medium text-gray-900 truncate dark:text-white">
-          Apparently no blogs had a tag
-        </p>
-      </li>;
+      return (
+        <li className="py-3 sm:py-4 list-none text-center">
+          <p className=" font-medium text-gray-900 truncate dark:text-white">
+            Apparently no blogs had a tag
+          </p>
+        </li>
+      );
     }
   }
 
   return (
     <div className="p-10">
+      <p>wowo</p>
       <ul className="flex flex-row flex-wrap">
         {tags.map((tag) => (
           <Link
