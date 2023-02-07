@@ -24,16 +24,17 @@ function AuthorProfile() {
   if (author.length === 0) return <p>......</p>;
   return (
     <div>
-      <div className="grid grid-cols-2 gap-4 place-content-between ">
+      <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4 md:place-content-between ">
         <div className="p-2">
-          <div className="mb-7  font-extrabold border-b border-gray-800 tracking-tight leading-none dark:text-slate-100  md:text-xl lg:text-4xl  ">
+          <div className="mb-7 invisible font-extrabold border-b border-gray-800 tracking-tight leading-none text-lg dark:text-slate-100 md:visible  md:text-xl lg:text-4xl  ">
             {author.name}
           </div>
 
+          <div className="md:fixed  overflow-auto md:inset-y-0 md:right-0 md:mt-28 md:mr-16 scrollbar-hide">
+            <ProfileRight author={author} />
+          </div>
+
           <BlogList id={id} author={author.name} />
-        </div>
-        <div className="fixed  overflow-auto inset-y-0 right-0 mt-28 mr-16 scrollbar-hide">
-          <ProfileRight author={author} />
         </div>
       </div>
     </div>

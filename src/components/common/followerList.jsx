@@ -35,12 +35,12 @@ function FollowerList() {
 
   if (followers) {
     return (
-      <div className="flex flex-row flex-wide  justify-center  ">
-        <div className="p-2 w-1/2">
-          <div class="mb-7  font-extrabold border-b border-gray-200 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
+      <div className="flex flex-row flex-wide justify-center  ">
+        <div className="md:p-2 md:w-1/2">
+          <div class="mb-7  font-extrabold mt-4 border-b border-gray-200 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
             Followers
           </div>
-          <div className="w-full  p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full  md:p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <ul className="list-none">
               {followers.map((follower) => (
                 <Link

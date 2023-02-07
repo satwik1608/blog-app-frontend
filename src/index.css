@@ -39,9 +39,15 @@
     /* background-color: #1f2937; */
     /* background-color: aliceblue; */
   
-    padding:3rem;
+    
     
   font-family: 'Roboto', sans-serif;
+}
+
+@media only screen and (min-width: 640px){
+  #root {
+    padding: 3rem;
+  }
 }
 
 .cdx-marker{

@@ -197,7 +197,11 @@ function NavBar() {
                 </Link>
               </li>
             )}
-            {user && <SearchBox />}
+            {user && (
+              <div className="invisible md:visible">
+                <SearchBox />
+              </div>
+            )}
             <li>
               <Link
                 to={"/in-transit"}

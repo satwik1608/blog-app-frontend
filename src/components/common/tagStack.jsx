@@ -80,7 +80,7 @@ function TagStack({ search }) {
     );
   }
 
-  if (blogs.length === 0) {
+  if (tags.length === 0) {
     if (search) {
       return (
         <li className="py-3 sm:py-4 list-none text-center">
@@ -102,7 +102,6 @@ function TagStack({ search }) {
 
   return (
     <div className="p-10">
-      <p>wowo</p>
       <ul className="flex flex-row flex-wrap">
         {tags.map((tag) => (
           <Link

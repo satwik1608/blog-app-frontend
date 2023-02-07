@@ -12,6 +12,7 @@ module.exports = {
       },
     },
   },
+
   darkMode: "class",
 
   plugins: [require("tailwind-scrollbar-hide"), require("flowbite/plugin")],

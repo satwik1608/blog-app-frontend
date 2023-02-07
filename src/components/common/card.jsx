@@ -71,12 +71,12 @@ function Card({
   }
   return (
     <>
-      <div className="flex flex-col items-center mb-6  border-b border-black rounded md:flex-row md:max-w-xl hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+      <div className="flex flex-row items-center mb-6  border-b border-black rounded md:flex-row md:max-w-xl hover:bg-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <div className="flex flex-col justify-between w-96 p-3 font-bold text-bg-neutral-900  leading-normal">
           <div className="flex flex-row mb-2">
             {thumbNail && (
               <img
-                className="w-8 h-8 rounded-full mr-2 content-center items-center"
+                className="w-4 h-4 md:w-8 md:h-8 rounded-full mr-2 content-center items-center"
                 src={thumbNail}
                 alt="Neil image"
               />
@@ -101,7 +101,10 @@ function Card({
               </div>
             )}
             <div>
-              <Link to={`/author/${authorId}`} className="dark:text-slate-100">
+              <Link
+                to={`/author/${authorId}`}
+                className="text-sm md:text-base dark:text-slate-100"
+              >
                 {author.name}
               </Link>
             </div>
@@ -161,7 +164,7 @@ function Card({
 
         {base64String && (
           <img
-            className="object-cover w-full rounded-t-lg h-32 w-32 md:h-32 md:w-32 md:rounded-none md:rounded-lg"
+            className="object-cover w-full rounded-lg h-24 w-24 md:h-32 md:w-32 md:rounded-none md:rounded-lg"
             src={`${base64String}`}
             alt="why"
           />
@@ -171,7 +174,7 @@ function Card({
             role="status"
             class="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex md:items-center"
           >
-            <div class="flex items-center justify-center h-32 w-32 bg-gray-300 rounded sm:w-32 dark:bg-gray-700">
+            <div class="flex items-center justify-center h-24 w-24 bg-gray-300 rounded sm:w-32 dark:bg-gray-700">
               <svg
                 class="w-12 h-12 text-gray-200 "
                 xmlns="http://www.w3.org/2000/svg"

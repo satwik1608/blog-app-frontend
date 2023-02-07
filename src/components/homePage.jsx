@@ -31,11 +31,11 @@ function HomePage() {
         <Hero />
         <Trending />
 
-        <div className="grid grid-cols-2 gap-4 place-content-between">
+        <div className="md:grid md:grid-cols-2 md:gap-4 md:place-content-between">
           <div className="">
             <BlogList />
           </div>
-          <div className="">
+          <div className="invisible md:visible">
             <TagStack />
           </div>
         </div>
@@ -45,11 +45,11 @@ function HomePage() {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 place-content-between">
+      <div className="md:grid md:grid-cols-2 md:gap-4 md:place-content-between">
         <div className="">
           <BlogList />
         </div>
-        <div className="fixed overflow-auto inset-y-0 right-0 mr-16 mt-20 scrollbar-hide">
+        <div className="fixed overflow-auto inset-y-0 right-0 mr-16 mt-20 scrollbar-hide invisible md:visible">
           <AuthorList notFollowing={notFollowing} />
         </div>
       </div>

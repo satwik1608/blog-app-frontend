@@ -49,7 +49,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
 
   if (followers) {
     return (
-      <div className="overflow-auto w-full max-w-md p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div className="overflow-auto w-full  max-w-md p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <div className="flex items-center justify-between mb-4">
           <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
             Followers

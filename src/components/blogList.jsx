@@ -85,7 +85,7 @@ function BlogList({ id, author, tag, search }) {
   if (isLoading)
     return (
       <div>
-        <div class="inline-flex rounded-md shadow-sm" role="group">
+        <div class="inline-flex rounded-md mt-4 shadow-sm" role="group">
           {!user && (
             <button
               type="button"
@@ -148,7 +148,7 @@ function BlogList({ id, author, tag, search }) {
   if (blogs.length === 0) {
     return (
       <div>
-        <div class="inline-flex rounded-md shadow-sm" role="group">
+        <div class="inline-flex rounded-md mt-4 shadow-sm" role="group">
           {!user && (
             <button
               type="button"
@@ -220,7 +220,7 @@ function BlogList({ id, author, tag, search }) {
   }
   return (
     <div>
-      <div class="inline-flex rounded-md shadow-sm" role="group">
+      <div class="inline-flex rounded-md mt-4 md:mt-0 shadow-sm" role="group">
         {!user && (
           <button
             type="button"
