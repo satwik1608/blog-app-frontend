@@ -114,7 +114,7 @@ function ProfileRight({ author }) {
 
   // console.log(user);
   return (
-    <div className=" max-w-96 bg-white border-left border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div className="md:max-w-96  bg-white border-left border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="flex flex-col items-center pb-10">
         <div className="flex flex-row space-x-3  items-center justify-center ">
           {user && user.username === username && (

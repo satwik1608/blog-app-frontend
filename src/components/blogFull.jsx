@@ -87,9 +87,9 @@ function BlogFull() {
 
   if (!blog) return <p>Wait</p>;
   return (
-    <div className="flex flex-row ">
+    <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:place-content-between">
       <div className="p-2 basis-1/2 m-5">
-        <div class="mb-7  font-extrabold border-b border-black dark:border-slate-100 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
+        <div class="mb-7 mt-3 font-extrabold border-b border-black dark:border-slate-100 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
           {blog.title}
         </div>
 
@@ -131,7 +131,7 @@ function BlogFull() {
 
         {isComment && <Comments blog={blog} />}
       </div>
-      <div className="fixed overflow-auto inset-y-0 right-0 mt-28 mr-16 scrollbar-hide">
+      <div className="lg:fixed lg:overflow-auto lg:inset-y-0 lg:right-0 lg:mt-28 lg:mr-16 lg:scrollbar-hide">
         <ProfileRight author={author} />
       </div>
     </div>

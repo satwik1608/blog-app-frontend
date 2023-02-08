@@ -197,7 +197,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
           {notFollowing.length === 0 && (
             <li className="py-3 sm:py-4 list-none text-center">
               <p className=" font-medium text-gray-900 truncate dark:text-white">
-                Apparently he/she has followed everyone
+                Apparently you have followed everyone
               </p>
             </li>
           )}

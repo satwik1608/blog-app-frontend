@@ -15,9 +15,7 @@
   ol {
     @apply list-decimal
   }
-  ul {
-    @apply list-disc
-  }
+ 
   
   mark {
     @apply bg-cyan-400
@@ -26,6 +24,8 @@
   #root {
     @apply dark:bg-gray-800
   }
+
+  
  
 };
 @tailwind components;
