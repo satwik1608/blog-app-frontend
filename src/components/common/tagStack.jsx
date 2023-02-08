@@ -32,13 +32,13 @@ function TagStack({ search }) {
 
       await call();
       console.log(blogs);
-      setLoading(false);
+      await setLoading(false);
     };
 
     getBl();
   }, [num.current, search]);
-
-  if (blogs.length === 0 && num.current < 1) {
+  // potential bug if all the blogs are deleted but aisa kabhi mai hone nhi doonga
+  if (blogs.length === 0) {
     ++num.current;
   }
 
