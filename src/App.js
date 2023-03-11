@@ -16,7 +16,7 @@ import { Navigate } from "react-router-dom";
 import UserContext from "./userContext";
 
 import { Route, Routes, Redirect } from "react-router-dom";
-
+import { QueryClient, QueryClientProvider } from "react-query";
 import { getAuthorId } from "./services/apiService";
 import RequireAuth from "./components/requireAuth";
 import AuthorUpdateForm from "./components/authorUpdateForm";
@@ -29,6 +29,8 @@ import InProgress from "./components/common/inProgress";
 function App() {
   const [user, setUser] = React.useState();
   const [id, setId] = React.useState();
+
+  const queryClient = new QueryClient();
 
   React.useEffect(() => {
     var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
@@ -90,52 +92,54 @@ function App() {
 
   return (
     <React.Fragment>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-      <UserContext.Provider value={{ id, setId }}>
-        <NavBar />
+      <QueryClientProvider client={queryClient}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        <UserContext.Provider value={{ id, setId }}>
+          <NavBar />
 
-        <Routes>
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/author/:id" element={<AuthorProfile />} />
-          <Route path="/search/:data" element={<SearchResult />} />
-          <Route path="blogs/:id" element={<BlogFull />} />
-          <Route path="tags/:tag" element={<TagProfile />} />
-          <Route path="/followers/:id" element={<FollowerList />} />
-          <Route path="/404" element={<Page404 />} />
-          <Route path="/in-transit" element={<InProgress />} />
-          <Route
-            path="new-blog"
-            element={
-              <RequireAuth>
-                <BlogForm />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="edit-author"
-            element={
-              <RequireAuth>
-                <AuthorUpdateForm />
-              </RequireAuth>
-            }
-          />
-          <Route path="/" exact element={<HomePage />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-        {/* <Footer /> */}
-      </UserContext.Provider>
+          <Routes>
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/author/:id" element={<AuthorProfile />} />
+            <Route path="/search/:data" element={<SearchResult />} />
+            <Route path="blogs/:id" element={<BlogFull />} />
+            <Route path="tags/:tag" element={<TagProfile />} />
+            <Route path="/followers/:id" element={<FollowerList />} />
+            <Route path="/404" element={<Page404 />} />
+            <Route path="/in-transit" element={<InProgress />} />
+            <Route
+              path="new-blog"
+              element={
+                <RequireAuth>
+                  <BlogForm />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="edit-author"
+              element={
+                <RequireAuth>
+                  <AuthorUpdateForm />
+                </RequireAuth>
+              }
+            />
+            <Route path="/" exact element={<HomePage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+          {/* <Footer /> */}
+        </UserContext.Provider>
+      </QueryClientProvider>
     </React.Fragment>
   );
 }

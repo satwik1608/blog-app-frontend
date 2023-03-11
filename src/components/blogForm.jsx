@@ -154,9 +154,9 @@ function BlogForm() {
     }
     if (
       briefRef.current.value.length < 3 ||
-      briefRef.current.value.length > 70
+      briefRef.current.value.length > 150
     ) {
-      setbriefError("Brief should be between 3 - 70 characters");
+      setbriefError("Brief should be between 3 - 150 characters");
       setTitleError("");
       return;
     }
