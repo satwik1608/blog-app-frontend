@@ -35,7 +35,7 @@ function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    // console.log(usernameRef.current.value);
     if (!validateEmail(emailRef.current.value)) {
       setemailError("abey theek se likh le email chacha");
       setnameError("");
@@ -45,16 +45,18 @@ function RegisterForm() {
     }
     if (
       usernameRef.current.value.length < 3 ||
-      usernameRef.current.value.length > 12
+      usernameRef.current.value.length > 30
     ) {
-      setusernameError("3 - 12 characters ke beech mein chahiye username");
+      setusernameError("3 - 30 characters ke beech mein chahiye username");
+
       setemailError("");
       setpasswordError("");
-      setusernameError("");
+      setnameError("");
       return;
     }
     if (nameRef.current.value.length < 3 || nameRef.current.value.length > 25) {
       setnameError("3 - 25 characters ke beech mein chahiye name");
+
       setemailError("");
       setpasswordError("");
       setusernameError("");
@@ -74,6 +76,7 @@ function RegisterForm() {
     try {
       await createAuthor(data);
       await login({ username: data.username, password: data.password });
+      console.log("w");
       setnameError("");
       setpasswordError("");
       setusernameError("");
