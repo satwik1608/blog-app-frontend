@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./blog.css";
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import MDEditor from "@uiw/react-md-editor";
@@ -102,7 +102,7 @@ function BlogFull() {
             blog.content.map((p) => (
               <div
                 dangerouslySetInnerHTML={iframe(p)}
-                className="break-words w-4/4 mb-4"
+                className="break-words w-4/4 mb-4 check"
               />
             ))}
         </p>

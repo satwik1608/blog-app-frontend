@@ -21,6 +21,8 @@
     @apply bg-cyan-400
   }
 
+  
+
   #root {
     @apply dark:bg-gray-800
   }
