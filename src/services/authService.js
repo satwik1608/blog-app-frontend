@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 
 const url = "https://shiny-ox-leotard.cyclic.app";
 // const url = "http://localhost:1337";
+const wow = 1;
 export function getJwt() {
   return localStorage.getItem("token");
 }
