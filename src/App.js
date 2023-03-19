@@ -26,6 +26,7 @@ import FollowerList from "./components/common/followerList";
 import Footer from "./components/footer";
 import Page404 from "./components/common/page404";
 import InProgress from "./components/common/inProgress";
+import EmailVerify from "./components/common/verifyEmail";
 function App() {
   const [user, setUser] = React.useState();
   const [id, setId] = React.useState();
@@ -118,6 +119,7 @@ function App() {
             <Route path="/followers/:id" element={<FollowerList />} />
             <Route path="/404" element={<Page404 />} />
             <Route path="/in-transit" element={<InProgress />} />
+            <Route path="/verify-email" element={<EmailVerify />} />
             <Route
               path="new-blog"
               element={

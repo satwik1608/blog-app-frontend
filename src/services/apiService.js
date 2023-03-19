@@ -65,6 +65,15 @@ export function updateComment(comment, id) {
   return http.put(`${url}/comments/${id}`, comment);
 }
 
+export function sendVerificationMail(userId, email) {
+  const obj = {
+    userId: userId,
+    email: email,
+  };
+  console.log("obj", obj);
+  return http.post(`${url}/send-verificaion-mail`, obj);
+}
+
 export function uploadImage(image) {
   // console.log(image);
   console.log("llol");
