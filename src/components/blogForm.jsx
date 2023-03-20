@@ -58,14 +58,14 @@ function BlogForm() {
           },
         },
         onChange: (api, event) => {
-          console.log("gd");
+          // console.log("gd");
           const tagss = tagsRef.current.value.toLowerCase();
 
           const tags = tagss.split(" ");
           editor.current
             .save()
             .then((outputData) => {
-              console.log("Article data: ", outputData);
+              // console.log("Article data: ", outputData);
               const html = edjsParser.parse(outputData);
               setContent(html);
               const obj = {
@@ -77,7 +77,7 @@ function BlogForm() {
                 author: userId,
               };
               setData(obj);
-              console.log(obj);
+              // console.log(obj);
             })
             .catch((error) => {
               console.log("Saving failed: ", error);
@@ -109,7 +109,7 @@ function BlogForm() {
       tags: tags,
       author: userId,
     };
-    console.log(obj);
+    // console.log(obj);
     setData(obj);
   };
 
@@ -118,7 +118,7 @@ function BlogForm() {
     const tagss = tagsRef.current.value.toLowerCase();
 
     const tags = tagss.split(" ");
-    console.log(testImage);
+    // console.log(testImage);
     const imageRef = ref(storage, `blogImg/${testImage.name + v4()}`);
 
     try {
@@ -134,10 +134,10 @@ function BlogForm() {
         author: userId,
       };
       setData(obj2);
-      console.log(link);
+      // console.log(link);
     } catch (ex) {
       console.log(ex);
-      console.log("wrong");
+      // console.log("wrong");
     }
   };
 

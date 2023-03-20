@@ -26,7 +26,7 @@ function FollowerList() {
   React.useEffect(() => {
     const getFollow = async () => {
       const followes = await getFollowers(id);
-      console.log(followes);
+      // console.log(followes);
       setFollowers(followes.data);
     };
 

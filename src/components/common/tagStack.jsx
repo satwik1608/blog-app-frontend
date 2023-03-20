@@ -31,7 +31,7 @@ function TagStack({ search }) {
       await setBlogs(bl.data);
 
       await call();
-      console.log(blogs);
+      // console.log(blogs);
       await setLoading(false);
     };
 

@@ -3,14 +3,12 @@ import UserContext from "./../../userContext";
 
 function Rating({ onLike, likes, wasLiked }) {
   const [liked, setLiked] = React.useState(false);
-  // console.log("likeS", liked);
+
   const [load, setLoad] = React.useState(0);
   const { id: user } = React.useContext(UserContext);
-  // console.log(wasLiked.current);
+
   const setLike = (id) => {
     setLiked(id);
-
-    // console.log(load);
     if (id) onLike(1);
     else onLike(-1);
 
@@ -18,10 +16,6 @@ function Rating({ onLike, likes, wasLiked }) {
   };
   React.useEffect(() => {
     setLiked(wasLiked.current);
-    // console.log("useEffect on");
-    // console.log(wasLiked.current);
-    // console.log("likeS", liked);
-    // console.log("useEffect off");
   }, [wasLiked]);
   if (!liked || !user)
     return (

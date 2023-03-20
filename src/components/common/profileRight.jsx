@@ -25,9 +25,9 @@ function ProfileRight({ author }) {
     imgThumb,
     profession,
   } = author;
-  console.log("author a", author);
-  console.log("imgf", imgThumb);
-  console.log("floofsd", followers);
+  // console.log("author a", author);
+  // console.log("imgf", imgThumb);
+  // console.log("floofsd", followers);
   const { id: user, setId } = React.useContext(UserContext);
 
   const [isFollower, setisFollower] = React.useState(false);
@@ -91,7 +91,7 @@ function ProfileRight({ author }) {
       setImageUpdate(false);
     } catch (ex) {
       console.log(ex);
-      console.log("wrong");
+      // console.log("wrong");
     }
   };
 

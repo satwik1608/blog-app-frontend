@@ -39,7 +39,7 @@ function AuthorUpdateForm() {
   };
 
   React.useEffect(() => {
-    console.log("usefdafs", user);
+    // console.log("usefdafs", user);
     usernameRef.current.value = user.username;
     // imgRef.current.value = user.imgThumb ? user.imgThumb : "";
     descriptionRef.current.value = user.description ? user.description : "";

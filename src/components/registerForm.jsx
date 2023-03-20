@@ -89,7 +89,7 @@ function RegisterForm() {
     try {
       await createAuthor(data);
       // await login({ username: data.username, password: data.password });
-      console.log("w");
+      // console.log("w");
       setnameError("");
       setpasswordError("");
       setusernameError("");

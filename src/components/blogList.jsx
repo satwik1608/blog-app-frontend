@@ -81,7 +81,7 @@ function BlogList({ id, author, tag, search }) {
 
     setId(author.data);
   };
-  console.log("auth", author);
+  // console.log("auth", author);
   if (isLoading)
     return (
       <div>

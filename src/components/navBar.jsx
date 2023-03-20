@@ -16,9 +16,9 @@ function NavBar() {
   };
 
   React.useEffect(() => {
-    console.log("lol");
+    // console.log("lol");
     // setLocalStore(false);
-    console.log(localStore);
+    // console.log(localStore);
 
     if (
       localStorage.getItem("color-theme") === "dark" ||
@@ -55,7 +55,7 @@ function NavBar() {
 
       // if set via local storage previously
       if (localStorage.getItem("color-theme")) {
-        console.log(localStorage.getItem("color-theme"), "lol");
+        // console.log(localStorage.getItem("color-theme"), "lol");
         if (localStorage.getItem("color-theme") === "light") {
           document.documentElement.classList.add("dark");
           localStorage.setItem("color-theme", "dark");

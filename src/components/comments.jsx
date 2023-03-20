@@ -14,7 +14,7 @@ function Comments({ blog }) {
   React.useEffect(() => {
     const getCom = async () => {
       const comments = await getComment();
-      console.log(comments.data);
+      // console.log(comments.data);
       const comment = comments.data.filter(
         (c) => c.blog._id === blog._id && c.replyIs === false
       );

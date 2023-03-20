@@ -8,8 +8,8 @@ import AuthorListSkeleton from "./authorListSkeleton";
 function AuthorList({ followers, search, notFollowing, authorId }) {
   const { id: user } = React.useContext(UserContext);
   const [data, setData] = React.useState([]);
-  console.log("fdsf");
-  console.log(followers, search, notFollowing);
+  // console.log("fdsf");
+  // console.log(followers, search, notFollowing);
   const [loading, setLoading] = React.useState(false);
   const [base64String, setbase64String] = React.useState("");
   function arrayBufferToBase64(buffer) {

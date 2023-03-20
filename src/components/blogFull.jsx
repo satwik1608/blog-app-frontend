@@ -20,20 +20,13 @@ import { Parser } from "html-to-react";
 const { iframe } = require("../services/utils");
 
 function BlogFull() {
-  const [blog, setBlog] = React.useState({});
-  const [author, setAuthor] = React.useState({});
+  const [blog, setBlog] = React.useState();
+  const [author, setAuthor] = React.useState();
   const [likes, setLikes] = React.useState(0);
   const [isComment, setIsComment] = React.useState(false);
   const wasLiked = React.useRef(null);
   const { id } = useParams();
   const { id: user, setId } = React.useContext(UserContext);
-  const [base64String, setbase64String] = React.useState("");
-  function arrayBufferToBase64(buffer) {
-    var binary = "";
-    var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    return window.btoa(binary);
-  }
 
   const handleLike = async (id) => {
     setLikes((like) => like + id);
@@ -45,16 +38,17 @@ function BlogFull() {
     const auth = author;
     auth.liked.push(blog._id);
 
-    console.log("hola");
+    // console.log("hola");
     setAuthor(auth);
     const idd = blog._id;
     const changeAuthor = {
       liked: idd,
       id: id,
     };
+
     // console.log("user in blog", user);
     const updatedAuthor = await updateAuthor(user._id, changeAuthor);
-    // console.log("UPDA", updatedAuthor);
+    console.log("UPDA", updatedAuthor);
     setId(updatedAuthor.data);
     await editBlog(change, blog._id);
     // console.log("like before", likes);
@@ -67,13 +61,19 @@ function BlogFull() {
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);
 
+      console.log("pokemon", author);
+      console.log("colllosal", blog);
       // console.log(arrayBufferToBase64(blog.data.img.img.data.data));
       // setbase64String(arrayBufferToBase64(blog.data.img.img.data.data));
       // console.log("before", wasLiked.current);
-      // console.log(user);
+      console.log(user);
 
-      if (user && user.liked.includes(blog.data._id)) wasLiked.current = true;
-      else wasLiked.current = false;
+      if (user && blog && user.liked.includes(blog.data._id))
+        wasLiked.current = true;
+      else if (user && blog) wasLiked.current = false;
+      else {
+        wasLiked.current = null;
+      }
 
       // console.log("after", wasLiked.current);
       // console.log("author", author.data);
@@ -81,9 +81,10 @@ function BlogFull() {
       setBlog(blog.data);
       setLikes(blog.data.likes);
     };
-
-    getBl();
-  }, [wasLiked.current, likes, user, isComment]);
+    if (!blog) {
+      getBl();
+    }
+  }, [isComment, user, wasLiked.current]);
 
   if (!blog) return <p>Wait</p>;
   return (
