@@ -2,7 +2,7 @@ import React, { Component, useReducer } from "react";
 import Card from "./common/card";
 
 import { getBlogs, updateAuthor } from "./../services/apiService";
-import UserContext from "./../userContext";
+import { useUser } from "./../userContext";
 import BlogListSkeleton from "./common/blogListSkeleton";
 import { Link } from "react-router-dom";
 function BlogList({ id, author, tag, search }) {
@@ -11,7 +11,7 @@ function BlogList({ id, author, tag, search }) {
   const [sort, setSort] = React.useState(false);
   const [following, setFollowing] = React.useState(false);
   const [list, setList] = React.useState(false);
-  const { id: user, setId } = React.useContext(UserContext);
+  const { id: user, setId } = useUser();
   const [isLoading, setisLoading] = React.useState(true);
   React.useEffect(() => {
     const getBlog = async () => {

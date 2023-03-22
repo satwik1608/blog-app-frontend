@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import CommentForm from "./commentForm";
-import UserContext from "./../../userContext";
+import { useUser } from "../../userContext";
 const { formatDate } = require("../../services/utils");
 function Comment({ comment, onChange }) {
   const [replyOpen, setReplyOpen] = React.useState(false);
-  const { id: user } = React.useContext(UserContext);
+  const { id: user } = useUser();
   const [viewReply, setviewReply] = React.useState(false);
 
   const setThumbnail = (person) => {

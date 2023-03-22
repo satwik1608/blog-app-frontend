@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getBlogImage } from "../../services/apiService";
 import iframe from "../../services/utils";
 import Explicit from "./explicit";
-import UserContext from "./../../userContext";
+import { useUser } from "../../userContext";
 import { getStateFromTextArea } from "@uiw/react-md-editor";
 
 function Card({
@@ -18,7 +18,7 @@ function Card({
   brief,
   img,
 }) {
-  const { id: user } = React.useContext(UserContext);
+  const { id: user } = useUser();
   function arrayBufferToBase64(buffer) {
     var binary = "";
     var bytes = [].slice.call(new Uint8Array(buffer));

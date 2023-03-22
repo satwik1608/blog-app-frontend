@@ -1,23 +1,18 @@
 import React, { Component } from "react";
 import { listAuthor } from "./../../services/apiService";
 import { Link } from "react-router-dom";
-import UserContext from "./../../userContext";
+
+import { useUser } from "../../userContext";
 import Modal from "./modal";
 import AuthorListSkeleton from "./authorListSkeleton";
 
 function AuthorList({ followers, search, notFollowing, authorId }) {
-  const { id: user } = React.useContext(UserContext);
+  const { id: user } = useUser();
   const [data, setData] = React.useState([]);
   // console.log("fdsf");
   // console.log(followers, search, notFollowing);
   const [loading, setLoading] = React.useState(false);
-  const [base64String, setbase64String] = React.useState("");
-  function arrayBufferToBase64(buffer) {
-    var binary = "";
-    var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    return window.btoa(binary);
-  }
+
   React.useEffect(() => {
     setLoading(true);
     const getAuth = async () => {

@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SearchBox from "./searchBox";
-import UserContext from "./../userContext";
+import { useUser } from "./../userContext";
 import { logout } from "../services/authService";
 import { onePiece } from "../services/onePiece";
 import { Navbar, Button } from "flowbite-react";
 function NavBar() {
-  const { id: user } = React.useContext(UserContext);
+  const { id: user, setId } = useUser();
   const [localStore, setLocalStore] = React.useState(false);
   // console.log("user", user);
   const handleLogout = () => {
@@ -81,7 +81,7 @@ function NavBar() {
     <Navbar
       fluid={true}
       rounded={true}
-      className=" px-2 sm:px-4 py-2.5 dark:bg-gray-900 bg-slate-300  fixed w-full z-20 top-0 left-0 border-b  border-gray-600"
+      className=" waah px-2 sm:px-4 py-2.5 dark:bg-gray-900 bg-slate-300  fixed w-full z-20 top-0 left-0 border-b  border-gray-600"
     >
       <Navbar.Brand as={Link} to="/home">
         <img
@@ -117,7 +117,7 @@ function NavBar() {
           id="theme-toggle"
           type="button"
           onClick={() => setLocalStore((c) => !c)}
-          class=" bg-gray-100 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+          class="  ml-2 bg-gray-100 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
         >
           <svg
             id="theme-toggle-dark-icon"
@@ -144,7 +144,7 @@ function NavBar() {
         </button>
       </div>
 
-      <Navbar.Collapse className="lol">
+      <Navbar.Collapse className="lol flex content-center items-center">
         <Navbar.Link as={Link} to="/" active={true}>
           Home
         </Navbar.Link>
@@ -154,19 +154,23 @@ function NavBar() {
           </Navbar.Link>
         )}
         {user && (
+          <Navbar.Link as={Link} to={`/search`}>
+            Search
+          </Navbar.Link>
+        )}
+        {user && (
           <Navbar.Link as={Link} to={`/author/${user._id}`}>
             Profile
           </Navbar.Link>
         )}
-        {user && (
-          <div className="invisible md:visible">
-            <SearchBox />
-          </div>
-        )}
+
         <Navbar.Link as={Link} to="/in-transit">
           Services
         </Navbar.Link>
-        <Navbar.Link href="https://twitter.com/SatwikKashyap6" target="_blank">
+        <Navbar.Link
+          href="https://www.linkedin.com/in/satwikkashyap16/"
+          target="_blank"
+        >
           Contact
         </Navbar.Link>
       </Navbar.Collapse>

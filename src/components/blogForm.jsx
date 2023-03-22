@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../userContext";
+import { useUser } from "./../userContext";
 import { createBlog, uploadImage } from "./../services/apiService";
 import { resizeFile } from "../services/imgService";
 
@@ -92,7 +92,7 @@ function BlogForm() {
   const [data, setData] = React.useState({});
   const [content, setContent] = React.useState([]);
 
-  const { id: user } = React.useContext(UserContext);
+  const { id: user } = useUser();
   let userId;
 
   if (user) userId = user._id;

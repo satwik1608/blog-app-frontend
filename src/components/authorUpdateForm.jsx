@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { updateAuthor, uploadImage } from "../services/apiService";
-import UserContext from "../userContext";
+import { useUser } from "./../userContext";
 import { resizeFile } from "../services/imgService";
 
 function AuthorUpdateForm() {
   const [data, setData] = React.useState({});
   const Navigate = useNavigate();
-  const { id: user, setId } = React.useContext(UserContext);
+  const { id: user, setId } = useUser();
   //   console.log(user);
   const nameRef = React.useRef("");
   const emailRef = React.useRef("");

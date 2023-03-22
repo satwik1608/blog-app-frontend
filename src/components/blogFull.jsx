@@ -14,7 +14,7 @@ import {
 } from "./../services/apiService";
 import Comments from "./comments";
 import { useParams } from "react-router-dom";
-import UserContext from "./../userContext";
+import { useUser } from "./../userContext";
 import { Parser } from "html-to-react";
 
 const { iframe } = require("../services/utils");
@@ -26,7 +26,8 @@ function BlogFull() {
   const [isComment, setIsComment] = React.useState(false);
   const wasLiked = React.useRef(null);
   const { id } = useParams();
-  const { id: user, setId } = React.useContext(UserContext);
+  const authorId = React.useRef(null);
+  const { id: user, setId } = useUser();
 
   const handleLike = async (id) => {
     setLikes((like) => like + id);
@@ -48,7 +49,7 @@ function BlogFull() {
 
     // console.log("user in blog", user);
     const updatedAuthor = await updateAuthor(user._id, changeAuthor);
-    console.log("UPDA", updatedAuthor);
+    // console.log("UPDA", updatedAuthor);
     setId(updatedAuthor.data);
     await editBlog(change, blog._id);
     // console.log("like before", likes);
@@ -57,16 +58,18 @@ function BlogFull() {
   };
 
   React.useEffect(() => {
+    // console.log("not bhosndi");
     const getBl = async () => {
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);
 
-      console.log("pokemon", author);
-      console.log("colllosal", blog);
+      if (!author.current) authorId.current = author.data._id;
+      // console.log("pokemon", author);
+      // console.log("colllosal", blog.data);
       // console.log(arrayBufferToBase64(blog.data.img.img.data.data));
       // setbase64String(arrayBufferToBase64(blog.data.img.img.data.data));
       // console.log("before", wasLiked.current);
-      console.log(user);
+      // console.log(user);
 
       if (user && blog && user.liked.includes(blog.data._id))
         wasLiked.current = true;
@@ -81,11 +84,11 @@ function BlogFull() {
       setBlog(blog.data);
       setLikes(blog.data.likes);
     };
-    if (!blog) {
-      getBl();
-    }
+
+    getBl();
   }, [isComment, user, wasLiked.current]);
 
+  // console.log(user);
   if (!blog) return <p>Wait</p>;
   return (
     <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:place-content-between">
@@ -133,7 +136,7 @@ function BlogFull() {
         {isComment && <Comments blog={blog} />}
       </div>
       <div className="lg:fixed lg:overflow-auto lg:inset-y-0 lg:right-0 lg:mt-28 lg:mr-16 lg:scrollbar-hide">
-        <ProfileRight author={author} />
+        <ProfileRight authorId={authorId.current} />
       </div>
     </div>
   );

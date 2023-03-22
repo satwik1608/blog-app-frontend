@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import CommentForm from "./common/commentForm";
 import Comment from "./common/comment";
 import { getComment } from "../services/apiService";
-import UserContext from "./../userContext";
+import { useUser } from "./../userContext";
 function Comments({ blog }) {
   const [comments, setComment] = React.useState([]);
   const [refresh, setRefresh] = React.useState(0);
-  const { id: user } = React.useContext(UserContext);
+  const { id: user, setId } = useUser();
   const handleRefresh = () => {
     setRefresh((c) => c + 1);
   };

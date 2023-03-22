@@ -3,14 +3,13 @@ import BlogList from "./blogList";
 import ProfileRight from "./common/profileRight";
 import { getAuthor } from "../services/apiService";
 import { useParams } from "react-router-dom";
-import UserContext from "./../userContext";
+import { useUser } from "./../userContext";
+import { useQuery } from "react-query";
 
 function AuthorProfile() {
-  const [author, setAuthor] = React.useState([]);
+  const [author, setAuthor] = React.useState();
   const { id } = useParams();
-  const { id: user } = React.useContext(UserContext);
-  const [imgThumb, setImgThumb] = React.useState("");
-  const [wait, setWait] = React.useState(true);
+  const { id: user } = useUser();
 
   React.useEffect(() => {
     const getAuth = async () => {
@@ -21,7 +20,8 @@ function AuthorProfile() {
     getAuth();
   }, [user, id]);
 
-  if (author.length === 0) return <p>......</p>;
+  if (!author) return <p>......</p>;
+  console.log(author);
   return (
     <div>
       <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4 md:place-content-between ">
@@ -30,8 +30,8 @@ function AuthorProfile() {
             {author.name}
           </div>
 
-          <div className="md:fixed  overflow-auto md:inset-y-0 md:right-0 md:mt-28 md:mr-16 scrollbar-hide">
-            <ProfileRight author={author} />
+          <div className="lg:fixed lg:overflow-auto lg:inset-y-0 lg:right-0 lg:mt-28 lg:mr-16 lg:scrollbar-hide">
+            <ProfileRight authorId={author._id} />
           </div>
 
           <BlogList id={id} author={author.name} />

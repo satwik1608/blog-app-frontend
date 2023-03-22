@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { createComment, updateComment } from "../../services/apiService";
-import UserContext from "./../../userContext";
+import { useUser } from "../../userContext";
 
 function CommentForm({ blog, onChange, isReply, id, onReset }) {
   const { _id } = blog;
   const [data, setData] = React.useState("nig");
-  const { id: user } = React.useContext(UserContext);
+  const { id: user } = useUser();
   const textRef = React.useRef();
 
   const handleSubmit = async (e) => {

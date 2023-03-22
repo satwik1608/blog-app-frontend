@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import UserContext from "./../../userContext";
+import { useUser } from "../../userContext";
 
 function Rating({ onLike, likes, wasLiked }) {
   const [liked, setLiked] = React.useState(false);
 
   const [load, setLoad] = React.useState(0);
-  const { id: user } = React.useContext(UserContext);
+  const { id: user } = useUser();
 
   const setLike = (id) => {
     setLiked(id);

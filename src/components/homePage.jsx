@@ -3,12 +3,13 @@ import BlogList from "./blogList";
 import TagStack from "./common/tagStack";
 
 import Trending from "./trending";
-import UserContext from "../userContext";
+import { useUser } from "./../userContext";
 import AuthorList from "./common/authorList";
 import { listAuthor } from "../services/apiService";
 import Hero from "./common/hero";
 function HomePage() {
-  const { id: user } = React.useContext(UserContext);
+  const { id: user, setId } = useUser();
+  console.log(user);
   const [notFollowing, setNotFollowing] = React.useState([]);
   React.useEffect(() => {
     if (user) {
