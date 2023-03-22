@@ -58,7 +58,6 @@ function BlogFull() {
   };
 
   React.useEffect(() => {
-    // console.log("not bhosndi");
     const getBl = async () => {
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);

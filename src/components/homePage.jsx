@@ -9,7 +9,7 @@ import { listAuthor } from "../services/apiService";
 import Hero from "./common/hero";
 function HomePage() {
   const { id: user, setId } = useUser();
-  console.log(user);
+  console.log("wow", user);
   const [notFollowing, setNotFollowing] = React.useState([]);
   React.useEffect(() => {
     if (user) {
