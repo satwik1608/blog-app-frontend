@@ -5,17 +5,70 @@ import { getBlogs, updateAuthor } from "./../services/apiService";
 import { useUser } from "./../userContext";
 import BlogListSkeleton from "./common/blogListSkeleton";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
 function BlogList({ id, author, tag, search }) {
-  const [blogs, setBlogs] = React.useState([]);
+  // const [blogs, setBlogs] = React.useState([]);
 
   const [sort, setSort] = React.useState(false);
   const [following, setFollowing] = React.useState(false);
   const [list, setList] = React.useState(false);
   const { id: user, setId } = useUser();
-  const [isLoading, setisLoading] = React.useState(true);
-  React.useEffect(() => {
-    const getBlog = async () => {
-      setisLoading(true);
+  // const [isLoading, setisLoading] = React.useState(true);
+  // React.useEffect(() => {
+  //   const getBlog = async () => {
+  //     setisLoading(true);
+  //     const blog = await getBlogs();
+
+  //     let blogData = blog.data;
+  //     blogData.reverse();
+  //     if (sort) {
+  //       blogData.sort((a, b) => b.likes - a.likes);
+  //     }
+  //     if (following) {
+  //       const bl = blogData.filter((b) =>
+  //         user.following.includes(b.author._id)
+  //       );
+  //       blogData = bl;
+  //     }
+  //     if (list) {
+  //       const bl = blogData.filter((b) => user.lists.includes(b._id));
+  //       blogData = bl;
+  //     }
+
+  //     if (author) {
+  //       let blogD = blogData;
+  //       if (!list) blogD = blogData.filter((b) => b.author._id === id);
+  //       await setBlogs(blogD);
+  //     } else if (tag) {
+  //       const blogD = blogData.filter((b) => b.tags.includes(tag));
+
+  //       await setBlogs(blogD);
+  //     } else if (search) {
+  //       const blogD = blogData.filter((b) => {
+  //         const bl = b.title.toLowerCase().split(" ");
+  //         const srch = search.toLowerCase();
+  //         let flag = 0;
+  //         bl.forEach((bll) => {
+  //           if (bll.startsWith(srch)) ++flag;
+  //         });
+  //         if (flag) return true;
+  //         return false;
+  //       });
+
+  //       await setBlogs(blogD);
+  //     } else {
+  //       await setBlogs(blogData);
+  //     }
+
+  //     setisLoading(false);
+  //   };
+
+  //   getBlog();
+  // }, [tag, id, author, search, sort, following, list, user]);
+
+  const blogQuery = useQuery(
+    ["blogs", tag, id, author, search, sort, following, list, user],
+    async () => {
       const blog = await getBlogs();
 
       let blogData = blog.data;
@@ -37,11 +90,11 @@ function BlogList({ id, author, tag, search }) {
       if (author) {
         let blogD = blogData;
         if (!list) blogD = blogData.filter((b) => b.author._id === id);
-        await setBlogs(blogD);
+        return blogD;
       } else if (tag) {
         const blogD = blogData.filter((b) => b.tags.includes(tag));
 
-        await setBlogs(blogD);
+        return blogD;
       } else if (search) {
         const blogD = blogData.filter((b) => {
           const bl = b.title.toLowerCase().split(" ");
@@ -54,16 +107,12 @@ function BlogList({ id, author, tag, search }) {
           return false;
         });
 
-        await setBlogs(blogD);
+        return blogD;
       } else {
-        await setBlogs(blogData);
+        return blogData;
       }
-
-      setisLoading(false);
-    };
-
-    getBlog();
-  }, [tag, id, author, search, sort, following, list, user]);
+    }
+  );
 
   function setStuff() {
     setSort(false);
@@ -82,7 +131,7 @@ function BlogList({ id, author, tag, search }) {
     setId(author.data);
   };
   // console.log("auth", author);
-  if (isLoading)
+  if (blogQuery.isLoading)
     return (
       <div>
         <div class="inline-flex rounded-md mt-4 shadow-sm" role="group">
@@ -145,7 +194,7 @@ function BlogList({ id, author, tag, search }) {
       </div>
     );
 
-  if (blogs.length === 0) {
+  if (blogQuery.data.length === 0) {
     return (
       <div>
         <div class="inline-flex rounded-md mt-4 shadow-sm" role="group">
@@ -270,7 +319,7 @@ function BlogList({ id, author, tag, search }) {
       </div>
 
       <ul className="m-4">
-        {blogs.map((blog) => (
+        {blogQuery.data.map((blog) => (
           <li className="m-2 list-none" key={blog._id}>
             <Card
               author={blog.author}

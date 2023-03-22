@@ -1,12 +1,51 @@
 import React, { Component } from "react";
 import { getBlogs } from "../../services/apiService";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
 function TagStack({ search }) {
-  const [blogs, setBlogs] = React.useState([]);
-  const [tags, setTags] = React.useState([]);
-  const num = React.useRef(0);
-  const [loading, setLoading] = React.useState(false);
-  const call = async () => {
+  // const [blogs, setBlogs] = React.useState([]);
+  // const [tags, setTags] = React.useState([]);
+  // const num = React.useRef(0);
+  // const [loading, setLoading] = React.useState(false);
+  // const call = async () => {
+  //   const tag = [];
+  //   blogs.forEach((b) => {
+  //     const tagss = b.tags;
+
+  //     tagss.forEach((t) => {
+  //       if (search) {
+  //         if (t.toLowerCase().startsWith(search.toLowerCase())) tag.push(t);
+  //       } else tag.push(t.toLowerCase());
+  //     });
+  //   });
+
+  //   const uniqueArray = [...new Set(tag)];
+  //   // console.log(uniqueArray);
+  //   await setTags(uniqueArray);
+  // };
+
+  // React.useEffect(() => {
+  //   setLoading(true);
+  //   const getBl = async () => {
+  //     const bl = await getBlogs();
+
+  //     await setBlogs(bl.data);
+
+  //     await call();
+  //     // console.log(blogs);
+  //     await setLoading(false);
+  //   };
+
+  //   getBl();
+  // }, [num.current, search]);
+  // // potential bug if all the blogs are deleted but aisa kabhi mai hone nhi doonga
+  // if (blogs.length === 0) {
+  //   ++num.current;
+  // }
+
+  const blogQuery = useQuery(["blog"], async () => {
+    const blog = await getBlogs();
+    const blogs = blog.data;
     const tag = [];
     blogs.forEach((b) => {
       const tagss = b.tags;
@@ -19,30 +58,11 @@ function TagStack({ search }) {
     });
 
     const uniqueArray = [...new Set(tag)];
-    // console.log(uniqueArray);
-    await setTags(uniqueArray);
-  };
 
-  React.useEffect(() => {
-    setLoading(true);
-    const getBl = async () => {
-      const bl = await getBlogs();
+    return uniqueArray;
+  });
 
-      await setBlogs(bl.data);
-
-      await call();
-      // console.log(blogs);
-      await setLoading(false);
-    };
-
-    getBl();
-  }, [num.current, search]);
-  // potential bug if all the blogs are deleted but aisa kabhi mai hone nhi doonga
-  if (blogs.length === 0) {
-    ++num.current;
-  }
-
-  if (loading) {
+  if (blogQuery.isLoading) {
     return (
       <div role="status" class="space-y-2.5 mt-4 animate-pulse max-w-lg">
         <div class="flex items-center w-full space-x-2">
@@ -80,7 +100,7 @@ function TagStack({ search }) {
     );
   }
 
-  if (tags.length === 0) {
+  if (blogQuery.data.length === 0) {
     if (search) {
       return (
         <li className="py-3 sm:py-4 list-none text-center">
@@ -103,7 +123,7 @@ function TagStack({ search }) {
   return (
     <div className="p-10">
       <ul className="flex flex-row flex-wrap">
-        {tags.map((tag) => (
+        {blogQuery.data.map((tag) => (
           <Link
             type="button"
             to={`/tags/${tag}`}

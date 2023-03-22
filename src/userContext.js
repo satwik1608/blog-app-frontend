@@ -16,7 +16,7 @@ export const UserProvider = (props) => {
   }, []);
 
   const userQuery = useQuery(
-    [author],
+    ["user", author],
     async () => {
       const auth = await getAuthorId(author.username);
 

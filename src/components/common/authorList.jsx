@@ -5,25 +5,26 @@ import { Link } from "react-router-dom";
 import { useUser } from "../../userContext";
 import Modal from "./modal";
 import AuthorListSkeleton from "./authorListSkeleton";
+import { useQuery } from "react-query";
 
 function AuthorList({ followers, search, notFollowing, authorId }) {
   const { id: user } = useUser();
-  const [data, setData] = React.useState([]);
+  // const [data, setData] = React.useState([]);
   // console.log("fdsf");
   // console.log(followers, search, notFollowing);
-  const [loading, setLoading] = React.useState(false);
+  // const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    setLoading(true);
-    const getAuth = async () => {
-      const authors = await listAuthor(search);
-      // setbase64String(arrayBufferToBase64());
-      await setData(authors.data);
+    // setLoading(true);
+    // const getAuth = async () => {
+    //   const authors = await listAuthor(search);
+    //   // setbase64String(arrayBufferToBase64());
+    //   await setData(authors.data);
 
-      setLoading(false);
-    };
+    //   setLoading(false);
+    // };
 
-    getAuth();
+    // getAuth();
 
     if (followers) {
       if (followers.length > 5) followers.length = 5;
@@ -42,6 +43,24 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
     return "https://picsum.photos/200";
   }
 
+  const authorQuery = useQuery(["authorList", search], async () => {
+    const authors = await listAuthor(search);
+
+    return authors.data;
+  });
+
+  if (authorQuery.isLoading) {
+    return (
+      <>
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+      </>
+    );
+  }
+
   if (followers) {
     return (
       <div className="overflow-auto w-full  max-w-md p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -56,15 +75,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
             View all
           </Link>
         </div>
-        {loading && (
-          <>
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-          </>
-        )}
+
         {followers.length === 0 && (
           <li className="py-3 sm:py-4 list-none text-center">
             <p className=" font-medium text-gray-900 truncate dark:text-white">
@@ -117,16 +128,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
   if (search) {
     return (
       <>
-        {loading && (
-          <>
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-          </>
-        )}
-        {data.length === 0 && (
+        {authorQuery.data.length === 0 && (
           <li className="py-3 sm:py-4 list-none text-center">
             <p className=" font-medium text-gray-900 truncate dark:text-white">
               No Author with given name
@@ -134,7 +136,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
           </li>
         )}
         <ul>
-          {data.map((d) => (
+          {authorQuery.data.map((d) => (
             <Link to={`/author/${d._id}`} className="flow-root" key={d._id}>
               <ul
                 role="list"
@@ -179,15 +181,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
             People to Follow
           </h5>
         </div>
-        {loading && (
-          <>
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-            <AuthorListSkeleton />
-          </>
-        )}
+
         <ul>
           {notFollowing.length === 0 && (
             <li className="py-3 sm:py-4 list-none text-center">
