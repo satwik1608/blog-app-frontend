@@ -7,7 +7,8 @@ function Trending() {
 
   React.useEffect(() => {
     const getBlog = async () => {
-      const blogs = await getBlogs();
+      const opts = { isSort: null, tag: null, author: null, search: null };
+      const blogs = await getBlogs(opts);
       setBlogs(blogs.data);
     };
     getBlog();

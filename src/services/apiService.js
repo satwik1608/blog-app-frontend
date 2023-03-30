@@ -4,8 +4,27 @@ import jsCookie from "js-cookie";
 const url = "https://shiny-ox-leotard.cyclic.app";
 // const url = "http:///localhost:1337";
 
-export function getBlogs() {
-  return http.get(`${url}/blogs`);
+export function getBlogs(opts) {
+  // const { isSort, search, tag, author } = opts;
+  // console.log(opts);
+  let query = "?";
+  console.log(opts, "opts");
+  if (opts.isSort === true) {
+    console.log("wow");
+    query = query.concat(`sort=true&`);
+    console.log(query);
+  }
+  if (opts.search) {
+    query = query.concat(`search=${opts.search}&`);
+  }
+  if (opts.tag) {
+    query = query.concat(`tag=${opts.tag}&`);
+  }
+  if (opts.author) {
+    query = query.concat(`author=${opts.author}&`);
+  }
+  console.log(`${url}/blogs${query}`);
+  return http.get(`${url}/blogs${query}`);
 }
 export function getBlogImage(id) {
   return http.get(`${url}/blogImage/${id}`);

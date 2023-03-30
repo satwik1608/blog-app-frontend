@@ -44,7 +44,7 @@ function AuthorProfile() {
         </div>
       </div>
     );
-  console.log(author);
+  // console.log(author);
   return (
     <div>
       <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4 md:place-content-between ">
@@ -57,7 +57,7 @@ function AuthorProfile() {
             <ProfileRight authorId={author._id} />
           </div>
 
-          <BlogList id={id} author={author.name} />
+          <BlogList id={id} author={author._id} />
         </div>
       </div>
     </div>

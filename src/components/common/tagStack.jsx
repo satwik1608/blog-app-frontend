@@ -44,7 +44,8 @@ function TagStack({ search }) {
   // }
 
   const blogQuery = useQuery(["blog"], async () => {
-    const blog = await getBlogs();
+    const opts = { isSort: null, tag: null, author: null, search: null };
+    const blog = await getBlogs(opts);
     const blogs = blog.data;
     const tag = [];
     blogs.forEach((b) => {

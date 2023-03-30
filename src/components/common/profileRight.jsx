@@ -96,7 +96,7 @@ function ProfileRight({ authorId }) {
       }
     }
   }, [authorQuery]);
-  console.log(authorQuery.data, user);
+  // console.log(authorQuery.data, user);
   if (authorQuery.isLoading)
     return (
       <div class="text-center">
