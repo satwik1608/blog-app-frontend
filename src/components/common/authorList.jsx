@@ -11,21 +11,10 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
   const { id: user } = useUser();
   // const [data, setData] = React.useState([]);
   // console.log("fdsf");
-  // console.log(followers, search, notFollowing);
+  console.log(followers, search, notFollowing);
   // const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    // setLoading(true);
-    // const getAuth = async () => {
-    //   const authors = await listAuthor(search);
-    //   // setbase64String(arrayBufferToBase64());
-    //   await setData(authors.data);
-
-    //   setLoading(false);
-    // };
-
-    // getAuth();
-
     if (followers) {
       if (followers.length > 5) followers.length = 5;
     }
@@ -43,13 +32,34 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
     return "https://picsum.photos/200";
   }
 
-  const authorQuery = useQuery(["authorList", search], async () => {
-    const authors = await listAuthor(search);
+  const authorQuery = useQuery(
+    ["authorList", search],
+    async () => {
+      const authors = await listAuthor(search);
 
-    return authors.data;
-  });
+      return authors.data;
+    },
+    {
+      enabled: !!search,
+    }
+  );
 
-  if (authorQuery.isLoading) {
+  const notFollowingQuery = useQuery(
+    ["notFollowing", user],
+    async () => {
+      const authors = await listAuthor();
+      const author = authors.data.filter(
+        (a) => !user.following.includes(a._id) && user._id !== a._id
+      );
+
+      return author;
+    },
+    {
+      enabled: !!user,
+    }
+  );
+
+  if (authorQuery.isLoading || notFollowingQuery.isLoading) {
     return (
       <>
         <AuthorListSkeleton />
@@ -173,7 +183,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
       </>
     );
   }
-  if (notFollowing) {
+  if (notFollowing && notFollowingQuery.isSuccess) {
     return (
       <div className="w-full max-w-md p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <div className="flex items-center justify-between mb-4">
@@ -183,14 +193,14 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
         </div>
 
         <ul>
-          {notFollowing.length === 0 && (
+          {notFollowingQuery.data.length === 0 && (
             <li className="py-3 sm:py-4 list-none text-center">
               <p className=" font-medium text-gray-900 truncate dark:text-white">
                 Apparently you have followed everyone
               </p>
             </li>
           )}
-          {notFollowing.map((notFollow) => (
+          {notFollowingQuery.data.map((notFollow) => (
             <Link
               to={`/author/${notFollow._id}`}
               className="flow-root"

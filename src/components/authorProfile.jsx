@@ -46,8 +46,8 @@ function AuthorProfile() {
     );
   // console.log(author);
   return (
-    <div>
-      <div className="flex flex-col md:grid md:grid-cols-2 md:gap-4 md:place-content-between ">
+    <div className="mt-16 pl-14 pr-14">
+      <div className="flex flex-col  md:grid md:grid-cols-2 md:gap-4 md:place-content-between ">
         <div className="p-2">
           <div className="mb-7 invisible font-extrabold border-b border-gray-800 tracking-tight leading-none text-lg dark:text-slate-100 md:visible  md:text-xl lg:text-4xl  ">
             {author.name}

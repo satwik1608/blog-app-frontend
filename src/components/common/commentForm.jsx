@@ -37,6 +37,10 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
         replyIs: false,
       };
       // console.log(comment);
+      console.group("Comment testing");
+      console.log("This works");
+      console.log(user);
+      console.groupEnd();
       await createComment(comment);
     }
 

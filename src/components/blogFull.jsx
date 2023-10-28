@@ -28,6 +28,7 @@ function BlogFull() {
   const { id } = useParams();
   const authorId = React.useRef(null);
   const { id: user, setId } = useUser();
+  console.log("User -> ", user);
 
   const handleLike = async (id) => {
     setLikes((like) => like + id);
@@ -35,7 +36,7 @@ function BlogFull() {
     const change = {
       likes: likes + id,
     };
-    await editBlog(change, blog._id);
+    await editBlog(change, blog._id); // should not give exact value of likes rather give just if I need to increment or decrement like coz if there are concurrent likes from different users it will result in inconsistency
     const auth = author;
     auth.liked.push(blog._id);
 

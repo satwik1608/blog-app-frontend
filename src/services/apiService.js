@@ -8,7 +8,7 @@ export function getBlogs(opts) {
   // const { isSort, search, tag, author } = opts;
   // console.log(opts);
   let query = "?";
-  console.log(opts, "opts");
+  // console.log(opts, "opts");
   if (opts.isSort === true) {
     console.log("wow");
     query = query.concat(`sort=true&`);
@@ -23,7 +23,7 @@ export function getBlogs(opts) {
   if (opts.author) {
     query = query.concat(`author=${opts.author}&`);
   }
-  console.log(`${url}/blogs${query}`);
+  // console.log(`${url}/blogs${query}`);
   return http.get(`${url}/blogs${query}`);
 }
 export function getBlogImage(id) {
