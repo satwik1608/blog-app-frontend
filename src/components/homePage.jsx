@@ -1,35 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
+import { useUser } from "./../userContext";
 import BlogList from "./blogList";
 import TagStack from "./common/tagStack";
-
 import Trending from "./trending";
-import { useUser } from "./../userContext";
 import AuthorList from "./common/authorList";
-import { listAuthor } from "../services/apiService";
 import Hero from "./common/hero";
-import { useQuery } from "react-query";
+
 function HomePage() {
-  const { id: user, setId } = useUser();
-  // console.log("wowtt", user);
-
-  if (!user) {
-    return (
-      <div className=" ">
-        <Hero />
-        <Trending />
-
-        <div className="md:grid  md:grid-cols-2 md:gap-4 md:place-content-between">
-          <div className="">
-            <BlogList />
-          </div>
-          <div className="invisible md:visible">
-            <TagStack />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  const { id: user } = useUser();
+  console.log("Margea lwe");
   if (user == 0) {
     return (
       <div class="text-center">
@@ -56,6 +35,23 @@ function HomePage() {
     );
   }
 
+  if (!user) {
+    return (
+      <div className=" ">
+        <Hero />
+        <Trending />
+
+        <div className="md:grid  md:grid-cols-2 md:gap-4 md:place-content-between">
+          <div className="">
+            <BlogList />
+          </div>
+          <div className="invisible md:visible">
+            <TagStack />
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <div className="md:grid md:grid-cols-2 md:gap-4 md:place-content-between">

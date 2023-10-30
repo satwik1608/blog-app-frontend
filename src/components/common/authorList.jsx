@@ -11,7 +11,7 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
   const { id: user } = useUser();
   // const [data, setData] = React.useState([]);
   // console.log("fdsf");
-  console.log(followers, search, notFollowing);
+  // console.log(followers, search, notFollowing);
   // const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {

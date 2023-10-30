@@ -1,28 +1,31 @@
-import React, { Component, useReducer } from "react";
-import Card from "./common/card";
-
-import { getBlogs, updateAuthor } from "./../services/apiService";
-import { useUser } from "./../userContext";
-import BlogListSkeleton from "./common/blogListSkeleton";
+import React from "react";
+import {
+  getAuthorBookmark,
+  getBlogs,
+  updateAuthor,
+} from "./../services/apiService";
+import { useUser, useUserApi } from "./../userContext";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
+import Card from "./common/card";
+import BlogListSkeleton from "./common/blogListSkeleton";
+
 function BlogList({ id, author, tag, search }) {
   const [sort, setSort] = React.useState(false);
   const [following, setFollowing] = React.useState(false);
   const [list, setList] = React.useState(false);
-  const { id: user, setId } = useUser();
-
+  const { id: user } = useUser();
+  const { setId } = useUserApi();
   const blogQuery = useQuery(
-    ["blogs", tag, id, author, search, sort, following, list, user],
+    ["blogs", tag, author, search, sort, following],
     async () => {
-      let isSort = false;
+      console.log("Does it runs always");
+      let isSort = false; // sorting on the basis of likes
       if (sort) isSort = true;
-
       const opts = { isSort: isSort, tag, author, search };
       const blog = await getBlogs(opts);
 
       let blogData = blog.data;
-      blogData.reverse();
 
       if (following) {
         const bl = blogData.filter((b) =>
@@ -30,11 +33,21 @@ function BlogList({ id, author, tag, search }) {
         );
         blogData = bl;
       }
-      if (list) {
-        const bl = blogData.filter((b) => user.lists.includes(b._id));
-        blogData = bl;
-      }
       return blogData;
+    }
+  );
+
+  const bookmarkQuery = useQuery(
+    ["bookmark"],
+    async () => {
+      console.log("Book mark query =>", author, list);
+      const blog = await getAuthorBookmark(author);
+      console.log("Lets see", blog.data[0]);
+      return blog.data[0].lists;
+    },
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!list,
     }
   );
 
@@ -95,7 +108,7 @@ function BlogList({ id, author, tag, search }) {
               Following
             </button>
           )}
-          {user && author && user.name === author && (
+          {user && author && user._id === author && (
             <button
               type="button"
               onClick={() => setList(true)}
@@ -159,7 +172,7 @@ function BlogList({ id, author, tag, search }) {
               Following
             </button>
           )}
-          {user && author && user.name === author && (
+          {user && author && user._id === author && (
             <button
               type="button"
               onClick={() => setList(true)}
@@ -231,7 +244,7 @@ function BlogList({ id, author, tag, search }) {
             Following
           </button>
         )}
-        {user && author && user.name === author && (
+        {user && author && user._id === author && (
           <button
             type="button"
             onClick={() => setList(true)}
@@ -243,22 +256,41 @@ function BlogList({ id, author, tag, search }) {
       </div>
 
       <ul className="m-4">
-        {blogQuery.data.map((blog) => (
-          <li className="m-2 list-none" key={blog._id}>
-            <Card
-              author={blog.author}
-              authorId={blog.author._id}
-              title={blog.title}
-              tags={blog.tags}
-              content={blog.content}
-              date={blog.date}
-              id={blog._id}
-              brief={blog.brief}
-              handleList={handleList}
-              img={blog.img}
-            />
-          </li>
-        ))}
+        {!list &&
+          blogQuery.data.map((blog) => (
+            <li className="m-2 list-none" key={blog._id}>
+              <Card
+                author={blog.author}
+                authorId={blog.author._id}
+                title={blog.title}
+                tags={blog.tags}
+                content={blog.content}
+                date={blog.date}
+                id={blog._id}
+                brief={blog.brief}
+                handleList={handleList}
+                img={blog.img}
+              />
+            </li>
+          ))}
+        {list &&
+          bookmarkQuery.isSuccess &&
+          bookmarkQuery.data.map((blog) => (
+            <li className="m-2 list-none" key={blog._id}>
+              <Card
+                author={blog.author}
+                authorId={blog.author._id}
+                title={blog.title}
+                tags={blog.tags}
+                content={blog.content}
+                date={blog.date}
+                id={blog._id}
+                brief={blog.brief}
+                handleList={handleList}
+                img={blog.img}
+              />
+            </li>
+          ))}
       </ul>
     </div>
   );

@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import CommentForm from "./common/commentForm";
 import Comment from "./common/comment";
 import { getComment } from "../services/apiService";
-import { useUser } from "./../userContext";
+import { useUser, useUserApi } from "./../userContext";
 function Comments({ blog }) {
   const [comments, setComment] = React.useState([]);
   const [refresh, setRefresh] = React.useState(0);
-  const { id: user, setId } = useUser();
+  const { id: user } = useUser();
+  const { setId } = useUserApi();
   const handleRefresh = () => {
     setRefresh((c) => c + 1);
   };
@@ -24,7 +25,7 @@ function Comments({ blog }) {
     getCom();
   }, [refresh]);
 
-  if (comments === []) return <p>Wait</p>;
+  if (comments.length === 0) return <p>Wait</p>;
   return (
     <section class="bg-#1f2937 dark:bg-#1f2937 py-8 lg:py-16">
       <div class="max-w-2xl mx-auto px-4">

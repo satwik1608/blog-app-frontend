@@ -6,7 +6,7 @@ import { logout } from "../services/authService";
 import { onePiece } from "../services/onePiece";
 import { Navbar, Button } from "flowbite-react";
 function NavBar() {
-  const { id: user, setId } = useUser();
+  const { id: user } = useUser();
   const [localStore, setLocalStore] = React.useState(false);
   // console.log("user", user);
   const handleLogout = () => {

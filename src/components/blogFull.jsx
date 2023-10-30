@@ -14,7 +14,7 @@ import {
 } from "./../services/apiService";
 import Comments from "./comments";
 import { useParams } from "react-router-dom";
-import { useUser } from "./../userContext";
+import { useUser, useUserApi } from "./../userContext";
 import { Parser } from "html-to-react";
 
 const { iframe } = require("../services/utils");
@@ -27,7 +27,8 @@ function BlogFull() {
   const wasLiked = React.useRef(null);
   const { id } = useParams();
   const authorId = React.useRef(null);
-  const { id: user, setId } = useUser();
+  const { id: user } = useUser();
+  const { setId } = useUserApi();
   console.log("User -> ", user);
 
   const handleLike = async (id) => {

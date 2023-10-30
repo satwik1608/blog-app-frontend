@@ -1,8 +1,8 @@
 import http from "./httpService";
 import jsCookie from "js-cookie";
 
-const url = "https://shiny-ox-leotard.cyclic.app";
-// const url = "http:///localhost:1337";
+// const url = "https://shiny-ox-leotard.cyclic.app";
+const url = "http:///localhost:1337";
 
 export function getBlogs(opts) {
   // const { isSort, search, tag, author } = opts;
@@ -31,6 +31,17 @@ export function getBlogImage(id) {
 }
 export function getAuthorId(author) {
   return http.get(`${url}/author?name=${author}`);
+}
+export function getAuthorBookmark(id) {
+  const wait = (ms) => {
+    const start = Date.now();
+    let now = start;
+
+    while (now - start < ms) now = Date.now();
+  };
+  // wait(5000);
+  console.log("I am getting called bookmar");
+  return http.get(`${url}/author/bookmark/${id}`);
 }
 export function getAuthor(id) {
   return http.get(`${url}/author/${id}`);

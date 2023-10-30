@@ -1,5 +1,4 @@
 import React from "react";
-import { useUser } from "../../userContext";
 import { useParams } from "react-router-dom";
 import { getFollowers } from "../../services/apiService";
 import { Link } from "react-router-dom";

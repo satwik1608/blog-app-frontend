@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { useUser } from "./../userContext";
 
 function RequireAuth({ children }) {
-  const { id: user, setId } = useUser();
+  const { id: user } = useUser();
 
   return user ? children : <Navigate to={`/login`} replace />;
 }

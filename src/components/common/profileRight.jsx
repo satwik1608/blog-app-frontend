@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AuthorList from "./authorList";
-import { useUser } from "../../userContext";
+import { useUser, useUserApi } from "../../userContext";
 import { useQuery } from "react-query";
 import {
   follow,
@@ -18,7 +18,8 @@ import { Link } from "react-router-dom";
 import { unsubscribe } from "medium-editor";
 import { func } from "joi";
 function ProfileRight({ authorId }) {
-  const { id: user, setId } = useUser();
+  const { id: user } = useUser();
+  const { setId } = useUserApi();
 
   const [isFollower, setisFollower] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
