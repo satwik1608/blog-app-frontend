@@ -8,7 +8,7 @@ import Hero from "./common/hero";
 
 function HomePage() {
   const { id: user } = useUser();
-  console.log("Margea lwe");
+  // console.log("Margea lwe");
   if (user == 0) {
     return (
       <div class="text-center">

@@ -51,11 +51,12 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
       const author = authors.data.filter(
         (a) => !user.following.includes(a._id) && user._id !== a._id
       );
-
+      // console.log("Not following", author);
+      // console.log(user);
       return author;
     },
     {
-      enabled: !!user,
+      enabled: !!notFollowing,
     }
   );
 

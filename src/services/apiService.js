@@ -71,6 +71,10 @@ export function editBlog(blog, id) {
   return http.put(`${url}/blogs/${id}`, blog);
 }
 
+export function toggleLike(fields) {
+  return http.post(`${url}/blogs/toggleLike`, fields);
+}
+
 export function createComment(comment) {
   jsCookie.set("jwt", localStorage.getItem("token"), { path: "/" });
   return http.post(`${url}/comments`, comment);

@@ -15,7 +15,7 @@ function Rating({ onLike, likes, wasLiked }) {
     setLoad((l) => l + 1);
   };
   React.useEffect(() => {
-    setLiked(wasLiked.current);
+    setLiked(wasLiked);
   }, [wasLiked]);
   if (!liked || !user)
     return (

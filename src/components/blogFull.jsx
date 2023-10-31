@@ -11,69 +11,84 @@ import {
   updateAuthor,
   follow,
   unFollow,
+  toggleLike,
 } from "./../services/apiService";
 import Comments from "./comments";
 import { useParams } from "react-router-dom";
 import { useUser, useUserApi } from "./../userContext";
 import { Parser } from "html-to-react";
+import { useQuery } from "react-query";
 
 const { iframe } = require("../services/utils");
 
 function BlogFull() {
   const [blog, setBlog] = React.useState();
-  const [author, setAuthor] = React.useState();
   const [likes, setLikes] = React.useState(0);
   const [isComment, setIsComment] = React.useState(false);
-  const wasLiked = React.useRef(null);
+  const [wasLiked, setWasLiked] = React.useState(null);
   const { id } = useParams();
   const authorId = React.useRef(null);
   const { id: user } = useUser();
   const { setId } = useUserApi();
-  console.log("User -> ", user);
+  // console.log("User -> ", user);
 
   const handleLike = async (id) => {
     setLikes((like) => like + id);
 
-    const change = {
-      likes: likes + id,
-    };
-    await editBlog(change, blog._id); // should not give exact value of likes rather give just if I need to increment or decrement like coz if there are concurrent likes from different users it will result in inconsistency
-    const auth = author;
-    auth.liked.push(blog._id);
+    // const change = {
+    //   likes: likes + id,
+    // };
+    // await editBlog(change, blog._id); // should not give exact value of likes rather give just if I need to increment or decrement like coz if there are concurrent likes from different users it will result in inconsistency
+    // const auth = author;
+    // auth.liked.push(blog._id);
 
-    setAuthor(auth);
-    const idd = blog._id;
-    const changeAuthor = {
-      liked: idd,
-      id: id,
+    // setAuthor(auth);
+    // const idd = blog._id;
+    // const changeAuthor = {
+    //   liked: idd,
+    //   id: id,
+    // };
+    // const currAuthor = author;
+    // currAuthor.liked.push(idd);
+    // setId(currAuthor); // Making current author the auth-user after liking the Blog (slow claps)
+    // await updateAuthor(changeAuthor);
+
+    const fields = {
+      blogId: blog._id,
+      change: id,
     };
-    const currAuthor = author;
-    currAuthor.liked.push(idd);
-    setId(currAuthor); // Making current author the auth-user after liking the Blog (slow claps)
-    await updateAuthor(changeAuthor);
+
+    const updatedUser = await toggleLike(fields); // ** bug all the fields are populated
+    // console.log(updatedUser);
+    setId(updatedUser.data);
   };
-
+  // console.log(blog);
   React.useEffect(() => {
     const getBl = async () => {
+      // console.log("UseEffect BlogFull");
       const blog = await getBlog(id);
       const author = await getAuthor(blog.data.author);
-
+      // console.log("THis is blog", blog);
       if (!author.current) authorId.current = author.data._id;
 
-      if (user && blog && user.liked.includes(blog.data._id))
-        wasLiked.current = true;
-      else if (user && blog) wasLiked.current = false;
+      if (user && blog.data && user.liked.includes(blog.data._id))
+        setWasLiked(true);
+      else if (user && blog.data) setWasLiked(false);
       else {
-        wasLiked.current = null;
+        setWasLiked(null);
       }
-
-      setAuthor(author.data);
       setBlog(blog.data);
       setLikes(blog.data.likes);
     };
 
     getBl();
-  }, [isComment, user, wasLiked.current]);
+  }, [isComment, user]);
+
+  // const blogFullQuery = useQuery(["blogFull"] , async () => {
+
+  //   const blog = await getBlog(id);
+
+  // })
 
   if (!blog)
     return (
@@ -120,7 +135,7 @@ function BlogFull() {
             ))}
         </p>
         <div className="flex flex-row">
-          {wasLiked.current !== null && (
+          {wasLiked !== null && (
             <Rating onLike={handleLike} likes={likes} wasLiked={wasLiked} />
           )}
           <svg
