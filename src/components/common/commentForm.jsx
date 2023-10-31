@@ -18,7 +18,6 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
       // };
       let comment = {
         data: data,
-        author: user._id,
         blog: _id,
         replyIs: true,
       };
@@ -32,7 +31,6 @@ function CommentForm({ blog, onChange, isReply, id, onReset }) {
     } else {
       const comment = {
         data: data,
-        author: user._id,
         blog: _id,
         replyIs: false,
       };

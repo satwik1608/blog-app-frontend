@@ -49,8 +49,8 @@ function BlogFull() {
     };
     const currAuthor = author;
     currAuthor.liked.push(idd);
-    setId(currAuthor);
-    await updateAuthor(user._id, changeAuthor);
+    setId(currAuthor); // Making current author the auth-user after liking the Blog (slow claps)
+    await updateAuthor(changeAuthor);
   };
 
   React.useEffect(() => {

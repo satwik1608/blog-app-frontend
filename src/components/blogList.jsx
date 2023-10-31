@@ -41,8 +41,8 @@ function BlogList({ id, author, tag, search }) {
     ["bookmark"],
     async () => {
       console.log("Book mark query =>", author, list);
-      const blog = await getAuthorBookmark(author);
-      console.log("Lets see", blog.data[0]);
+      const blog = await getAuthorBookmark();
+      console.log("Its here -> ", blog);
       return blog.data[0].lists;
     },
     {
@@ -62,8 +62,8 @@ function BlogList({ id, author, tag, search }) {
       id: id,
     };
     let author;
-    if (flag == 1) author = await updateAuthor(user._id, obj, "list");
-    else author = await updateAuthor(user._id, obj, "delist");
+    if (flag == 1) author = await updateAuthor(obj, "list");
+    else author = await updateAuthor(obj, "delist");
 
     setId(author.data);
   };

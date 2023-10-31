@@ -41,9 +41,9 @@ function ProfileRight({ authorId }) {
   const handleFollow = async () => {
     setIsLoading(true);
     const obj = {
-      id: user._id,
+      id: authorQuery.data._id,
     };
-    const updatedUser = await follow(obj, authorQuery.data._id);
+    const updatedUser = await follow(obj);
     setisFollower(true);
     setId(updatedUser.data);
     setIsLoading(false);
@@ -51,9 +51,9 @@ function ProfileRight({ authorId }) {
   const handleUnfollow = async () => {
     setIsLoading(true);
     const obj = {
-      id: user._id,
+      id: authorQuery.data._id,
     };
-    const updatedUser = await unFollow(obj, authorQuery.data._id);
+    const updatedUser = await unFollow(obj);
     setisFollower(false);
     setId(updatedUser.data);
     setIsLoading(false);
@@ -73,7 +73,7 @@ function ProfileRight({ authorId }) {
       const data = {
         imgThumb: imgRef.current,
       };
-      const author = await updateAuthor(user._id, data);
+      const author = await updateAuthor(data);
 
       setId(author.data);
 
