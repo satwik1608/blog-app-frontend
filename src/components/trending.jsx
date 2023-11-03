@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import CardSm from "./common/cardSm";
-import { getBlogs } from "../services/apiService";
+import { getBlogs, getTrendingBlogs } from "../services/apiService";
 
 function Trending() {
   const [blogs, setBlogs] = React.useState([]);
 
   React.useEffect(() => {
     const getBlog = async () => {
-      const opts = { isSort: null, tag: null, author: null, search: null };
-      const blogs = await getBlogs(opts);
+      const blogs = await getTrendingBlogs();
       setBlogs(blogs.data);
     };
     getBlog();

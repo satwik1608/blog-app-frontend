@@ -43,35 +43,19 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
       enabled: !!search,
     }
   );
-
   const notFollowingQuery = useQuery(
-    ["notFollowing", user],
+    ["notFollowing", user?.following],
     async () => {
       const authors = await listAuthor();
       const author = authors.data.filter(
         (a) => !user.following.includes(a._id) && user._id !== a._id
       );
-      // console.log("Not following", author);
-      // console.log(user);
       return author;
     },
     {
       enabled: !!notFollowing,
     }
   );
-
-  if (authorQuery.isLoading || notFollowingQuery.isLoading) {
-    return (
-      <>
-        <AuthorListSkeleton />
-        <AuthorListSkeleton />
-        <AuthorListSkeleton />
-        <AuthorListSkeleton />
-        <AuthorListSkeleton />
-      </>
-    );
-  }
-
   if (followers) {
     return (
       <div className="overflow-auto w-full  max-w-md p-4 bg-white  rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -136,6 +120,18 @@ function AuthorList({ followers, search, notFollowing, authorId }) {
       </div>
     );
   }
+  if (authorQuery.isLoading || notFollowingQuery.isLoading) {
+    return (
+      <>
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+        <AuthorListSkeleton />
+      </>
+    );
+  }
+
   if (search) {
     return (
       <>

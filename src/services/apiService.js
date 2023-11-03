@@ -22,6 +22,10 @@ export function getBlogs(opts) {
   }
   return http.get(`${url}/blogs${query}`);
 }
+
+export function getTrendingBlogs() {
+  return http.get(`${url}/blogs/trending`);
+}
 export function getBlogImage(id) {
   return http.get(`${url}/blogImage/${id}`);
 }

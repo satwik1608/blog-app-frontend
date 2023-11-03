@@ -19,7 +19,7 @@ function BlogList({ id, author, tag, search }) {
   const blogQuery = useQuery(
     ["blogs", tag, author, search, sort, following],
     async () => {
-      console.log("Does it runs always");
+      // console.log("Does it runs always");
       let isSort = false; // sorting on the basis of likes
       if (sort) isSort = true;
       const opts = { isSort: isSort, tag, author, search };
@@ -68,7 +68,7 @@ function BlogList({ id, author, tag, search }) {
     setId(author.data);
   };
 
-  if (blogQuery.isLoading)
+  if (blogQuery.isLoading || bookmarkQuery.isLoading)
     return (
       <div>
         <div class="inline-flex rounded-md mt-4 shadow-sm" role="group">

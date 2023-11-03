@@ -20,7 +20,7 @@ function ProfileRight({ authorId }) {
 
   const [isFollower, setisFollower] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  console.log("isFollower", isFollower);
+  // console.log("isFollower", isFollower);
   const [base64String, setbase64String] = React.useState("");
   const [isImageUpdate, setImageUpdate] = React.useState(false);
 
@@ -37,7 +37,7 @@ function ProfileRight({ authorId }) {
       return await fetchAuthor(authorId);
     }
   );
-  console.log(authorQuery.isFetched, authorQuery.isFetching);
+  // console.log(authorQuery.isFetched, authorQuery.isFetching);
 
   React.useEffect(() => {
     if (authorQuery.data && !authorQuery.isFetching) {
@@ -47,22 +47,22 @@ function ProfileRight({ authorId }) {
         setisFollower(false);
         if (user && authorQuery.data.followers) {
           authorQuery.data.followers.forEach((f) => {
-            console.log(f._id, user._id);
+            // console.log(f._id, user._id);
             if (f._id === user._id) {
-              console.log("Something happened here");
+              // console.log("Something happened here");
               setisFollower(true);
             }
           });
         }
       }
 
-      console.log("Use effect", authorQuery.data);
+      // console.log("Use effect", authorQuery.data);
     }
   }, [authorQuery.isFetching]);
-  console.log(authorQuery.isFetching, authorQuery.data);
+  console.log(authorQuery.isFetching, authorQuery.isLoading, authorQuery.data);
 
   const handleFollow = async () => {
-    console.log("handle follow");
+    // console.log("handle follow");
     setIsLoading(true);
     const obj = {
       id: authorQuery.data._id,
@@ -73,19 +73,19 @@ function ProfileRight({ authorId }) {
     setIsLoading(false);
   };
   const handleUnfollow = async () => {
-    console.log("handle unfollow");
+    // console.log("handle unfollow");
     setIsLoading(true);
     const obj = {
       id: authorQuery.data._id,
     };
-    console.log("1 change");
+    // console.log("1 change");
     const updatedUser = await unFollow(obj);
     setisFollower(false);
-    console.log("2 change");
+    // console.log("2 change");
     setId(updatedUser.data);
-    console.log("3 change");
+    // console.log("3 change");
     setIsLoading(false);
-    console.log("4 change");
+    // console.log("4 change");
   };
 
   const imgRef = React.useRef("");

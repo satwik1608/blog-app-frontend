@@ -3,6 +3,7 @@ import "./blog.css";
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import MDEditor from "@uiw/react-md-editor";
+import { formatDate } from "../services/utils";
 
 import {
   getAuthor,
@@ -31,7 +32,7 @@ function BlogFull() {
   const { id: user } = useUser();
   const { setId } = useUserApi();
   // console.log("User -> ", user);
-
+  console.log(wasLiked);
   const handleLike = async (id) => {
     setLikes((like) => like + id);
 
@@ -117,10 +118,14 @@ function BlogFull() {
   return (
     <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:place-content-between">
       <div className="p-2 basis-1/2 m-5">
-        <div class="mb-7 mt-3 font-extrabold border-b border-black dark:border-slate-100 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
+        <div class=" mt-3 mb-7 font-extrabold border-b border-black dark:border-slate-100 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
           {blog.title}
+          <div class="flex justify-end ">
+            <p className="text-base text-gray-800 dark:text-white">
+              {formatDate(blog.date)}
+            </p>
+          </div>
         </div>
-
         <div>
           <img src={blog.img} className="rounded" />
         </div>
@@ -138,6 +143,7 @@ function BlogFull() {
           {wasLiked !== null && (
             <Rating onLike={handleLike} likes={likes} wasLiked={wasLiked} />
           )}
+          {wasLiked === null && <Rating likes={likes} wasLiked={wasLiked} />}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

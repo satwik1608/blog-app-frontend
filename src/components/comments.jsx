@@ -25,7 +25,19 @@ function Comments({ blog }) {
     getCom();
   }, [refresh]);
 
-  if (comments.length === 0) return <p>Wait</p>;
+  if (comments.length === 0)
+    return (
+      <section class="bg-#1f2937 dark:bg-#1f2937 py-8 lg:py-16">
+        <div class="max-w-2xl mx-auto px-4">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
+              Discussion ({comments.length})
+            </h2>
+          </div>
+          {user && <CommentForm blog={blog} onChange={handleRefresh} />}
+        </div>
+      </section>
+    );
   return (
     <section class="bg-#1f2937 dark:bg-#1f2937 py-8 lg:py-16">
       <div class="max-w-2xl mx-auto px-4">
