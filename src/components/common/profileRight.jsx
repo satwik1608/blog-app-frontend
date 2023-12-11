@@ -33,7 +33,7 @@ function ProfileRight({ authorId }) {
   const authorQuery = useQuery(
     ["isFollower", isFollower, authorId],
     async () => {
-      console.log("first time");
+      // console.log("first time");
       return await fetchAuthor(authorId);
     }
   );
@@ -59,7 +59,7 @@ function ProfileRight({ authorId }) {
       // console.log("Use effect", authorQuery.data);
     }
   }, [authorQuery.isFetching]);
-  console.log(authorQuery.isFetching, authorQuery.isLoading, authorQuery.data);
+  // console.log(authorQuery.isFetching, authorQuery.isLoading, authorQuery.data);
 
   const handleFollow = async () => {
     // console.log("handle follow");

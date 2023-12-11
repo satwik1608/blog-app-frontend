@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import Card from "./common/card";
 import BlogListSkeleton from "./common/blogListSkeleton";
+import BlogButtonGroup from "./common/blogButtonGroup";
 
 function BlogList({ id, author, tag, search }) {
   const [sort, setSort] = React.useState(false);
@@ -62,7 +63,7 @@ function BlogList({ id, author, tag, search }) {
       id: id,
     };
     let author;
-    if (flag == 1) author = await updateAuthor(obj, "list");
+    if (flag === 1) author = await updateAuthor(obj, "list");
     else author = await updateAuthor(obj, "delist");
 
     setId(author.data);
@@ -71,53 +72,14 @@ function BlogList({ id, author, tag, search }) {
   if (blogQuery.isLoading || bookmarkQuery.isLoading)
     return (
       <div>
-        <div class="inline-flex rounded-md mt-4 shadow-sm" role="group">
-          {!user && (
-            <button
-              type="button"
-              onClick={() => setStuff(false)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Recent
-            </button>
-          )}
-          {!user && (
-            <button
-              type="button"
-              onClick={() => setSort(true)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Likes
-            </button>
-          )}
-          {user && (
-            <button
-              type="button"
-              onClick={() => setStuff(false)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Recent
-            </button>
-          )}
-          {user && !author && (
-            <button
-              type="button"
-              onClick={() => setFollowing(true)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Following
-            </button>
-          )}
-          {user && author && user._id === author && (
-            <button
-              type="button"
-              onClick={() => setList(true)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Bookmarks
-            </button>
-          )}
-        </div>
+        <BlogButtonGroup
+          user={user}
+          setStuff={setStuff}
+          setSort={setSort}
+          setFollowing={setFollowing}
+          setList={setList}
+          author={author}
+        />
 
         <BlogListSkeleton />
         <BlogListSkeleton />
@@ -134,54 +96,14 @@ function BlogList({ id, author, tag, search }) {
   if (blogQuery.data.length === 0) {
     return (
       <div>
-        <div class="inline-flex rounded-md mt-4 shadow-sm" role="group">
-          {!user && (
-            <button
-              type="button"
-              onClick={() => setStuff(false)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Recent
-            </button>
-          )}
-          {!user && (
-            <button
-              type="button"
-              onClick={() => setSort(true)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Likes
-            </button>
-          )}
-
-          {user && (
-            <button
-              type="button"
-              onClick={() => setStuff(false)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Recent
-            </button>
-          )}
-          {user && !author && (
-            <button
-              type="button"
-              onClick={() => setFollowing(true)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Following
-            </button>
-          )}
-          {user && author && user._id === author && (
-            <button
-              type="button"
-              onClick={() => setList(true)}
-              className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-            >
-              Bookmarks
-            </button>
-          )}
-        </div>
+        <BlogButtonGroup
+          user={user}
+          setStuff={setStuff}
+          setSort={setSort}
+          setFollowing={setFollowing}
+          setList={setList}
+          author={author}
+        />
         <section class="bg-white dark:bg-gray-800">
           <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
             <div class="mx-auto max-w-screen-sm text-center">
@@ -206,54 +128,14 @@ function BlogList({ id, author, tag, search }) {
   }
   return (
     <div>
-      <div class="inline-flex rounded-md mt-4 md:mt-0 shadow-sm" role="group">
-        {!user && (
-          <button
-            type="button"
-            onClick={() => setStuff(false)}
-            className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-          >
-            Recent
-          </button>
-        )}
-        {!user && (
-          <button
-            type="button"
-            onClick={() => setSort(true)}
-            className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-          >
-            Likes
-          </button>
-        )}
-
-        {user && (
-          <button
-            type="button"
-            onClick={() => setStuff(false)}
-            className="py-2 px-4 text-sm font-medium text-gray-900 bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-          >
-            Recent
-          </button>
-        )}
-        {user && !author && (
-          <button
-            type="button"
-            onClick={() => setFollowing(true)}
-            className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-          >
-            Following
-          </button>
-        )}
-        {user && author && user._id === author && (
-          <button
-            type="button"
-            onClick={() => setList(true)}
-            className="py-2 px-4 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
-          >
-            Bookmarks
-          </button>
-        )}
-      </div>
+      <BlogButtonGroup
+        user={user}
+        setStuff={setStuff}
+        setSort={setSort}
+        setFollowing={setFollowing}
+        setList={setList}
+        author={author}
+      />
 
       <ul className="m-4">
         {!list &&
