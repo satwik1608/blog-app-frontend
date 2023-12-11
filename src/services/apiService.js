@@ -6,7 +6,6 @@ const url = "https://shiny-ox-leotard.cyclic.app";
 
 export function getBlogs(opts) {
   let query = "?";
-  // console.log(opts, "opts");
   if (opts.isSort === true) {
     console.log("wow");
     query = query.concat(`sort=true&`);
@@ -21,7 +20,6 @@ export function getBlogs(opts) {
   if (opts.author) {
     query = query.concat(`author=${opts.author}&`);
   }
-  console.log(`${url}/blogs${query}`);
   return http.get(`${url}/blogs${query}`);
 }
 
