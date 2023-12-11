@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SearchBox from "./searchBox";
 import { useUser } from "./../userContext";
@@ -6,36 +6,17 @@ import { logout } from "../services/authService";
 import { onePiece } from "../services/onePiece";
 import { Navbar, Button } from "flowbite-react";
 function NavBar() {
-  const { id: user, setId } = useUser();
-  const [localStore, setLocalStore] = React.useState(false);
-  // console.log("user", user);
+  const { id: user } = useUser();
   const handleLogout = () => {
     logout();
-
     window.location = "./";
   };
-
-  React.useEffect(() => {
-    // console.log("lol");
-    // setLocalStore(false);
-    // console.log(localStore);
-
-    if (
-      localStorage.getItem("color-theme") === "dark" ||
-      (!("color-theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
-    //----------------------------------------------------------------------------
+  function handleTheme() {
     var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
     var themeToggleLightIcon = document.getElementById(
       "theme-toggle-light-icon"
     );
-
+    // Change the icons inside the button based on previous settings
     if (
       localStorage.getItem("color-theme") === "dark" ||
       (!("color-theme" in localStorage) &&
@@ -45,42 +26,35 @@ function NavBar() {
     } else {
       themeToggleDarkIcon.classList.remove("hidden");
     }
+    // toggle icons inside button
+    themeToggleDarkIcon.classList.toggle("hidden");
+    themeToggleLightIcon.classList.toggle("hidden");
 
-    var themeToggleBtn = document.getElementById("theme-toggle");
-
-    themeToggleBtn.addEventListener("click", function () {
-      // toggle icons inside button
-      themeToggleDarkIcon.classList.toggle("hidden");
-      themeToggleLightIcon.classList.toggle("hidden");
-
-      // if set via local storage previously
-      if (localStorage.getItem("color-theme")) {
-        // console.log(localStorage.getItem("color-theme"), "lol");
-        if (localStorage.getItem("color-theme") === "light") {
-          document.documentElement.classList.add("dark");
-          localStorage.setItem("color-theme", "dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-          localStorage.setItem("color-theme", "light");
-        }
-
-        // if NOT set via local storage previously
+    // if set via local storage previously
+    if (localStorage.getItem("color-theme")) {
+      if (localStorage.getItem("color-theme") === "light") {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("color-theme", "dark");
       } else {
-        if (document.documentElement.classList.contains("dark")) {
-          document.documentElement.classList.remove("dark");
-          localStorage.setItem("color-theme", "light");
-        } else {
-          document.documentElement.classList.add("dark");
-          localStorage.setItem("color-theme", "dark");
-        }
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("color-theme", "light");
       }
-    });
-  }, [localStore]);
 
+      // if NOT set via local storage previously
+    } else {
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("color-theme", "light");
+      } else {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("color-theme", "dark");
+      }
+    }
+  }
+  const [activeItem, setActiveItem] = useState("home");
   return (
     <Navbar
       fluid={true}
-      rounded={true}
       className=" waah px-2 sm:px-4 py-2.5 dark:bg-gray-900 bg-slate-300  fixed w-full z-20 top-0 left-0 border-b  border-gray-600"
     >
       <Navbar.Brand as={Link} to="/home">
@@ -116,23 +90,23 @@ function NavBar() {
         <button
           id="theme-toggle"
           type="button"
-          onClick={() => setLocalStore((c) => !c)}
-          class="  ml-2 bg-gray-100 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+          onClick={handleTheme}
+          class="text-gray-500 ml-2 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
         >
           <svg
             id="theme-toggle-dark-icon"
             class="hidden w-5 h-5"
+            fill="currentColor"
             viewBox="0 0 20 20"
-            fill="black"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
           </svg>
           <svg
             id="theme-toggle-light-icon"
-            class="hidden w-5 h-5"
+            class=" w-5 h-5"
+            fill="currentColor"
             viewBox="0 0 20 20"
-            fill="black"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
@@ -145,26 +119,51 @@ function NavBar() {
       </div>
 
       <Navbar.Collapse className="lol flex content-center items-center">
-        <Navbar.Link as={Link} to="/" active={true}>
+        <Navbar.Link
+          as={Link}
+          to="/"
+          active={activeItem === "home"}
+          onClick={() => setActiveItem("home")}
+        >
           Home
         </Navbar.Link>
         {user && (
-          <Navbar.Link as={Link} to="/new-blog">
+          <Navbar.Link
+            as={Link}
+            to="/new-blog"
+            active={activeItem === "write"}
+            onClick={() => setActiveItem("write")}
+          >
             Write
           </Navbar.Link>
         )}
         {user && (
-          <Navbar.Link as={Link} to={`/search`}>
+          <Navbar.Link
+            as={Link}
+            to={`/search`}
+            active={activeItem === "search"}
+            onClick={() => setActiveItem("search")}
+          >
             Search
           </Navbar.Link>
         )}
         {user && (
-          <Navbar.Link as={Link} to={`/author/${user._id}`}>
+          <Navbar.Link
+            as={Link}
+            to={`/author/${user._id}`}
+            active={activeItem === "profile"}
+            onClick={() => setActiveItem("profile")}
+          >
             Profile
           </Navbar.Link>
         )}
 
-        <Navbar.Link as={Link} to="/in-transit">
+        <Navbar.Link
+          as={Link}
+          to="/in-transit"
+          active={activeItem === "services"}
+          onClick={() => setActiveItem("services")}
+        >
           Services
         </Navbar.Link>
         <Navbar.Link

@@ -11,6 +11,7 @@ import SearchResult from "./components/searchResult";
 import BlogForm from "./components/blogForm";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser, logout } from "./services/authService";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Navigate } from "react-router-dom";
 // import { Redirect } from "react-router-dom";
 import { UserProvider } from "./userContext";
@@ -80,6 +81,7 @@ function App() {
         </Routes>
         {/* <Footer /> */}
       </UserProvider>
+      <ReactQueryDevtools />
     </React.Fragment>
   );
 }

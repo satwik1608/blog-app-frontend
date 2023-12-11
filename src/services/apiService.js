@@ -2,11 +2,9 @@ import http from "./httpService";
 import jsCookie from "js-cookie";
 
 const url = "https://shiny-ox-leotard.cyclic.app";
-// const url = "http:///localhost:1337";
+// const url = "http://localhost:1337";
 
 export function getBlogs(opts) {
-  // const { isSort, search, tag, author } = opts;
-  // console.log(opts);
   let query = "?";
   // console.log(opts, "opts");
   if (opts.isSort === true) {
@@ -23,14 +21,22 @@ export function getBlogs(opts) {
   if (opts.author) {
     query = query.concat(`author=${opts.author}&`);
   }
-  // console.log(`${url}/blogs${query}`);
+  console.log(`${url}/blogs${query}`);
   return http.get(`${url}/blogs${query}`);
+}
+
+export function getTrendingBlogs() {
+  return http.get(`${url}/blogs/trending`);
 }
 export function getBlogImage(id) {
   return http.get(`${url}/blogImage/${id}`);
 }
 export function getAuthorId(author) {
   return http.get(`${url}/author?name=${author}`);
+}
+export function getAuthorBookmark() {
+  console.log("Frontend hit");
+  return http.get(`${url}/author/bookmark`);
 }
 export function getAuthor(id) {
   return http.get(`${url}/author/${id}`);
@@ -43,16 +49,16 @@ export function listAuthor(search) {
 export function createAuthor(author) {
   return http.post(`${url}/author`, author);
 }
-export function updateAuthor(id, author, func) {
-  if (func) return http.put(`${url}/author/${id}?use=${func}`, author);
-  return http.put(`${url}/author/${id}`, author);
+export function updateAuthor(author, func) {
+  if (func) return http.put(`${url}/author?use=${func}`, author);
+  return http.put(`${url}/author`, author);
 }
 
-export function follow(follower, followee) {
-  return http.post(`${url}/follow/${followee}`, follower);
+export function follow(followee) {
+  return http.post(`${url}/follow/`, followee);
 }
-export function unFollow(follower, followee) {
-  return http.post(`${url}/unfollow/${followee}`, follower);
+export function unFollow(followee) {
+  return http.post(`${url}/unfollow/`, followee);
 }
 export function getFollowers(author) {
   console.log(author);
@@ -69,6 +75,10 @@ export function getBlog(id) {
 
 export function editBlog(blog, id) {
   return http.put(`${url}/blogs/${id}`, blog);
+}
+
+export function toggleLike(fields) {
+  return http.post(`${url}/blogs/toggleLike`, fields);
 }
 
 export function createComment(comment) {

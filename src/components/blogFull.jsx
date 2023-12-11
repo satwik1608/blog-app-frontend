@@ -1,80 +1,64 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import "./blog.css";
 import ProfileRight from "./common/profileRight";
 import Rating from "./common/ratings";
 import MDEditor from "@uiw/react-md-editor";
+import { formatDate } from "../services/utils";
+import { useQuery } from "react-query";
 
-import {
-  getAuthor,
-  getBlog,
-  editBlog,
-  updateAuthor,
-  follow,
-  unFollow,
-} from "./../services/apiService";
+import { getAuthor, getBlog, toggleLike } from "./../services/apiService";
 import Comments from "./comments";
 import { useParams } from "react-router-dom";
-import { useUser } from "./../userContext";
-import { Parser } from "html-to-react";
+import { useUser, useUserApi } from "./../userContext";
 
 const { iframe } = require("../services/utils");
 
 function BlogFull() {
-  const [blog, setBlog] = React.useState();
-  const [author, setAuthor] = React.useState();
   const [likes, setLikes] = React.useState(0);
   const [isComment, setIsComment] = React.useState(false);
-  const wasLiked = React.useRef(null);
+  const [wasLiked, setWasLiked] = React.useState(null);
   const { id } = useParams();
-  const authorId = React.useRef(null);
-  const { id: user, setId } = useUser();
-  console.log("User -> ", user);
+  const [authorId, setAuthorId] = React.useState(null);
+  const { id: user } = useUser();
+  const { setId } = useUserApi();
+  // console.log("User -> ", user);
+  // console.log(wasLiked);
+  const blogFullQuery = useQuery(["blogFull", user?._id], async () => {
+    const blog = await getBlog(id);
 
+    return blog.data;
+  });
   const handleLike = async (id) => {
     setLikes((like) => like + id);
 
-    const change = {
-      likes: likes + id,
+    const fields = {
+      blogId: blogFullQuery.data._id,
+      change: id,
     };
-    await editBlog(change, blog._id); // should not give exact value of likes rather give just if I need to increment or decrement like coz if there are concurrent likes from different users it will result in inconsistency
-    const auth = author;
-    auth.liked.push(blog._id);
 
-    setAuthor(auth);
-    const idd = blog._id;
-    const changeAuthor = {
-      liked: idd,
-      id: id,
-    };
-    const currAuthor = author;
-    currAuthor.liked.push(idd);
-    setId(currAuthor);
-    await updateAuthor(user._id, changeAuthor);
+    const updatedUser = await toggleLike(fields);
+    setId(updatedUser.data);
   };
-
+  // console.log(blog);
   React.useEffect(() => {
     const getBl = async () => {
-      const blog = await getBlog(id);
-      const author = await getAuthor(blog.data.author);
-
-      if (!author.current) authorId.current = author.data._id;
-
-      if (user && blog && user.liked.includes(blog.data._id))
-        wasLiked.current = true;
-      else if (user && blog) wasLiked.current = false;
+      console.log("useEffect");
+      setAuthorId(blogFullQuery.data.author);
+      console.log("user", user);
+      console.log("blog", blogFullQuery.data._id);
+      if (user && user.liked.includes(blogFullQuery.data._id))
+        setWasLiked(true);
+      else if (user) setWasLiked(false);
       else {
-        wasLiked.current = null;
+        setWasLiked(null);
       }
-
-      setAuthor(author.data);
-      setBlog(blog.data);
-      setLikes(blog.data.likes);
+      setLikes(blogFullQuery.data.likes);
     };
 
-    getBl();
-  }, [isComment, user, wasLiked.current]);
+    if (blogFullQuery.data) getBl();
+  }, [blogFullQuery.data]);
 
-  if (!blog)
+  if (!blogFullQuery.data)
     return (
       <div class="text-center">
         <div role="status">
@@ -101,17 +85,21 @@ function BlogFull() {
   return (
     <div className="lg:grid lg:grid-cols-2 lg:gap-4 lg:place-content-between">
       <div className="p-2 basis-1/2 m-5">
-        <div class="mb-7 mt-3 font-extrabold border-b border-black dark:border-slate-100 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
-          {blog.title}
+        <div class=" mt-3 mb-7 font-extrabold border-b border-black dark:border-slate-100 tracking-tight leading-none text-gray-900 md:text-xl lg:text-4xl dark:text-white ">
+          {blogFullQuery.data.title}
+          <div class="flex justify-end ">
+            <p className="text-base text-gray-800 dark:text-white">
+              {formatDate(blogFullQuery.data.date)}
+            </p>
+          </div>
         </div>
-
         <div>
-          <img src={blog.img} className="rounded" />
+          <img src={blogFullQuery.data.img} className="rounded" />
         </div>
 
         <p class="mb-3 mt-10  text-gray-800 dark:text-white w-100 flex-wrap tracking-wide text-lg leading-relaxed">
-          {blog.content &&
-            blog.content.map((p) => (
+          {blogFullQuery.data.content &&
+            blogFullQuery.data.content.map((p) => (
               <div
                 dangerouslySetInnerHTML={iframe(p)}
                 className="break-words w-4/4 mb-4 check"
@@ -119,9 +107,10 @@ function BlogFull() {
             ))}
         </p>
         <div className="flex flex-row">
-          {wasLiked.current !== null && (
+          {wasLiked !== null && (
             <Rating onLike={handleLike} likes={likes} wasLiked={wasLiked} />
           )}
+          {wasLiked === null && <Rating likes={likes} wasLiked={wasLiked} />}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -136,15 +125,17 @@ function BlogFull() {
               clipRule="evenodd"
             />
           </svg>
-          {blog.comments && (
-            <p className="dark:text-slate-100">{blog.comments.length}</p>
+          {blogFullQuery.data.comments && (
+            <p className="dark:text-slate-100">
+              {blogFullQuery.data.comments.length}
+            </p>
           )}
         </div>
 
-        {isComment && <Comments blog={blog} />}
+        {isComment && <Comments blog={blogFullQuery.data} />}
       </div>
       <div className="lg:fixed lg:overflow-auto lg:inset-y-0 lg:right-0 lg:mt-28 lg:mr-16 lg:scrollbar-hide">
-        <ProfileRight authorId={authorId.current} />
+        {authorId && <ProfileRight authorId={authorId} />}
       </div>
     </div>
   );

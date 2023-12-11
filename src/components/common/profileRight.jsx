@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import AuthorList from "./authorList";
-import { useUser } from "../../userContext";
+import { useUser, useUserApi } from "../../userContext";
 import { useQuery } from "react-query";
 import {
   follow,
   unFollow,
-  uploadImage,
   updateAuthor,
   getAuthor,
 } from "../../services/apiService";
@@ -15,14 +14,13 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
 import { Link } from "react-router-dom";
-import { unsubscribe } from "medium-editor";
-import { func } from "joi";
 function ProfileRight({ authorId }) {
-  const { id: user, setId } = useUser();
+  const { id: user } = useUser();
+  const { setId } = useUserApi();
 
-  const [isFollower, setisFollower] = React.useState(false);
+  const [isFollower, setisFollower] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-
+  // console.log("isFollower", isFollower);
   const [base64String, setbase64String] = React.useState("");
   const [isImageUpdate, setImageUpdate] = React.useState(false);
 
@@ -33,29 +31,61 @@ function ProfileRight({ authorId }) {
   }
 
   const authorQuery = useQuery(
-    ["isFollower", isFollower, user, authorId],
-    async () => await fetchAuthor(authorId)
+    ["isFollower", isFollower, authorId],
+    async () => {
+      // console.log("first time");
+      return await fetchAuthor(authorId);
+    }
   );
+  // console.log(authorQuery.isFetched, authorQuery.isFetching);
+
+  React.useEffect(() => {
+    if (authorQuery.data && !authorQuery.isFetching) {
+      if (authorQuery.data.imgThumb) setbase64String(authorQuery.data.imgThumb);
+      else setbase64String("https://picsum.photos/200");
+      if (isFollower === null) {
+        setisFollower(false);
+        if (user && authorQuery.data.followers) {
+          authorQuery.data.followers.forEach((f) => {
+            // console.log(f._id, user._id);
+            if (f._id === user._id) {
+              // console.log("Something happened here");
+              setisFollower(true);
+            }
+          });
+        }
+      }
+
+      // console.log("Use effect", authorQuery.data);
+    }
+  }, [authorQuery.isFetching]);
+  // console.log(authorQuery.isFetching, authorQuery.isLoading, authorQuery.data);
 
   const handleFollow = async () => {
+    // console.log("handle follow");
     setIsLoading(true);
     const obj = {
-      id: user._id,
+      id: authorQuery.data._id,
     };
-    const updatedUser = await follow(obj, authorQuery.data._id);
+    const updatedUser = await follow(obj);
     setisFollower(true);
     setId(updatedUser.data);
     setIsLoading(false);
   };
   const handleUnfollow = async () => {
+    // console.log("handle unfollow");
     setIsLoading(true);
     const obj = {
-      id: user._id,
+      id: authorQuery.data._id,
     };
-    const updatedUser = await unFollow(obj, authorQuery.data._id);
+    // console.log("1 change");
+    const updatedUser = await unFollow(obj);
     setisFollower(false);
+    // console.log("2 change");
     setId(updatedUser.data);
+    // console.log("3 change");
     setIsLoading(false);
+    // console.log("4 change");
   };
 
   const imgRef = React.useRef("");
@@ -72,7 +102,7 @@ function ProfileRight({ authorId }) {
       const data = {
         imgThumb: imgRef.current,
       };
-      const author = await updateAuthor(user._id, data);
+      const author = await updateAuthor(data);
 
       setId(author.data);
 
@@ -82,20 +112,6 @@ function ProfileRight({ authorId }) {
     }
   };
 
-  React.useEffect(() => {
-    if (authorQuery.data) {
-      if (authorQuery.data.imgThumb) setbase64String(authorQuery.data.imgThumb);
-      else setbase64String("https://picsum.photos/200");
-
-      if (user && authorQuery.data.followers) {
-        authorQuery.data.followers.forEach((f) => {
-          if (f._id === user._id) {
-            setisFollower(true);
-          }
-        });
-      }
-    }
-  }, [authorQuery]);
   // console.log(authorQuery.data, user);
   if (authorQuery.isLoading)
     return (
@@ -205,7 +221,18 @@ function ProfileRight({ authorId }) {
           )}
           {user &&
             user.username !== authorQuery.data.username &&
-            !isFollower &&
+            isFollower == null &&
+            !isLoading && (
+              <button
+                disabled={true}
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                ....
+              </button>
+            )}
+          {user &&
+            user.username !== authorQuery.data.username &&
+            isFollower === false &&
             !isLoading && (
               <button
                 onClick={handleFollow}
@@ -217,7 +244,7 @@ function ProfileRight({ authorId }) {
 
           {user &&
             user.username !== authorQuery.data.username &&
-            isFollower &&
+            isFollower === true &&
             !isLoading && (
               <button
                 onClick={handleUnfollow}
