@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
 
-const url = "https://shiny-ox-leotard.cyclic.app";
+const url = "https://blog-app-backend-fe7d.onrender.com";
 // const url = "http://localhost:1337";
 const wow = 1;
 export function getJwt() {
